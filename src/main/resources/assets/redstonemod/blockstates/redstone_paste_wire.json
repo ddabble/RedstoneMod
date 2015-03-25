@@ -1,0 +1,1658 @@
+{
+	"variants": {
+		"down=none,east=wall,north=none,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none", "x": 90, "y": 270 },
+		
+		"down=side,east=wall,north=none,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "x": 270, "y": 90 },
+		"down=side,east=wall,north=none,power=0,south=none,up=side,west=none": { "model": "redstonemod:redstone_paste_north-south", "x": 270, "y": 90 },
+		"down=none,east=wall,north=none,power=0,south=none,up=side,west=none": { "model": "redstonemod:redstone_paste_north-south", "x": 270, "y": 90 },
+		
+		
+		
+		"down=none,east=none,north=none,power=0,south=none,up=side,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=none,north=none,power=0,south=none,up=side,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		
+		"down=none,east=none,north=side,power=0,south=none,up=side,west=none": { "model": "redstonemod:redstone_paste_nue" },
+		
+		"down=none,east=none,north=side,power=0,south=side,up=side,west=none": { "model": "redstonemod:redstone_paste_nsue" },
+		
+		"down=none,east=none,north=none,power=0,south=side,up=side,west=side": { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		
+		"down=none,east=none,north=none,power=0,south=side,up=side,west=none": { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		
+		"down=none,east=none,north=side,power=0,south=side,up=side,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		
+		"down=none,east=none,north=side,power=0,south=none,up=side,west=side": { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		
+		
+		
+		"down=none,east=none,north=none,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=none,power=0,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=side,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=0,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+
+		"down=none,east=none,north=diagonal,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=0,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=0,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=0,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=0,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=0,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=0,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=0,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=0,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=0,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=0,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=0,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=0,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=0,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=0,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=0,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=0,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=0,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=0,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=0,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=0,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=0,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=0,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=0,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=0,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=0,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=0,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=0,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=0,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=0,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=0,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=0,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=0,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=0,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=0,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=0,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=0,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=0,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=0,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=0,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=0,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=0,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=0,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=0,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=0,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=0,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=0,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=0,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=0,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=0,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=0,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=0,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=0,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=0,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=0,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=0,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=0,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=0,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=0,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=1,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=1,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=1,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=1,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=1,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=1,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=1,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=1,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=1,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=1,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=1,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=1,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=1,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=1,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=1,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=1,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=1,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=1,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=1,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=1,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=1,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=1,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=1,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=1,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=1,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=1,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=1,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=1,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=1,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=1,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=1,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=1,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=1,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=1,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=1,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=1,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=1,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=1,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=1,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=1,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=1,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=1,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=1,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=1,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=1,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=1,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=1,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=1,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=1,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=1,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=1,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=1,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=1,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=1,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=1,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=1,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=1,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=1,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=1,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=1,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=1,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=1,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=1,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=1,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=2,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=2,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=2,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=2,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=2,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=2,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=2,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=2,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=2,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=2,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=2,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=2,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=2,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=2,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=2,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=2,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=2,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=2,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=2,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=2,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=2,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=2,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=2,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=2,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=2,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=2,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=2,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=2,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=2,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=2,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=2,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=2,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=2,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=2,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=2,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=2,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=2,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=2,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=2,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=2,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=2,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=2,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=2,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=2,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=2,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=2,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=2,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=2,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=2,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=2,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=2,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=2,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=2,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=2,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=2,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=2,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=2,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=2,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=2,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=2,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=2,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=2,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=2,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=2,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=3,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=3,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=3,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=3,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=3,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=3,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=3,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=3,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=3,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=3,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=3,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=3,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=3,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=3,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=3,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=3,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=3,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=3,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=3,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=3,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=3,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=3,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=3,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=3,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=3,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=3,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=3,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=3,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=3,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=3,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=3,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=3,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=3,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=3,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=3,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=3,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=3,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=3,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=3,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=3,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=3,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=3,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=3,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=3,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=3,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=3,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=3,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=3,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=3,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=3,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=3,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=3,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=3,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=3,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=3,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=3,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=3,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=3,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=3,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=3,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=3,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=3,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=3,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=3,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=4,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=4,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=4,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=4,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=4,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=4,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=4,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=4,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=4,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=4,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=4,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=4,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=4,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=4,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=4,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=4,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=4,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=4,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=4,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=4,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=4,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=4,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=4,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=4,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=4,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=4,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=4,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=4,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=4,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=4,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=4,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=4,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=4,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=4,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=4,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=4,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=4,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=4,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=4,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=4,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=4,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=4,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=4,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=4,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=4,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=4,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=4,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=4,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=4,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=4,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=4,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=4,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=4,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=4,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=4,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=4,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=4,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=4,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=4,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=4,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=4,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=4,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=4,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=4,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=5,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=5,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=5,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=5,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=5,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=5,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=5,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=5,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=5,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=5,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=5,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=5,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=5,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=5,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=5,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=5,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=5,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=5,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=5,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=5,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=5,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=5,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=5,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=5,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=5,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=5,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=5,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=5,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=5,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=5,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=5,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=5,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=5,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=5,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=5,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=5,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=5,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=5,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=5,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=5,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=5,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=5,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=5,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=5,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=5,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=5,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=5,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=5,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=5,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=5,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=5,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=5,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=5,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=5,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=5,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=5,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=5,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=5,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=5,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=5,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=5,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=5,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=5,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=5,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=6,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=6,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=6,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=6,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=6,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=6,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=6,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=6,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=6,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=6,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=6,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=6,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=6,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=6,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=6,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=6,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=6,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=6,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=6,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=6,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=6,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=6,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=6,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=6,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=6,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=6,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=6,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=6,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=6,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=6,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=6,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=6,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=6,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=6,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=6,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=6,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=6,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=6,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=6,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=6,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=6,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=6,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=6,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=6,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=6,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=6,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=6,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=6,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=6,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=6,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=6,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=6,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=6,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=6,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=6,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=6,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=6,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=6,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=6,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=6,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=6,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=6,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=6,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=6,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=7,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=7,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=7,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=7,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=7,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=7,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=7,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=7,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=7,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=7,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=7,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=7,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=7,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=7,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=7,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=7,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=7,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=7,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=7,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=7,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=7,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=7,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=7,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=7,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=7,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=7,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=7,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=7,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=7,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=7,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=7,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=7,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=7,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=7,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=7,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=7,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=7,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=7,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=7,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=7,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=7,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=7,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=7,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=7,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=7,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=7,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=7,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=7,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=7,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=7,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=7,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=7,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=7,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=7,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=7,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=7,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=7,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=7,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=7,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=7,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=7,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=7,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=7,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=7,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=8,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=8,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=8,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=8,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=8,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=8,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=8,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=8,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=8,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=8,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=8,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=8,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=8,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=8,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=8,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=8,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=8,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=8,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=8,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=8,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=8,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=8,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=8,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=8,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=8,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=8,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=8,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=8,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=8,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=8,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=8,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=8,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=8,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=8,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=8,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=8,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=8,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=8,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=8,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=8,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=8,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=8,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=8,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=8,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=8,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=8,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=8,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=8,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=8,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=8,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=8,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=8,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=8,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=8,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=8,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=8,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=8,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=8,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=8,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=8,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=8,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=8,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=8,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=8,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=9,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=9,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=9,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=9,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=9,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=9,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=9,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=9,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=9,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=9,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=9,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=9,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=9,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=9,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=9,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=9,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=9,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=9,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=9,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=9,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=9,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=9,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=9,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=9,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=9,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=9,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=9,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=9,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=9,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=9,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=9,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=9,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=9,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=9,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=9,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=9,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=9,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=9,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=9,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=9,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=9,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=9,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=9,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=9,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=9,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=9,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=9,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=9,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=9,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=9,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=9,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=9,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=9,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=9,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=9,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=9,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=9,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=9,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=9,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=9,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=9,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=9,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=9,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=9,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=10,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=10,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=10,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=10,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=10,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=10,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=10,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=10,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=10,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=10,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=10,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=10,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=10,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=10,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=10,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=10,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=10,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=10,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=10,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=10,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=10,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=10,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=10,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=10,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=10,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=10,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=10,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=10,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=10,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=10,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=10,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=10,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=10,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=10,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=10,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=10,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=10,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=10,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=10,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=10,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=10,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=10,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=10,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=10,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=10,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=10,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=10,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=10,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=10,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=10,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=10,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=10,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=10,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=10,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=10,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=10,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=10,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=10,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=10,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=10,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=10,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=10,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=10,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=10,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=11,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=11,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=11,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=11,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=11,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=11,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=11,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=11,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=11,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=11,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=11,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=11,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=11,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=11,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=11,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=11,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=11,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=11,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=11,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=11,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=11,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=11,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=11,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=11,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=11,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=11,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=11,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=11,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=11,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=11,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=11,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=11,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=11,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=11,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=11,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=11,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=11,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=11,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=11,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=11,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=11,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=11,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=11,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=11,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=11,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=11,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=11,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=11,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=11,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=11,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=11,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=11,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=11,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=11,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=11,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=11,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=11,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=11,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=11,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=11,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=11,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=11,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=11,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=11,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=12,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=12,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=12,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=12,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=12,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=12,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=12,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=12,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=12,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=12,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=12,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=12,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=12,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=12,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=12,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=12,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=12,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=12,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=12,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=12,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=12,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=12,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=12,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=12,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=12,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=12,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=12,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=12,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=12,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=12,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=12,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=12,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=12,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=12,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=12,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=12,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=12,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=12,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=12,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=12,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=12,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=12,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=12,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=12,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=12,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=12,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=12,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=12,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=12,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=12,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=12,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=12,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=12,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=12,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=12,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=12,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=12,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=12,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=12,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=12,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=12,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=12,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=12,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=12,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=13,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=13,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=13,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=13,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=13,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=13,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=13,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=13,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=13,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=13,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=13,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=13,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=13,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=13,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=13,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=13,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=13,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=13,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=13,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=13,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=13,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=13,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=13,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=13,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=13,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=13,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=13,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=13,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=13,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=13,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=13,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=13,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=13,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=13,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=13,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=13,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=13,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=13,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=13,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=13,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=13,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=13,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=13,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=13,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=13,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=13,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=13,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=13,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=13,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=13,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=13,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=13,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=13,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=13,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=13,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=13,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=13,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=13,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=13,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=13,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=13,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=13,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=13,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=13,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=14,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=14,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=14,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=14,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=14,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=14,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=14,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=14,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=14,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=14,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=14,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=14,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=14,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=14,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=14,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=14,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=14,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=14,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=14,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=14,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=14,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=14,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=14,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=14,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=14,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=14,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=14,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=14,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=14,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=14,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=14,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=14,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=14,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=14,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=14,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=14,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=14,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=14,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=14,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=14,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=14,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=14,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=14,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=14,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=14,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=14,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=14,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=14,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=14,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=14,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=14,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=14,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=14,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=14,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=14,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=14,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=14,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=14,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=14,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=14,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=14,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=14,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=14,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=14,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" },
+
+
+
+		"down=none,east=none,north=none,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_none" },
+
+		"down=none,east=none,north=side,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=none,power=15,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=side,north=none,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=none,north=none,power=15,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+
+		"down=none,east=none,north=diagonal,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=none,power=15,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=diagonal,north=none,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_uew" },
+		"down=none,east=none,north=none,power=15,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uew", "y": 180 },
+
+		"down=none,east=side,north=side,power=15,south=none,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne" },
+		"down=none,east=side,north=diagonal,power=15,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_une" },
+		"down=none,east=diagonal,north=side,power=15,south=none,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue" },
+		"down=none,east=diagonal,north=diagonal,power=15,south=none,up=none,west=none": { "model": "redstonemod:redstone_paste_unue" },
+
+		"down=none,east=side,north=none,power=15,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_ne", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_une", "y": 90 },
+		"down=none,east=side,north=none,power=15,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unue", "y": 90 },
+
+		"down=none,east=none,north=none,power=15,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 180 },
+		"down=none,east=none,north=none,power=15,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_une", "y": 180 },
+		"down=none,east=none,north=none,power=15,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nue", "y": 180 },
+		"down=none,east=none,north=none,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 180 },
+
+		"down=none,east=none,north=side,power=15,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_ne", "y": 270 },
+		"down=none,east=none,north=side,power=15,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_une", "y": 270 },
+		"down=none,east=none,north=diagonal,power=15,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nue", "y": 270 },
+		"down=none,east=none,north=diagonal,power=15,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unue", "y": 270 },
+
+		"down=none,east=none,north=side,power=15,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_north-south" },
+		"down=none,east=none,north=diagonal,power=15,south=side,up=none,west=none": { "model": "redstonemod:redstone_paste_uns" },
+		"down=none,east=none,north=side,power=15,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_uns", "y": 180 },
+		"down=none,east=none,north=diagonal,power=15,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unus" },
+
+		"down=none,east=side,north=none,power=15,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_north-south", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=none,up=none,west=side": { "model": "redstonemod:redstone_paste_uns", "y": 90 },
+		"down=none,east=side,north=none,power=15,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_uns", "y": 270 },
+		"down=none,east=diagonal,north=none,power=15,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_ueuw" },
+
+		"down=none,east=side,north=side,power=15,south=side,up=none,west=none":    { "model": "redstonemod:redstone_paste_nse" },
+		"down=none,east=side,north=diagonal,power=15,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_unse" },
+		"down=none,east=side,north=side,power=15,south=diagonal,up=none,west=none":   { "model": "redstonemod:redstone_paste_nuse" },
+		"down=none,east=diagonal,north=side,power=15,south=side,up=none,west=none":   { "model": "redstonemod:redstone_paste_nsue" },
+		"down=none,east=diagonal,north=side,power=15,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_nusue" },
+		"down=none,east=side,north=diagonal,power=15,south=diagonal,up=none,west=none":  { "model": "redstonemod:redstone_paste_unuse" },
+		"down=none,east=diagonal,north=diagonal,power=15,south=side,up=none,west=none":  { "model": "redstonemod:redstone_paste_unsue" },
+		"down=none,east=diagonal,north=diagonal,power=15,south=diagonal,up=none,west=none": { "model": "redstonemod:redstone_paste_unusue" },
+
+		"down=none,east=side,north=none,power=15,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 90 },
+		"down=none,east=side,north=none,power=15,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nuse", "y": 90 },
+		"down=none,east=side,north=none,power=15,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 90 },
+		"down=none,east=side,north=none,power=15,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unsue", "y": 90 },
+		"down=none,east=diagonal,north=none,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 90 },
+
+		"down=none,east=none,north=side,power=15,south=side,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 180 },
+		"down=none,east=none,north=side,power=15,south=diagonal,up=none,west=side":   { "model": "redstonemod:redstone_paste_unse", "y": 180 },
+		"down=none,east=none,north=diagonal,power=15,south=side,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 180 },
+		"down=none,east=none,north=side,power=15,south=side,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_nsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=15,south=side,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_nusue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=15,south=diagonal,up=none,west=side":  { "model": "redstonemod:redstone_paste_unuse", "y": 180 },
+		"down=none,east=none,north=side,power=15,south=diagonal,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 180 },
+		"down=none,east=none,north=diagonal,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 180 },
+
+		"down=none,east=side,north=side,power=15,south=none,up=none,west=side":    { "model": "redstonemod:redstone_paste_nse", "y": 270 },
+		"down=none,east=side,north=side,power=15,south=none,up=none,west=diagonal":   { "model": "redstonemod:redstone_paste_unse", "y": 270 },
+		"down=none,east=diagonal,north=side,power=15,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=15,south=none,up=none,west=side":   { "model": "redstonemod:redstone_paste_nsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=15,south=none,up=none,west=side":  { "model": "redstonemod:redstone_paste_nusue", "y": 270 },
+		"down=none,east=diagonal,north=side,power=15,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unuse", "y": 270 },
+		"down=none,east=side,north=diagonal,power=15,south=none,up=none,west=diagonal":  { "model": "redstonemod:redstone_paste_unsue", "y": 270 },
+		"down=none,east=diagonal,north=diagonal,power=15,south=none,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusue", "y": 270 },
+
+		"down=none,east=side,north=side,power=15,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_nsew" },
+
+		"down=none,east=side,north=diagonal,power=15,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew" },
+		"down=none,east=side,north=side,power=15,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 180 },
+		"down=none,east=diagonal,north=side,power=15,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsew", "y": 90 },
+		"down=none,east=side,north=side,power=15,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsew", "y": 270 },
+
+		"down=none,east=side,north=diagonal,power=15,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusew" },
+		"down=none,east=diagonal,north=side,power=15,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusew", "y": 90 },
+
+		"down=none,east=diagonal,north=diagonal,power=15,south=side,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew" },
+		"down=none,east=diagonal,north=side,power=15,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unsuew", "y": 90 },
+		"down=none,east=side,north=side,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 180 },
+		"down=none,east=side,north=diagonal,power=15,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unsuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=15,south=diagonal,up=none,west=side": { "model": "redstonemod:redstone_paste_unusuew" },
+		"down=none,east=diagonal,north=side,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 90 },
+		"down=none,east=side,north=diagonal,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 180 },
+		"down=none,east=diagonal,north=diagonal,power=15,south=side,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusuew", "y": 270 },
+
+		"down=none,east=diagonal,north=diagonal,power=15,south=diagonal,up=none,west=diagonal": { "model": "redstonemod:redstone_paste_unusueuw" }
+	}
+}
