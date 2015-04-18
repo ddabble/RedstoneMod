@@ -6,7 +6,7 @@ import dabble.redstonemod.util.EnumModel;
 public class BlockRedstonePasteWire_NorthEast extends BlockRedstonePasteWire {
 
 	public BlockRedstonePasteWire_NorthEast(String unlocalizedName) {
-		super(EnumModel.N, unlocalizedName);
+		super(EnumModel.NONE, unlocalizedName);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -45,8 +44,8 @@ import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block {
 	public static final PropertyEnum MODEL = PropertyEnum.create("model", EnumModel.class);
-	public static final PropertyEnum ROTATION = PropertyEnum.create("model", Rotation.class);
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
+	public static final PropertyEnum ROTATION = PropertyEnum.create("rotation", EnumModel.Rotation.class);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
 
@@ -54,8 +53,9 @@ public abstract class BlockRedstonePasteWire extends Block {
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(MODEL, baseModel)
-				.withProperty(POWER, Integer.valueOf(0)));
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
+				.withProperty(POWER, Integer.valueOf(0))
+				.withProperty(ROTATION, EnumModel.Rotation.valueOf(getPastedSide().toString().toUpperCase())));
+		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
 		this.setHardness(0.0F);
 		this.setStepSound(Block.soundTypeStone);
 		this.setUnlocalizedName(unlocalizedName);
@@ -75,7 +75,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(MODEL, getModel(worldIn, pos));
+		return state.withProperty(MODEL, getModel(worldIn, pos)).withProperty(ROTATION, EnumModel.Rotation.valueOf(getPastedSide().toString().toUpperCase()));
 	}
 
 	private EnumModel getModel(IBlockAccess worldIn, BlockPos pos) {
@@ -127,30 +127,37 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 	private AttachState getAttachState(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
 		BlockPos neighborPos = pos.offset(side);
-		Block block = worldIn.getBlockState(neighborPos).getBlock();
+		IBlockState neighborState = worldIn.getBlockState(neighborPos);
+		Block neighborBlock = neighborState.getBlock();
 
-		if (block instanceof BlockAir)
+		if (neighborBlock instanceof BlockAir)
 			return AttachState.NONE;
+		else if (neighborBlock instanceof BlockRedstonePasteWire)
+			return AttachState.CONNECT;
 		else if (canPasteOnSide(worldIn, neighborPos, side.getOpposite()))
 			return AttachState.BLOCK;
-		else if (block.getMaterial() == Material.circuits && !(block instanceof BlockRedstoneWire))
+		else if (Blocks.unpowered_repeater.isAssociated(neighborBlock)) {
+			EnumFacing direction = (EnumFacing) neighborState.getValue(BlockRedstoneRepeater.FACING);
+			if (direction == side || direction.getOpposite() == side)
+				return AttachState.CONNECT;
+		} else if (neighborBlock.canConnectRedstone(worldIn, pos, side) && !(neighborBlock instanceof BlockRedstoneWire))
 			return AttachState.CONNECT;
-		else
-			return AttachState.NONE;
+
+		return AttachState.NONE;
 	}
 
 	private AttachState getAttachState(IBlockAccess worldIn, BlockPos pos, EnumFacing side1, EnumFacing side2) {
 		BlockPos neighborPos = pos.offset(side1).offset(side2);
-		Block block = worldIn.getBlockState(neighborPos).getBlock();
+		Block neighborBlock = worldIn.getBlockState(neighborPos).getBlock();
 
-		if (block instanceof BlockAir)
+		if (neighborBlock instanceof BlockAir)
 			return AttachState.NONE;
 		// else if (canPasteOnSide(worldIn, neighborPos, side1.getOpposite()) || canPasteOnSide(worldIn, neighborPos, side2.getOpposite()))
 		// return AttachState.BLOCK;
-		else if (block.getMaterial() == Material.circuits && !(block instanceof BlockRedstoneWire))
+		else if (neighborBlock instanceof BlockRedstonePasteWire)
 			return AttachState.CONNECT;
-		else
-			return AttachState.NONE;
+
+		return AttachState.NONE;
 	}
 
 	@Override
@@ -159,34 +166,28 @@ public abstract class BlockRedstonePasteWire extends Block {
 	}
 
 	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos)
-	{
-		// float f = 0.1875F;
-		//
-		// switch (BlockLever.SwitchEnumFacing.ORIENTATION_LOOKUP[((BlockLever.EnumOrientation)worldIn.getBlockState(pos).getValue(FACING)).ordinal()])
-		// {
-		// case 1:
-		// this.setBlockBounds(0.0F, 0.2F, 0.5F - f, f * 2.0F, 0.8F, 0.5F + f);
-		// break;
-		// case 2:
-		// this.setBlockBounds(1.0F - f * 2.0F, 0.2F, 0.5F - f, 1.0F, 0.8F, 0.5F + f);
-		// break;
-		// case 3:
-		// this.setBlockBounds(0.5F - f, 0.2F, 0.0F, 0.5F + f, 0.8F, f * 2.0F);
-		// break;
-		// case 4:
-		// this.setBlockBounds(0.5F - f, 0.2F, 1.0F - f * 2.0F, 0.5F + f, 0.8F, 1.0F);
-		// break;
-		// case 5:
-		// case 6:
-		// f = 0.25F;
-		// this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.6F, 0.5F + f);
-		// break;
-		// case 7:
-		// case 8:
-		// f = 0.25F;
-		// this.setBlockBounds(0.5F - f, 0.4F, 0.5F - f, 0.5F + f, 1.0F, 0.5F + f);
-		// }
+	public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
+		float height = 0.0625F;
+
+		switch (getPastedSide()) {
+			case DOWN:
+				break;
+			case UP:
+				this.setBlockBounds(0, 1 - height, 0, 1, 1, 1);
+				break;
+			case NORTH:
+				this.setBlockBounds(0, 0, 0, 1, 1, height);
+				break;
+			case SOUTH:
+				this.setBlockBounds(0, 0, 1 - height, 1, 1, 1);
+				break;
+			case WEST:
+				this.setBlockBounds(0, 0, 0, height, 1, 1);
+				break;
+			case EAST:
+				this.setBlockBounds(1 - height, 0, 0, 1, 1, 1);
+				break;
+		}
 	}
 
 	@Override
@@ -236,7 +237,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 		Block block = worldIn.getBlockState(pos).getBlock();
 
-		if (block.isNormalCube(worldIn, pos))
+		if (block.isNormalCube())
 			return true;
 
 		if (block.getMaterial() == Material.circuits)
@@ -626,32 +627,10 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { MODEL, POWER });
+		return new BlockState(this, new IProperty[] { MODEL, POWER, ROTATION });
 	}
 
 	private static enum AttachState {
 		NONE, CONNECT, BLOCK;
-	}
-
-	private static enum Rotation implements IStringSerializable {
-		NONE("none"),
-		X180("x180"),
-		X270("x270"),
-		X90("x90"),
-		X90Y90("x90-y90"),
-		X270Y90("x270-y90");
-		private final String name;
-
-		private Rotation(String name) {
-			this.name = name;
-		}
-
-		public String toString() {
-			return this.getName();
-		}
-
-		public String getName() {
-			return this.name;
-		}
 	}
 }
