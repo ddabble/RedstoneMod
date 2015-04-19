@@ -11,15 +11,15 @@ public enum EnumModel implements IStringSerializable {
 	NONE("none"),
 	N("n"),
 	W("w"),
-	NW("n_w"),
-	NE("n_e"),
-	SW("s_w"),
-	SE("s_e"),
-	NSW("n_s_w"),
-	NSE("n_s_e"),
-	NWE("n_w_e"),
-	SWE("s_w_e"),
-	NSWE("n_s_w_e");
+	NW("nw"),
+	NE("ne"),
+	SW("sw"),
+	SE("se"),
+	NSW("nsw"),
+	NSE("nse"),
+	NWE("nwe"),
+	SWE("swe"),
+	NSWE("nswe");
 
 	private final String name;
 
@@ -37,7 +37,7 @@ public enum EnumModel implements IStringSerializable {
 
 	public static EnumModel getModel(BlockRedstonePasteWire block, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections) {
 		StringBuffer model = new StringBuffer();
-		EnumFacing pastedSide = block.getPastedSide();
+		EnumFacing pastedSide = block.pastedSide;
 
 		if (connectionDirections.size() > 0 && pastedSide != EnumFacing.DOWN) {
 

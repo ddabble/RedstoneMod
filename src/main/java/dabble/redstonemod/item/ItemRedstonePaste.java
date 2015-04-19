@@ -25,9 +25,9 @@ public class ItemRedstonePaste extends Item {
 			if (currentBlock instanceof BlockRedstonePasteWire) {
 				BlockRedstonePasteWire currentRedstonePaste = (BlockRedstonePasteWire) currentBlock;
 
-				if (currentRedstonePaste.isSingleFaced() && currentRedstonePaste.getPastedSide() != side) {
-					int sideIndex = side.getOpposite().getIndex();
-					int pastedSideIndex = currentRedstonePaste.getPastedSide().getIndex();
+				if (currentRedstonePaste.isSingleFaced && currentRedstonePaste.pastedSide != side) {
+					int sideIndex = side.getOpposite().getIndex() << 1;
+					int pastedSideIndex = currentRedstonePaste.pastedSide.getIndex() << 1;
 					Block modBlocksBlock = ModBlocks.doubleSideMap.get(sideIndex + pastedSideIndex + (sideIndex * pastedSideIndex));
 					worldIn.setBlockState(currentPos, modBlocksBlock.getDefaultState());
 					return true;

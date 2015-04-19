@@ -45,37 +45,33 @@ import dabble.redstonemod.util.EnumModel;
 public abstract class BlockRedstonePasteWire extends Block {
 	public static final PropertyEnum MODEL = PropertyEnum.create("model", EnumModel.class);
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
-	public static final PropertyEnum ROTATION = PropertyEnum.create("rotation", EnumModel.Rotation.class);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
+	public boolean isSingleFaced;
+	public EnumFacing pastedSide;
+	public EnumFacing pastedSide2;
 
-	public BlockRedstonePasteWire(EnumModel baseModel, String unlocalizedName) {
+	public BlockRedstonePasteWire(String unlocalizedName, EnumFacing pastedSide, EnumFacing pastedSide2) {
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
-				.withProperty(MODEL, baseModel)
-				.withProperty(POWER, Integer.valueOf(0))
-				.withProperty(ROTATION, EnumModel.Rotation.valueOf(getPastedSide().toString().toUpperCase())));
+				.withProperty(MODEL, EnumModel.NONE)
+				.withProperty(POWER, Integer.valueOf(0)));
 		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
 		this.setHardness(0.0F);
 		this.setStepSound(Block.soundTypeStone);
 		this.setUnlocalizedName(unlocalizedName);
+		this.pastedSide = pastedSide;
+		this.pastedSide2 = pastedSide2;
 	}
 
-	public boolean isSingleFaced() {
-		return false;
-	}
-
-	public EnumFacing getPastedSide() {
-		return null;
-	}
-
-	public EnumFacing getPastedSide2() {
-		return null;
+	public BlockRedstonePasteWire(String unlocalizedName, EnumFacing pastedSide) {
+		this(unlocalizedName, pastedSide, null);
+		this.isSingleFaced = true;
 	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(MODEL, getModel(worldIn, pos)).withProperty(ROTATION, EnumModel.Rotation.valueOf(getPastedSide().toString().toUpperCase()));
+		return state.withProperty(MODEL, getModel(worldIn, pos));
 	}
 
 	private EnumModel getModel(IBlockAccess worldIn, BlockPos pos) {
@@ -169,7 +165,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 	public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
 		float height = 0.0625F;
 
-		switch (getPastedSide()) {
+		switch (this.pastedSide) {
 			case DOWN:
 				break;
 			case UP:
@@ -627,7 +623,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { MODEL, POWER, ROTATION });
+		return new BlockState(this, new IProperty[] { MODEL, POWER });
 	}
 
 	private static enum AttachState {
