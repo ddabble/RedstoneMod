@@ -9,17 +9,40 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumModel implements IStringSerializable {
 	NONE("none"),
-	N("n"),
-	W("w"),
-	NW("nw"),
-	NE("ne"),
-	SW("sw"),
-	SE("se"),
-	NSW("nsw"),
-	NSE("nse"),
-	NWE("nwe"),
-	SWE("swe"),
-	NSWE("nswe");
+	ns("ns"),
+	we("we"),
+	nw("nw"),
+	ne("ne"),
+	sw("sw"),
+	se("se"),
+	nsw("nsw"),
+	nse("nse"),
+	nwe("nwe"),
+	swe("swe"),
+	nswe("nswe"),
+
+	nsNns("nsNns"),
+	weEns("weEns"),
+	neNns("neNns"),
+	neEns("neEns"),
+	nseNns("nseNns"),
+	nseSns("nseSns"),
+	nseEns("nseEns"),
+	nsweNns("nsweNns"),
+
+	nsNnsSns("nsNnsSns"),
+	weEnsEns("weEnsEns"),
+	neNnsEns("neNnsEns"),
+	nseNnsSns("nseNnsSns"),
+	nseNnsEns("nseNnsEns"),
+	nseSnsEns("nseSnsEns"),
+	nsweNnsSns("nsweNnsSns"),
+	nsweNnsEns("nsweNnsEns"),
+
+	nseNnsSnsEns("nseNnsSnsEns"),
+	nsweNnsSnsEns("nsweNnsSnsEns"),
+
+	nsweNnsSnsWnsEns("nsweNnsSnsWnsEns");
 
 	private final String name;
 
@@ -39,14 +62,15 @@ public enum EnumModel implements IStringSerializable {
 		StringBuffer model = new StringBuffer();
 		EnumFacing pastedSide = block.pastedSide;
 
+		// TODO Remove this when finished (?)
 		if (connectionDirections.size() > 0 && pastedSide != EnumFacing.DOWN) {
 
 			for (byte i = 0; i < connectionDirections.size(); ++i) {
 				EnumFacing currentSide = connectionDirections.get(i);
-				EnumFacing normalizedSide = getNormalizedSide(currentSide, pastedSide);
+				EnumFacing normalisedSide = getNormalisedSide(currentSide, pastedSide);
 
-				if (normalizedSide != currentSide)
-					connectionDirections.set(i, normalizedSide);
+				if (normalisedSide != currentSide)
+					connectionDirections.set(i, normalisedSide);
 			}
 
 			connectionDirections.sort(new Comparator<EnumFacing>() {
@@ -65,21 +89,22 @@ public enum EnumModel implements IStringSerializable {
 		if (model.length() == 0)
 			return NONE;
 
-		switch (model.toString()) {
-			case "ns":
-				return EnumModel.N;
-			case "s":
-				return EnumModel.N;
-			case "we":
-				return EnumModel.W;
-			case "e":
-				return EnumModel.W;
-		}
+		if (model.length() == 1)
+			switch (model.toString()) {
+				case "n":
+					return ns;
+				case "s":
+					return ns;
+				case "w":
+					return we;
+				case "e":
+					return we;
+			}
 
 		return valueOf(model);
 	}
 
-	private static EnumFacing getNormalizedSide(EnumFacing currentSide, EnumFacing pastedSide) {
+	private static EnumFacing getNormalisedSide(EnumFacing currentSide, EnumFacing pastedSide) {
 
 		switch (pastedSide) {
 			case UP:
@@ -117,31 +142,9 @@ public enum EnumModel implements IStringSerializable {
 
 	private static EnumModel valueOf(StringBuffer sb) {
 		try {
-			return EnumModel.valueOf(sb.toString().toUpperCase());
+			return valueOf(sb.toString());
 		} catch (Exception e) {
-			return EnumModel.NONE;
-		}
-	}
-
-	public static enum Rotation implements IStringSerializable {
-		DOWN("none"),
-		UP("x180"),
-		NORTH("x270"),
-		SOUTH("x90"),
-		WEST("x90-y90"),
-		EAST("x270-y90");
-		private final String name;
-
-		private Rotation(String name) {
-			this.name = name;
-		}
-
-		public String toString() {
-			return this.getName();
-		}
-
-		public String getName() {
-			return this.name;
+			return NONE;
 		}
 	}
 }

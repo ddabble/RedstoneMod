@@ -4,7 +4,7 @@ import net.minecraft.util.EnumFacing;
 
 public class BlockRedstonePasteWire_SouthEast extends BlockRedstonePasteWire {
 
-	public BlockRedstonePasteWire_SouthEast(String unlocalizedName) {
-		super(unlocalizedName, EnumFacing.SOUTH, EnumFacing.EAST);
+	public BlockRedstonePasteWire_SouthEast(String unlocalisedName) {
+		super(unlocalisedName, EnumFacing.SOUTH, EnumFacing.EAST);
 	}
 }

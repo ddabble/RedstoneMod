@@ -1,8 +1,8 @@
 {
 	"variants": {
 		"model=none,power=0": { "model": "redstonemod:redstone_paste-none", "x": 90, "y": 90 },
-		"model=n,power=0": { "model": "redstonemod:redstone_paste-n", "x": 90, "y": 90 },
-		"model=w,power=0": { "model": "redstonemod:redstone_paste-w", "x": 90, "y": 90 },
+		"model=ns,power=0": { "model": "redstonemod:redstone_paste-ns", "x": 90, "y": 90 },
+		"model=we,power=0": { "model": "redstonemod:redstone_paste-we", "x": 90, "y": 90 },
 		"model=nw,power=0": { "model": "redstonemod:redstone_paste-se", "x": 90, "y": 90 },
 		"model=ne,power=0": { "model": "redstonemod:redstone_paste-sw", "x": 90, "y": 90 },
 		"model=sw,power=0": { "model": "redstonemod:redstone_paste-ne", "x": 90, "y": 90 },

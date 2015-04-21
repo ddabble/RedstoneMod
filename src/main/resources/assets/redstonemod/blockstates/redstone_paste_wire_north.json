@@ -1,8 +1,8 @@
 {
 	"variants": {
 		"model=none,power=0": { "model": "redstonemod:redstone_paste-none", "x": 270 },
-		"model=n,power=0": { "model": "redstonemod:redstone_paste-n", "x": 270 },
-		"model=w,power=0": { "model": "redstonemod:redstone_paste-w", "x": 270 },
+		"model=ns,power=0": { "model": "redstonemod:redstone_paste-ns", "x": 270 },
+		"model=we,power=0": { "model": "redstonemod:redstone_paste-we", "x": 270 },
 		"model=nw,power=0": { "model": "redstonemod:redstone_paste-nw", "x": 270 },
 		"model=ne,power=0": { "model": "redstonemod:redstone_paste-ne", "x": 270 },
 		"model=sw,power=0": { "model": "redstonemod:redstone_paste-sw", "x": 270 },

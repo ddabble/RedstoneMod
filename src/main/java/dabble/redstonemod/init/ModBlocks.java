@@ -32,7 +32,7 @@ public class ModBlocks {
 			redstone_paste_wire_up_north, redstone_paste_wire_up_south, redstone_paste_wire_up_east, redstone_paste_wire_up_west,
 			redstone_paste_wire_down_north, redstone_paste_wire_down_south, redstone_paste_wire_down_east, redstone_paste_wire_down_west,
 			redstone_paste_wire_north_east, redstone_paste_wire_north_west, redstone_paste_wire_south_east, redstone_paste_wire_south_west;
-	private static int down = EnumFacing.DOWN.getIndex() << 1,
+	private static int down = EnumFacing.DOWN.getIndex(),
 			up = EnumFacing.UP.getIndex() << 1,
 			north = EnumFacing.NORTH.getIndex() << 1,
 			south = EnumFacing.SOUTH.getIndex() << 1,

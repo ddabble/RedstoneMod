@@ -51,7 +51,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 	public EnumFacing pastedSide;
 	public EnumFacing pastedSide2;
 
-	public BlockRedstonePasteWire(String unlocalizedName, EnumFacing pastedSide, EnumFacing pastedSide2) {
+	public BlockRedstonePasteWire(String unlocalisedName, EnumFacing pastedSide, EnumFacing pastedSide2) {
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(MODEL, EnumModel.NONE)
@@ -59,13 +59,13 @@ public abstract class BlockRedstonePasteWire extends Block {
 		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
 		this.setHardness(0.0F);
 		this.setStepSound(Block.soundTypeStone);
-		this.setUnlocalizedName(unlocalizedName);
+		this.setUnlocalizedName(unlocalisedName);
 		this.pastedSide = pastedSide;
 		this.pastedSide2 = pastedSide2;
 	}
 
-	public BlockRedstonePasteWire(String unlocalizedName, EnumFacing pastedSide) {
-		this(unlocalizedName, pastedSide, null);
+	public BlockRedstonePasteWire(String unlocalisedName, EnumFacing pastedSide) {
+		this(unlocalisedName, pastedSide, null);
 		this.isSingleFaced = true;
 	}
 
