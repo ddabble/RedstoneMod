@@ -160,7 +160,7 @@ public enum EnumModel implements IStringSerializable {
 		return this.name;
 	}
 
-	public static EnumModel getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
+	public static StringBuffer getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
 		EnumMap<EnumFacing, ArrayList<EnumFacing>> faces = new EnumMap<EnumFacing, ArrayList<EnumFacing>>(EnumFacing.class);
 		EnumMap<EnumFacing, ArrayList<EnumFacing>> normalisedFaces = new EnumMap<EnumFacing, ArrayList<EnumFacing>>(EnumFacing.class);
 		EnumFacing pastedSide = wire.pastedSide;
@@ -240,7 +240,7 @@ public enum EnumModel implements IStringSerializable {
 			if (face.getValue().get(0) == null) {
 
 				if (faces.size() == 1)
-					return NONE;
+					return model;
 
 				ArrayList<EnumFacing> value = new ArrayList<EnumFacing>();
 				value.add(EnumFacing.NORTH);
@@ -262,7 +262,7 @@ public enum EnumModel implements IStringSerializable {
 			++i;
 		}
 
-		return valueOf(model);
+		return model;
 	}
 
 	private static void normaliseAndSort(ArrayList<EnumFacing> connectionSides, EnumFacing pastedSide) {

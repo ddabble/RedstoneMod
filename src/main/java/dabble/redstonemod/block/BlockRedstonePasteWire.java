@@ -17,14 +17,15 @@ import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -41,10 +42,11 @@ import com.google.common.collect.Sets;
 
 import dabble.redstonemod.init.ModBlocks;
 import dabble.redstonemod.init.ModItems;
+import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.EnumModel;
 
-public abstract class BlockRedstonePasteWire extends Block {
-	public static final PropertyEnum MODEL = PropertyEnum.create("model", EnumModel.class);
+public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
+	// public static final PropertyEnum MODEL = PropertyEnum.create("model", EnumModel.class);
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
@@ -55,7 +57,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 	public BlockRedstonePasteWire(String unlocalisedName, EnumFacing pastedSide, EnumFacing pastedSide2) {
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
-				.withProperty(MODEL, EnumModel.NONE)
+				// .withProperty(MODEL, EnumModel.NONE)
 				.withProperty(POWER, Integer.valueOf(0)));
 		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
 		this.setHardness(0.0F);
@@ -70,12 +72,26 @@ public abstract class BlockRedstonePasteWire extends Block {
 		this.isDoubleFaced = false;
 	}
 
+	// Will remove once I figure out how to customise the rendering of non-tile entities
+	@Deprecated
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(MODEL, getModel(worldIn, pos));
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new TileEntityRedstonePaste();
 	}
 
-	private EnumModel getModel(IBlockAccess worldIn, BlockPos pos) {
+	// Same goes with this
+	@Deprecated
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	// @Override
+	// public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+	// return state.withProperty(MODEL, getModel(worldIn, pos));
+	// }
+
+	public StringBuffer getModel(IBlockAccess worldIn, BlockPos pos) {
 		ArrayList<EnumFacing> connectionDirections = new ArrayList<EnumFacing>();
 		ArrayList<EnumFacing> blockDirections = new ArrayList<EnumFacing>();
 		ArrayList<EnumFacing[]> diagonalConnectionDirections = new ArrayList<EnumFacing[]>();
@@ -190,6 +206,12 @@ public abstract class BlockRedstonePasteWire extends Block {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		return false;
+	}
+
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
@@ -197,13 +219,6 @@ public abstract class BlockRedstonePasteWire extends Block {
 	@Override
 	public boolean isFullCube() {
 		return false;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-		IBlockState iblockstate = worldIn.getBlockState(pos);
-		return iblockstate.getBlock() != this ? super.colorMultiplier(worldIn, pos, renderPass) : this.colorMultiplier(((Integer) iblockstate.getValue(POWER)).intValue());
 	}
 
 	@Override
@@ -577,6 +592,13 @@ public abstract class BlockRedstonePasteWire extends Block {
 		return !this.canProvidePower;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
+		IBlockState iblockstate = worldIn.getBlockState(pos);
+		return iblockstate.getBlock() != this ? super.colorMultiplier(worldIn, pos, renderPass) : this.colorMultiplier(((Integer) iblockstate.getValue(POWER)).intValue());
+	}
+
 	@SideOnly(Side.CLIENT)
 	private int colorMultiplier(int powerLevel) {
 		float f = (float) powerLevel / 15.0F;
@@ -644,7 +666,7 @@ public abstract class BlockRedstonePasteWire extends Block {
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { MODEL, POWER });
+		return new BlockState(this, new IProperty[] { /* MODEL, */POWER });
 	}
 
 	private static enum AttachState {

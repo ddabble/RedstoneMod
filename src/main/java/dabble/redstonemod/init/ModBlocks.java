@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 import dabble.redstonemod.block.BlockRedstonePasteWire_Down;
@@ -24,6 +25,8 @@ import dabble.redstonemod.block.BlockRedstonePasteWire_UpNorth;
 import dabble.redstonemod.block.BlockRedstonePasteWire_UpSouth;
 import dabble.redstonemod.block.BlockRedstonePasteWire_UpWest;
 import dabble.redstonemod.block.BlockRedstonePasteWire_West;
+import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
+import dabble.redstonemod.util.RedstonePasteRenderer;
 
 public class ModBlocks {
 	public static HashMap<Integer, BlockRedstonePasteWire> singleSideMap = new HashMap<Integer, BlockRedstonePasteWire>(6);
@@ -85,6 +88,9 @@ public class ModBlocks {
 		registerBlock(redstone_paste_wire_north_east);
 		registerBlock(redstone_paste_wire_south_west);
 		registerBlock(redstone_paste_wire_south_east);
+
+		GameRegistry.registerTileEntity(TileEntityRedstonePaste.class, "tileEntityRedstonePaste");
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRedstonePaste.class, new RedstonePasteRenderer());
 	}
 
 	private static void registerBlock(Block block) {
