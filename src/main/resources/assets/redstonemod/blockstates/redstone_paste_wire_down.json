@@ -1,16 +1,5 @@
 {
 	"variants": {
-		"model=none,power=0": { "model": "redstonemod:redstone_paste-none" },
-		"model=ns,power=0": { "model": "redstonemod:redstone_paste-ns" },
-		"model=we,power=0": { "model": "redstonemod:redstone_paste-we" },
-		"model=nw,power=0": { "model": "redstonemod:redstone_paste-nw" },
-		"model=ne,power=0": { "model": "redstonemod:redstone_paste-ne" },
-		"model=sw,power=0": { "model": "redstonemod:redstone_paste-sw" },
-		"model=se,power=0": { "model": "redstonemod:redstone_paste-se" },
-		"model=nsw,power=0": { "model": "redstonemod:redstone_paste-nsw" },
-		"model=nse,power=0": { "model": "redstonemod:redstone_paste-nse" },
-		"model=nwe,power=0": { "model": "redstonemod:redstone_paste-nwe" },
-		"model=swe,power=0": { "model": "redstonemod:redstone_paste-swe" },
-		"model=nswe,power=0": { "model": "redstonemod:redstone_paste-nswe" }
+		"normal": { "model": "redstonemod:redstone_paste_wire_down" }
 	}
 }

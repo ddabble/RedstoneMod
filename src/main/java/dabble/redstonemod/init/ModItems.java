@@ -5,7 +5,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import dabble.redstonemod.Reference;
+import dabble.redstonemod.RedstoneMod;
 import dabble.redstonemod.item.ItemRedstonePaste;
 
 public class ModItems {
@@ -25,6 +25,6 @@ public class ModItems {
 	}
 
 	public static void registerRender(Item item) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(RedstoneMod.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
 	}
 }

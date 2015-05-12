@@ -1,10 +1,5 @@
 {
 	"variants": {
-		"model=none,power=0": { "model": "redstonemod:redstone_paste-none" },
-		"model=none-x90,power=0": { "model": "redstonemod:redstone_paste-none", "x": 90 },
-		"model=none-x90-y90,power=0": { "model": "redstonemod:redstone_paste-none", "x": 90, "y": 90 },
-		"model=none-x180,power=0": { "model": "redstonemod:redstone_paste-none", "x": 180 },
-		"model=none-x270,power=0": { "model": "redstonemod:redstone_paste-none", "x": 270 },
-		"model=none-x270-y90,power=0": { "model": "redstonemod:redstone_paste-none", "x": 270, "y": 90 }
+		"normal": { "model": "redstonemod:redstone_paste_wire_up_east" }
 	}
 }

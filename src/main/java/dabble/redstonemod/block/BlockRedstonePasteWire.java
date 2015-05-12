@@ -1,6 +1,7 @@
 package dabble.redstonemod.block;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Random;
@@ -46,7 +47,6 @@ import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
-	// public static final PropertyEnum MODEL = PropertyEnum.create("model", EnumModel.class);
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
@@ -57,10 +57,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	public BlockRedstonePasteWire(String unlocalisedName, EnumFacing pastedSide, EnumFacing pastedSide2) {
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
-				// .withProperty(MODEL, EnumModel.NONE)
 				.withProperty(POWER, Integer.valueOf(0)));
 		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
-		this.setHardness(0.0F);
+		this.setHardness(0);
 		this.setStepSound(Block.soundTypeStone);
 		this.setUnlocalizedName(unlocalisedName);
 		this.pastedSide = pastedSide;
@@ -72,7 +71,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		this.isDoubleFaced = false;
 	}
 
-	// Will remove once I figure out how to customise the rendering of non-tile entities
+	// Will remove once I figure out how to customise the rendering of non-tileEntities
 	@Deprecated
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -86,12 +85,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return true;
 	}
 
-	// @Override
-	// public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-	// return state.withProperty(MODEL, getModel(worldIn, pos));
-	// }
-
-	public StringBuffer getModel(IBlockAccess worldIn, BlockPos pos) {
+	public EnumMap<EnumFacing, EnumModel> getModel(IBlockAccess worldIn, BlockPos pos) {
 		ArrayList<EnumFacing> connectionDirections = new ArrayList<EnumFacing>();
 		ArrayList<EnumFacing> blockDirections = new ArrayList<EnumFacing>();
 		ArrayList<EnumFacing[]> diagonalConnectionDirections = new ArrayList<EnumFacing[]>();
@@ -411,7 +405,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
-		if (!worldIn.isRemote) { // If the world is not client side
+		if (!worldIn.isRemote) {
 			this.updateSurroundingRedstone(worldIn, pos, state);
 			Iterator<?> iterator = EnumFacing.Plane.VERTICAL.iterator();
 			EnumFacing enumfacing;
@@ -482,9 +476,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	private int getMaxCurrentStrength(World worldIn, BlockPos pos, int strength) {
 
-		if (worldIn.getBlockState(pos).getBlock() != this) {
+		if (worldIn.getBlockState(pos).getBlock() != this)
 			return strength;
-		} else {
+		else {
 			int j = ((Integer) worldIn.getBlockState(pos).getValue(POWER)).intValue();
 			return j > strength ? j : strength;
 		}
@@ -502,12 +496,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 					if (!canPasteOnSide(worldIn, pos.offset(this.pastedSide), this.pastedSide.getOpposite())) {
 						Block modBlocksBlock = ModBlocks.singleSideMap.get(pastedSide2.getIndex());
 						worldIn.setBlockState(pos, modBlocksBlock.getDefaultState());
-					} else {
-
-						if (!canPasteOnSide(worldIn, pos.offset(this.pastedSide2), this.pastedSide2.getOpposite())) {
-							Block modBlocksBlock = ModBlocks.singleSideMap.get(pastedSide.getIndex());
-							worldIn.setBlockState(pos, modBlocksBlock.getDefaultState());
-						}
+					} else if (!canPasteOnSide(worldIn, pos.offset(this.pastedSide2), this.pastedSide2.getOpposite())) {
+						Block modBlocksBlock = ModBlocks.singleSideMap.get(pastedSide.getIndex());
+						worldIn.setBlockState(pos, modBlocksBlock.getDefaultState());
 					}
 				}
 
@@ -532,34 +523,32 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 
-		if (!this.canProvidePower) {
+		if (!this.canProvidePower)
 			return 0;
-		} else {
+		else {
 			int i = ((Integer) state.getValue(POWER)).intValue();
 
-			if (i == 0) {
+			if (i == 0)
 				return 0;
-			} else if (side == EnumFacing.UP) {
+			else if (side == EnumFacing.UP)
 				return i;
-			} else {
+			else {
 				EnumSet<EnumFacing> enumset = EnumSet.noneOf(EnumFacing.class);
 				Iterator<?> iterator = EnumFacing.Plane.HORIZONTAL.iterator();
 
 				while (iterator.hasNext()) {
 					EnumFacing enumfacing1 = (EnumFacing) iterator.next();
 
-					if (this.func_176339_d(worldIn, pos, enumfacing1)) {
+					if (this.func_176339_d(worldIn, pos, enumfacing1))
 						enumset.add(enumfacing1);
-					}
 				}
 
-				if (side.getAxis().isHorizontal() && enumset.isEmpty()) {
+				if (side.getAxis().isHorizontal() && enumset.isEmpty())
 					return i;
-				} else if (enumset.contains(side) && !enumset.contains(side.rotateYCCW()) && !enumset.contains(side.rotateY())) {
+				else if (enumset.contains(side) && !enumset.contains(side.rotateYCCW()) && !enumset.contains(side.rotateY()))
 					return i;
-				} else {
+				else
 					return 0;
-				}
 			}
 		}
 	}
@@ -577,14 +566,13 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	protected static boolean canRedstoneConnect(IBlockAccess world, BlockPos pos, EnumFacing side) {
 		IBlockState state = world.getBlockState(pos);
 
-		if (state.getBlock() instanceof BlockRedstonePasteWire) {
+		if (state.getBlock() instanceof BlockRedstonePasteWire)
 			return true;
-		} else if (Blocks.unpowered_repeater.isAssociated(state.getBlock())) {
+		else if (Blocks.unpowered_repeater.isAssociated(state.getBlock())) {
 			EnumFacing direction = (EnumFacing) state.getValue(BlockRedstoneRepeater.FACING);
 			return direction == side || direction.getOpposite() == side;
-		} else {
+		} else
 			return state.getBlock().canConnectRedstone(world, pos, side) && state.getBlock() != Blocks.redstone_wire;
-		}
 	}
 
 	@Override
@@ -604,20 +592,17 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		float f = (float) powerLevel / 15.0F;
 		float f1 = f * 0.6F + 0.4F;
 
-		if (powerLevel == 0) {
+		if (powerLevel == 0)
 			f1 = 0.3F;
-		}
 
 		float f2 = f * f * 0.7F - 0.5F;
 		float f3 = f * f * 0.6F - 0.7F;
 
-		if (f2 < 0.0F) {
+		if (f2 < 0.0F)
 			f2 = 0.0F;
-		}
 
-		if (f3 < 0.0F) {
+		if (f3 < 0.0F)
 			f3 = 0.0F;
-		}
 
 		int j = MathHelper.clamp_int((int) (f1 * 255.0F), 0, 255);
 		int k = MathHelper.clamp_int((int) (f2 * 255.0F), 0, 255);

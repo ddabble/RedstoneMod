@@ -8,164 +8,56 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 
-public enum EnumModel implements IStringSerializable {
-	NONE("none"),
-	ns("ns"),
-	we("we"),
-	nw("nw"),
-	ne("ne"),
-	sw("sw"),
-	se("se"),
-	nsw("nsw"),
-	nse("nse"),
-	nwe("nwe"),
-	swe("swe"),
-	nswe("nswe"),
+public enum EnumModel {
+	NONE(0, 1, 0, 1),
+	NS(1, 2, 0, 1),
+	WE(2, 3, 0, 1),
+	NW(3, 4, 0, 1),
+	NE(4, 5, 0, 1),
+	SW(5, 6, 0, 1),
+	SE(6, 7, 0, 1),
+	NSW(7, 8, 0, 1),
+	NSE(8, 9, 0, 1),
+	NWE(9, 10, 0, 1),
+	SWE(0, 1, 1, 2),
+	NSWE(1, 2, 1, 2);
 
-	// nsNns("nsNns"),
-	// nsNnw("nsNnw"),
-	// nsNne("nsNne"),
-	// nsNnsw("nsNnsw"),
-	// nsNnse("nsNnse"),
-	// nsNswe("nsNswe"),
-	// nsNnswe("nsNnswe"),
-	//
-	// nsSns("nsSns"),
-	// nsSnw("nsSnw"),
-	// nsSne("nsSne"),
-	// nsSnsw("nsSnsw"),
-	// nsSnse("nsSnse"),
-	// nsSswe("nsSswe"),
-	// nsSnswe("nsSnswe"),
-	//
-	// weEns("weEns"),
-	// weEnw("weEnw"),
-	// weEne("weEne"),
-	// weEnsw("weEnsw"),
-	// weEnse("weEnse"),
-	// weEswe("weEswe"),
-	// weEnswe("weEnswe"),
-	//
-	// weWns("weWns"),
-	// weWnw("weWnw"),
-	// weWne("weWne"),
-	// weWnsw("weWnsw"),
-	// weWnse("weWnse"),
-	// weWswe("weWswe"),
-	// weWnswe("weWnswe"),
-	//
-	// nwNns("nwNns"),
-	// nwNnw("nwNnw"),
-	// nwNne("nwNne"),
-	// nwNnsw("nwNnsw"),
-	// nwNnse("nwNnse"),
-	// nwNswe("nwNswe"),
-	// nwNnswe("nwNnswe"),
-	//
-	// nwWns("nwWns"),
-	// nwWnw("nwWnw"),
-	// nwWne("nwWne"),
-	// nwWnsw("nwWnsw"),
-	// nwWnse("nwWnse"),
-	// nwWswe("nwWswe"),
-	// nwWnswe("nwWnswe"),
-	//
-	// neNns("neNns"),
-	// neNnw("neNnw"),
-	// neNne("neNne"),
-	// neNnsw("neNnsw"),
-	// neNnse("neNnse"),
-	// neNswe("neNswe"),
-	// neNnswe("neNnswe"),
-	//
-	// neEns("neEns"),
-	// neEnw("neEnw"),
-	// neEne("neEne"),
-	// neEnsw("neEnsw"),
-	// neEnse("neEnse"),
-	// neEswe("neEswe"),
-	// neEnswe("neEnswe"),
-	//
-	// swSns("swSns"),
-	// swSnw("swSnw"),
-	// swSne("swSne"),
-	// swSnsw("swSnsw"),
-	// swSnse("swSnse"),
-	// swSswe("swSswe"),
-	// swSnswe("swSnswe"),
-	//
-	// swWns("swWns"),
-	// swWnw("swWnw"),
-	// swWne("swWne"),
-	// swWnsw("swWnsw"),
-	// swWnse("swWnse"),
-	// swWswe("swWswe"),
-	// swWnswe("swWnswe"),
-	//
-	// seSns("seSns"),
-	// seSnw("seSnw"),
-	// seSne("seSne"),
-	// seSnsw("seSnsw"),
-	// seSnse("seSnse"),
-	// seSswe("seSswe"),
-	// seSnswe("seSnswe"),
-	//
-	// seEns("seEns"),
-	// seEnw("seEnw"),
-	// seEne("seEne"),
-	// seEnsw("seEnsw"),
-	// seEnse("seEnse"),
-	// seEswe("seEswe"),
-	// seEnswe("seEnswe"),
-	//
-	// nseNns("nseNns"),
-	//
-	// nseSns("nseSns"),
-	//
-	// nseEns("nseEns"),
-	//
-	// nsweNns("nsweNns"),
-	//
-	// nsNnsSns("nsNnsSns"),
-	// weEnsEns("weEnsEns"),
-	// neNnsEns("neNnsEns"),
-	// nseNnsSns("nseNnsSns"),
-	// nseNnsEns("nseNnsEns"),
-	// nseSnsEns("nseSnsEns"),
-	// nsweNnsSns("nsweNnsSns"),
-	// nsweNnsEns("nsweNnsEns"),
-	//
-	// nseNnsSnsEns("nseNnsSnsEns"),
-	// nsweNnsSnsEns("nsweNnsSnsEns"),
-	//
-	// nsweNnsSnsWnsEns("nsweNnsSnsWnsEns"),
+	private final double minU;
+	private final double maxU;
+	private final double minV;
+	private final double maxV;
 
-	INVALID("invalid");
-
-	private final String name;
-
-	private EnumModel(String name) {
-		this.name = name;
+	private EnumModel(double minU, double maxU, double minV, double maxV) {
+		this.minU = minU / 10;
+		this.maxU = maxU / 10;
+		this.minV = minV / 2;
+		this.maxV = maxV / 2;
 	}
 
-	public String toString() {
-		return this.getName();
+	public double getMinU() {
+		return this.minU;
 	}
 
-	public String getName() {
-		return this.name;
+	public double getMaxU() {
+		return this.maxU;
 	}
 
-	public static StringBuffer getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
+	public double getMinV() {
+		return this.minV;
+	}
+
+	public double getMaxV() {
+		return this.maxV;
+	}
+
+	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
 		EnumMap<EnumFacing, ArrayList<EnumFacing>> faces = new EnumMap<EnumFacing, ArrayList<EnumFacing>>(EnumFacing.class);
-		EnumMap<EnumFacing, ArrayList<EnumFacing>> normalisedFaces = new EnumMap<EnumFacing, ArrayList<EnumFacing>>(EnumFacing.class);
+		EnumMap<EnumFacing, EnumModel> model = new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
 		EnumFacing pastedSide = wire.pastedSide;
 		EnumFacing pastedSide2 = wire.pastedSide2;
-		StringBuffer model = new StringBuffer();
 
 		for (EnumFacing blockSide : blockDirections) {
 			ArrayList<EnumFacing> connections = new ArrayList<EnumFacing>();
@@ -235,31 +127,20 @@ public enum EnumModel implements IStringSerializable {
 
 		for (Entry<EnumFacing, ArrayList<EnumFacing>> face : faces.entrySet()) {
 			EnumFacing currentSide = face.getKey();
-			EnumFacing normalisedSide = asdf(currentSide, pastedSide);
 
 			if (face.getValue().get(0) == null) {
 
-				if (faces.size() == 1)
+				if (faces.size() == 1) {
+					model.put(currentSide, EnumModel.NONE);
 					return model;
+				}
 
 				ArrayList<EnumFacing> value = new ArrayList<EnumFacing>();
 				value.add(EnumFacing.NORTH);
 				value.add(EnumFacing.SOUTH);
-				normalisedFaces.put(normalisedSide, value);
+				model.put(currentSide, valueOf(value));
 			} else
-				normalisedFaces.put(normalisedSide, face.getValue());
-		}
-
-		byte i = 0;
-		for (Entry<EnumFacing, ArrayList<EnumFacing>> face : normalisedFaces.entrySet()) {
-
-			if (i != 0)
-				model.append(Character.toUpperCase(face.getKey().toString().charAt(0)));
-
-			for (EnumFacing side : face.getValue())
-				model.append(side.toString().charAt(0));
-
-			++i;
+				model.put(currentSide, valueOf(face.getValue()));
 		}
 
 		return model;
@@ -388,11 +269,17 @@ public enum EnumModel implements IStringSerializable {
 		}
 	}
 
-	private static EnumModel valueOf(StringBuffer sb) {
+	private static EnumModel valueOf(ArrayList<EnumFacing> model) {
+		StringBuffer sb = new StringBuffer();
+
+		for (EnumFacing direction : model)
+			sb.append(Character.toUpperCase(direction.toString().charAt(0)));
+
 		try {
 			return valueOf(sb.toString());
 		} catch (Exception e) {
-			return INVALID;
+			System.out.println("Could not find the enum with the value of " + sb + ".");
+			return NONE;
 		}
 	}
 
