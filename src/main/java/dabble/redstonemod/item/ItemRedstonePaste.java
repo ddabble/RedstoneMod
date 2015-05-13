@@ -2,6 +2,7 @@ package dabble.redstonemod.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -37,13 +38,21 @@ public class ItemRedstonePaste extends Item {
 
 			if (!worldIn.canBlockBePlaced(currentBlock, currentPos, false, side, null, stack))
 				return false;
-			else {
+			else if (playerIn.dimension == -1) {
+
+				if (Blocks.redstone_wire.canPlaceBlockAt(worldIn, currentPos)) {
+					--stack.stackSize;
+					worldIn.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
+					return true;
+				} else
+					return false;
+			} else {
 				EnumFacing firstPasteableSide;
 
 				if ((firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(worldIn, currentPos, side)) != null) {
 					--stack.stackSize;
-					Block modBlocksBlock = ModBlocks.singleSideMap.get(firstPasteableSide.getOpposite().getIndex());
-					worldIn.setBlockState(currentPos, modBlocksBlock.getDefaultState());
+					Block redstonePasteBlock = ModBlocks.singleSideMap.get(firstPasteableSide.getOpposite().getIndex());
+					worldIn.setBlockState(currentPos, redstonePasteBlock.getDefaultState());
 					return true;
 				} else
 					return false;

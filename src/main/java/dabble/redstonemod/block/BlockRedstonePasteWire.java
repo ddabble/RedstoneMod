@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockCompressedPowered;
@@ -21,9 +23,15 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -33,8 +41,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,6 +59,8 @@ import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
+	public static final PropertyEnum PASTEDSIDE = PropertyEnum.create("pastedSide", EnumFacing.class);
+	public static final PropertyEnum PASTEDSIDE2 = PropertyEnum.create("pastedSide2", EnumFacing.class);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
 	public EnumFacing pastedSide;
@@ -58,7 +71,6 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		super(Material.circuits);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(POWER, Integer.valueOf(0)));
-		this.setBlockBounds(0, 0, 0, 1, 0.0625F, 1);
 		this.setHardness(0);
 		this.setStepSound(Block.soundTypeStone);
 		this.setUnlocalizedName(unlocalisedName);
@@ -174,30 +186,30 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return null;
 	}
 
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
-		float height = 0.0625F;
-
-		switch (this.pastedSide) {
-			case DOWN:
-				break;
-			case UP:
-				this.setBlockBounds(0, 1 - height, 0, 1, 1, 1);
-				break;
-			case NORTH:
-				this.setBlockBounds(0, 0, 0, 1, 1, height);
-				break;
-			case SOUTH:
-				this.setBlockBounds(0, 0, 1 - height, 1, 1, 1);
-				break;
-			case WEST:
-				this.setBlockBounds(0, 0, 0, height, 1, 1);
-				break;
-			case EAST:
-				this.setBlockBounds(1 - height, 0, 0, 1, 1, 1);
-				break;
-		}
-	}
+	// @Override
+	// public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
+	// float height = 1 / 16F;
+	//
+	// switch (this.pastedSide) {
+	// case DOWN:
+	// break;
+	// case UP:
+	// this.setBlockBounds(0, 1 - height, 0, 1, 1, 1);
+	// break;
+	// case NORTH:
+	// this.setBlockBounds(0, 0, 0, 1, 1, height);
+	// break;
+	// case SOUTH:
+	// this.setBlockBounds(0, 0, 1 - height, 1, 1, 1);
+	// break;
+	// case WEST:
+	// this.setBlockBounds(0, 0, 0, height, 1, 1);
+	// break;
+	// case EAST:
+	// this.setBlockBounds(1 - height, 0, 0, 1, 1, 1);
+	// break;
+	// }
+	// }
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -651,7 +663,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { /* MODEL, */POWER });
+		return new BlockState(this, new IProperty[] { POWER });
 	}
 
 	private static enum AttachState {

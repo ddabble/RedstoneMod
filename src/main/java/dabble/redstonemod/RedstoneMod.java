@@ -1,5 +1,6 @@
 package dabble.redstonemod;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -12,6 +13,7 @@ import dabble.redstonemod.init.ModBlocks;
 import dabble.redstonemod.init.ModItems;
 import dabble.redstonemod.init.ModRecipes;
 import dabble.redstonemod.proxy.CommonProxy;
+import dabble.redstonemod.renderer.EventHookContainer;
 import dabble.redstonemod.renderer.RedstonePasteRenderer;
 import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 
@@ -48,6 +50,7 @@ public class RedstoneMod {
 
 		GameRegistry.registerTileEntity(TileEntityRedstonePaste.class, "tileEntityRedstonePaste");
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRedstonePaste.class, new RedstonePasteRenderer());
+		MinecraftForge.EVENT_BUS.register(new EventHookContainer());
 	}
 
 	@EventHandler
