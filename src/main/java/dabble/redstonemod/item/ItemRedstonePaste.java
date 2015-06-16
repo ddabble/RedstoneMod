@@ -40,7 +40,7 @@ public class ItemRedstonePaste extends Item {
 				return false;
 			else if (playerIn.dimension == -1) {
 
-				if (Blocks.redstone_wire.canPlaceBlockAt(worldIn, currentPos)) {
+				if (BlockRedstonePasteWire.getFirstPasteableSide(worldIn, currentPos, side) != null) {
 					--stack.stackSize;
 					worldIn.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
 					return true;

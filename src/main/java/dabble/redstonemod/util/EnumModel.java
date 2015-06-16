@@ -3,6 +3,7 @@ package dabble.redstonemod.util;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
@@ -54,13 +55,13 @@ public enum EnumModel {
 	}
 
 	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
-		EnumMap<EnumFacing, ArrayList<EnumFacing>> faces = new EnumMap<EnumFacing, ArrayList<EnumFacing>>(EnumFacing.class);
+		EnumMap<EnumFacing, EnumSet<EnumFacing>> faces = new EnumMap<EnumFacing, EnumSet<EnumFacing>>(EnumFacing.class);
 		EnumMap<EnumFacing, EnumModel> model = new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
 		EnumFacing pastedSide = wire.pastedSide;
 		EnumFacing pastedSide2 = wire.pastedSide2;
 
 		for (EnumFacing blockSide : blockDirections) {
-			ArrayList<EnumFacing> connections = new ArrayList<EnumFacing>();
+			EnumSet<EnumFacing> connections = EnumSet.noneOf(EnumFacing.class);
 
 			for (EnumFacing side : connectionDirections) {
 
@@ -93,51 +94,32 @@ public enum EnumModel {
 
 			if (connections.size() == 0) {
 
-				if (blockSide == pastedSide || blockSide == pastedSide2) {
-					connections.add(null);
+				if (blockSide == pastedSide || blockSide == pastedSide2)
 					faces.put(blockSide, connections);
-				}
 
 				continue;
-			} else
-				normaliseAndSort(connections, blockSide);
+			} /*
+			 * else
+			 * normaliseAndSort(connections, blockSide);
+			 */
 
-			if (connections.size() == 1) {
-
-				switch (connections.get(0)) {
-					case NORTH:
-						connections.add(EnumFacing.SOUTH);
-						break;
-					case SOUTH:
-						connections.add(0, EnumFacing.NORTH);
-						break;
-					case WEST:
-						connections.add(EnumFacing.EAST);
-						break;
-					case EAST:
-						connections.add(0, EnumFacing.WEST);
-						break;
-					default:
-						break;
-				}
-			}
+			if (connections.size() == 1)
+				connections.add(connections.iterator().next().getOpposite());
 
 			faces.put(blockSide, connections);
 		}
 
-		for (Entry<EnumFacing, ArrayList<EnumFacing>> face : faces.entrySet()) {
+		for (Entry<EnumFacing, EnumSet<EnumFacing>> face : faces.entrySet()) {
 			EnumFacing currentSide = face.getKey();
 
-			if (face.getValue().get(0) == null) {
+			if (face.getValue().size() == 0) {
 
 				if (faces.size() == 1) {
 					model.put(currentSide, EnumModel.NONE);
 					return model;
 				}
 
-				ArrayList<EnumFacing> value = new ArrayList<EnumFacing>();
-				value.add(EnumFacing.NORTH);
-				value.add(EnumFacing.SOUTH);
+				EnumSet<EnumFacing> value = EnumSet.of(EnumFacing.NORTH, EnumFacing.SOUTH);
 				model.put(currentSide, valueOf(value));
 			} else
 				model.put(currentSide, valueOf(face.getValue()));
@@ -149,7 +131,7 @@ public enum EnumModel {
 	private static void normaliseAndSort(ArrayList<EnumFacing> connectionSides, EnumFacing pastedSide) {
 
 		// TODO Remove this when finished (?)
-		if (connectionSides.size() > 0 && pastedSide != EnumFacing.DOWN) {
+		if (connectionSides.size() > 0 && pastedSide != EnumFacing.DOWN)
 
 			for (byte i = 0; i < connectionSides.size(); ++i) {
 				EnumFacing currentSide = connectionSides.get(i);
@@ -159,13 +141,12 @@ public enum EnumModel {
 					connectionSides.set(i, normalisedSide);
 			}
 
-			connectionSides.sort(new Comparator<EnumFacing>() {
-				@Override
-				public int compare(EnumFacing side1, EnumFacing side2) {
-					return (int) Math.signum(side1.getIndex() - side2.getIndex());
-				}
-			});
-		}
+		connectionSides.sort(new Comparator<EnumFacing>() {
+			@Override
+			public int compare(EnumFacing side1, EnumFacing side2) {
+				return (int) Math.signum(side1.getIndex() - side2.getIndex());
+			}
+		});
 	}
 
 	private static EnumFacing getNormalisedSide(EnumFacing currentSide, EnumFacing pastedSide) {
@@ -234,6 +215,28 @@ public enum EnumModel {
 		return currentSide;
 	}
 
+	public static EnumFacing rotateCCWAround(EnumFacing side, EnumFacing.Axis axis) {
+		switch (SwitchPlane.AXIS_LOOKUP[axis.ordinal()]) {
+			case 1:
+				if (side != EnumFacing.WEST && side != EnumFacing.EAST)
+					return rotateXCCW(side);
+
+				return side;
+			case 2:
+				if (side != EnumFacing.UP && side != EnumFacing.DOWN)
+					return side.rotateYCCW();
+
+				return side;
+			case 3:
+				if (side != EnumFacing.NORTH && side != EnumFacing.SOUTH)
+					return rotateZCCW(side);
+
+				return side;
+			default:
+				throw new IllegalStateException("Unable to get CW facing for axis " + axis);
+		}
+	}
+
 	private static EnumFacing rotateXCCW(EnumFacing side) {
 
 		switch (SwitchPlane.FACING_LOOKUP[side.ordinal()]) {
@@ -269,7 +272,11 @@ public enum EnumModel {
 		}
 	}
 
-	private static EnumModel valueOf(ArrayList<EnumFacing> model) {
+	private static EnumModel valueOf(EnumSet<EnumFacing> model) {
+
+		if (model.size() == 4)
+			return NSWE;
+
 		StringBuffer sb = new StringBuffer();
 
 		for (EnumFacing direction : model)
@@ -284,6 +291,7 @@ public enum EnumModel {
 	}
 
 	static final class SwitchPlane {
+		static final int[] AXIS_LOOKUP;
 		static final int[] FACING_LOOKUP;
 
 		static {
@@ -322,6 +330,26 @@ public enum EnumModel {
 			try {
 				FACING_LOOKUP[EnumFacing.DOWN.ordinal()] = 6;
 			} catch (NoSuchFieldError var4) {
+				;
+			}
+
+			AXIS_LOOKUP = new int[EnumFacing.Axis.values().length];
+
+			try {
+				AXIS_LOOKUP[EnumFacing.Axis.X.ordinal()] = 1;
+			} catch (NoSuchFieldError var3) {
+				;
+			}
+
+			try {
+				AXIS_LOOKUP[EnumFacing.Axis.Y.ordinal()] = 2;
+			} catch (NoSuchFieldError var2) {
+				;
+			}
+
+			try {
+				AXIS_LOOKUP[EnumFacing.Axis.Z.ordinal()] = 3;
+			} catch (NoSuchFieldError var1) {
 				;
 			}
 		}

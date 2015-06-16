@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockCompressedPowered;
@@ -27,11 +25,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -41,11 +34,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -58,7 +48,9 @@ import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
+	public static boolean rayTraceable = true;
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
+	// TODO Implement these for added debug information
 	public static final PropertyEnum PASTEDSIDE = PropertyEnum.create("pastedSide", EnumFacing.class);
 	public static final PropertyEnum PASTEDSIDE2 = PropertyEnum.create("pastedSide2", EnumFacing.class);
 	private boolean canProvidePower = true;
@@ -186,30 +178,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return null;
 	}
 
-	// @Override
-	// public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
-	// float height = 1 / 16F;
-	//
-	// switch (this.pastedSide) {
-	// case DOWN:
-	// break;
-	// case UP:
-	// this.setBlockBounds(0, 1 - height, 0, 1, 1, 1);
-	// break;
-	// case NORTH:
-	// this.setBlockBounds(0, 0, 0, 1, 1, height);
-	// break;
-	// case SOUTH:
-	// this.setBlockBounds(0, 0, 1 - height, 1, 1, 1);
-	// break;
-	// case WEST:
-	// this.setBlockBounds(0, 0, 0, height, 1, 1);
-	// break;
-	// case EAST:
-	// this.setBlockBounds(1 - height, 0, 0, 1, 1, 1);
-	// break;
-	// }
-	// }
+	@Override
+	public int getRenderType() {
+		return 2;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -592,6 +564,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return !this.canProvidePower;
 	}
 
+	// TODO: Look into this when fixing the breaking particles; it affects their colour
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
@@ -601,24 +574,24 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	@SideOnly(Side.CLIENT)
 	private int colorMultiplier(int powerLevel) {
-		float f = (float) powerLevel / 15.0F;
-		float f1 = f * 0.6F + 0.4F;
+		float f = (float) powerLevel / 15f;
+		float f1 = f * 0.6f + 0.4f;
 
 		if (powerLevel == 0)
-			f1 = 0.3F;
+			f1 = 0.3f;
 
-		float f2 = f * f * 0.7F - 0.5F;
-		float f3 = f * f * 0.6F - 0.7F;
+		float f2 = f * f * 0.7f - 0.5f;
+		float f3 = f * f * 0.6f - 0.7f;
 
-		if (f2 < 0.0F)
-			f2 = 0.0F;
+		if (f2 < 0)
+			f2 = 0;
 
-		if (f3 < 0.0F)
-			f3 = 0.0F;
+		if (f3 < 0)
+			f3 = 0;
 
-		int j = MathHelper.clamp_int((int) (f1 * 255.0F), 0, 255);
-		int k = MathHelper.clamp_int((int) (f2 * 255.0F), 0, 255);
-		int l = MathHelper.clamp_int((int) (f3 * 255.0F), 0, 255);
+		int j = MathHelper.clamp_int((int) (f1 * 255), 0, 255);
+		int k = MathHelper.clamp_int((int) (f2 * 255), 0, 255);
+		int l = MathHelper.clamp_int((int) (f3 * 255), 0, 255);
 		return -16777216 | j << 16 | k << 8 | l;
 	}
 
@@ -628,14 +601,14 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		int i = ((Integer) state.getValue(POWER)).intValue();
 
 		if (i != 0) {
-			double d0 = (double) pos.getX() + 0.5D + ((double) rand.nextFloat() - 0.5D) * 0.2D;
-			double d1 = (double) ((float) pos.getY() + 0.0625F);
-			double d2 = (double) pos.getZ() + 0.5D + ((double) rand.nextFloat() - 0.5D) * 0.2D;
-			float f = (float) i / 15.0F;
-			float f1 = f * 0.6F + 0.4F;
-			float f2 = Math.max(0.0F, f * f * 0.7F - 0.5F);
-			float f3 = Math.max(0.0F, f * f * 0.6F - 0.7F);
-			worldIn.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, (double) f1, (double) f2, (double) f3, new int[0]);
+			double d0 = pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
+			double d1 = pos.getY() + 1 / 16.0;
+			double d2 = pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
+			float f = i / 15f;
+			float f1 = f * 0.6f + 0.4f;
+			float f2 = Math.max(0, f * f * 0.7f - 0.5f);
+			float f3 = Math.max(0, f * f * 0.6f - 0.7f);
+			worldIn.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, f1, f2, f3, new int[0]);
 		}
 	}
 
