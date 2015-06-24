@@ -70,7 +70,7 @@ public enum EnumModel {
 
 				Block block = worldIn.getBlockState(pos.offset(side)).getBlock();
 
-				// TODO Move this to checkBlockInDirection in BlockRedstonePasteWire
+				// TODO: Move this to checkBlockInDirection() in BlockRedstonePasteWire
 				if (block instanceof BlockRedstonePasteWire && (((BlockRedstonePasteWire) block).pastedSide == blockSide || ((BlockRedstonePasteWire) block).pastedSide2 == blockSide))
 					connections.add(side);
 				else if (blockSide == pastedSide || blockSide == pastedSide2)
@@ -130,7 +130,7 @@ public enum EnumModel {
 
 	private static void normaliseAndSort(ArrayList<EnumFacing> connectionSides, EnumFacing pastedSide) {
 
-		// TODO Remove this when finished (?)
+		// TODO: Remove this when finished (?)
 		if (connectionSides.size() > 0 && pastedSide != EnumFacing.DOWN)
 
 			for (byte i = 0; i < connectionSides.size(); ++i) {

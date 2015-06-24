@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -34,6 +35,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,9 +51,8 @@ import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
-	public static boolean rayTraceable = true;
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
-	// TODO Implement these for added debug information
+	// TODO: Implement these for added debug information
 	public static final PropertyEnum PASTEDSIDE = PropertyEnum.create("pastedSide", EnumFacing.class);
 	public static final PropertyEnum PASTEDSIDE2 = PropertyEnum.create("pastedSide2", EnumFacing.class);
 	private boolean canProvidePower = true;
@@ -124,7 +126,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 		if (state != AttachState.NONE)
 
-			// TODO Separate these
+			// TODO: Separate these
 			if (state == AttachState.CONNECT || state == AttachState.PASTE)
 				connectionDirections.add(side);
 			else
@@ -171,6 +173,144 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			return AttachState.CONNECT;
 
 		return AttachState.NONE;
+	}
+
+	@Override
+	public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end) {
+		start = start.subtract(pos.getX(), pos.getY(), pos.getZ());
+		end = end.subtract(pos.getX(), pos.getY(), pos.getZ());
+		EnumMap<EnumFacing, EnumModel> model = getModel(worldIn, pos);
+
+		EnumMap<EnumFacing, Vec3> hitVecs = new EnumMap<EnumFacing, Vec3>(EnumFacing.class);
+
+		Vec3 hitVecDown = (model.containsKey(EnumFacing.DOWN)) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 1 / 16.0), model) : null;
+		if (hitVecDown != null)
+			hitVecs.put(EnumFacing.DOWN, hitVecDown);
+
+		Vec3 hitVecUp = (model.containsKey(EnumFacing.UP)) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 15 / 16.0), model) : null;
+		if (hitVecUp != null)
+			hitVecs.put(EnumFacing.UP, hitVecUp);
+
+		Vec3 hitVecNorth = (model.containsKey(EnumFacing.NORTH)) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 1 / 16.0), model) : null;
+		if (hitVecNorth != null)
+			hitVecs.put(EnumFacing.NORTH, hitVecNorth);
+
+		Vec3 hitVecSouth = (model.containsKey(EnumFacing.SOUTH)) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 15 / 16.0), model) : null;
+		if (hitVecSouth != null)
+			hitVecs.put(EnumFacing.SOUTH, hitVecSouth);
+
+		Vec3 hitVecWest = (model.containsKey(EnumFacing.WEST)) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 1 / 16.0), model) : null;
+		if (hitVecWest != null)
+			hitVecs.put(EnumFacing.WEST, hitVecWest);
+
+		Vec3 hitVecEast = (model.containsKey(EnumFacing.EAST)) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 15 / 16.0), model) : null;
+		if (hitVecEast != null)
+			hitVecs.put(EnumFacing.EAST, hitVecEast);
+
+		Vec3 hitVec = null;
+		EnumFacing facing = null;
+
+		if (hitVecs.size() == 0)
+			return getNearestFaceEdgeMOP(worldIn, pos, start.addVector(pos.getX(), pos.getY(), pos.getZ()), end.addVector(pos.getX(), pos.getY(), pos.getZ()), model);
+		else if (hitVecs.size() == 1) {
+			Entry<EnumFacing, Vec3> vec = hitVecs.entrySet().iterator().next();
+			hitVec = vec.getValue();
+			facing = vec.getKey();
+		} else
+			for (Entry<EnumFacing, Vec3> vec : hitVecs.entrySet())
+
+				if (hitVec == null) {
+					hitVec = vec.getValue();
+					facing = vec.getKey();
+				} else if (start.squareDistanceTo(vec.getValue()) < start.squareDistanceTo(hitVec)) {
+					hitVec = vec.getValue();
+					facing = vec.getKey();
+				}
+
+		if (hitVec == null)
+			return null;
+
+		return new MovingObjectPosition(hitVec.addVector(pos.getX(), pos.getY(), pos.getZ()), facing, pos);
+	}
+
+	/**
+	 * Returns the provided vector if it is within the X and Z bounds of the block and if it's not being covered by another rendered face, or null if that's not the case.
+	 */
+	private Vec3 getVecInsideXZBounds(Vec3 point, EnumMap<EnumFacing, EnumModel> model) {
+
+		if (point == null || point.xCoord < 0 || point.xCoord > 1 || point.zCoord < 0 || point.zCoord > 1)
+			return null;
+
+		return (!(point.xCoord <= 1 / 16.0 && model.containsKey(EnumFacing.WEST)) && !(point.xCoord >= 15 / 16.0 && model.containsKey(EnumFacing.EAST))
+				&& !(point.zCoord <= 1 / 16.0 && model.containsKey(EnumFacing.NORTH)) && !(point.zCoord >= 15 / 16.0 && model.containsKey(EnumFacing.SOUTH))) ? point : null;
+	}
+
+	/**
+	 * Returns the provided vector if it is within the X and Y bounds of the block and if it's not being covered by another rendered face, or null if that's not the case.
+	 */
+	private Vec3 getVecInsideXYBounds(Vec3 point, EnumMap<EnumFacing, EnumModel> model) {
+
+		if (point == null || point.xCoord < 0 || point.xCoord > 1 || point.yCoord < 0 || point.yCoord > 1)
+			return null;
+
+		return (!(point.xCoord <= 1 / 16.0 && model.containsKey(EnumFacing.WEST)) && !(point.xCoord >= 15 / 16.0 && model.containsKey(EnumFacing.EAST))
+				&& !(point.yCoord <= 1 / 16.0 && model.containsKey(EnumFacing.DOWN)) && !(point.yCoord >= 15 / 16.0 && model.containsKey(EnumFacing.UP))) ? point : null;
+	}
+
+	/**
+	 * Returns the provided vector if it is within the Y and Z bounds of the block and if it's not being covered by another rendered face, or null if that's not the case.
+	 */
+	private Vec3 getVecInsideYZBounds(Vec3 point, EnumMap<EnumFacing, EnumModel> model) {
+
+		if (point == null || point.yCoord < 0 || point.yCoord > 1 || point.zCoord < 0 || point.zCoord > 1)
+			return null;
+
+		return (!(point.yCoord <= 1 / 16.0 && model.containsKey(EnumFacing.DOWN)) && !(point.yCoord >= 15 / 16.0 && model.containsKey(EnumFacing.UP))
+				&& !(point.zCoord <= 1 / 16.0 && model.containsKey(EnumFacing.NORTH)) && !(point.zCoord >= 15 / 16.0 && model.containsKey(EnumFacing.SOUTH))) ? point : null;
+	}
+
+	private MovingObjectPosition getNearestFaceEdgeMOP(World worldIn, BlockPos pos, Vec3 start, Vec3 end, EnumMap<EnumFacing, EnumModel> model) {
+		MovingObjectPosition nearestMOP = super.collisionRayTrace(worldIn, pos, start, end);
+		Vec3 hitVec = nearestMOP.hitVec.subtract(pos.getX(), pos.getY(), pos.getZ());
+		EnumFacing facing = null;
+
+		switch (nearestMOP.sideHit.getAxis()) {
+			case X:
+				if (hitVec.yCoord <= 1 / 16.0)
+					facing = EnumFacing.DOWN;
+				else if (hitVec.yCoord >= 15 / 16.0)
+					facing = EnumFacing.UP;
+				else if (hitVec.zCoord <= 1 / 16.0)
+					facing = EnumFacing.NORTH;
+				else if (hitVec.zCoord >= 15 / 16.0)
+					facing = EnumFacing.SOUTH;
+				break;
+			case Y:
+				if (hitVec.xCoord <= 1 / 16.0)
+					facing = EnumFacing.WEST;
+				else if (hitVec.xCoord >= 15 / 16.0)
+					facing = EnumFacing.EAST;
+				else if (hitVec.zCoord <= 1 / 16.0)
+					facing = EnumFacing.NORTH;
+				else if (hitVec.zCoord >= 15 / 16.0)
+					facing = EnumFacing.SOUTH;
+				break;
+			case Z:
+				if (hitVec.xCoord <= 1 / 16.0)
+					facing = EnumFacing.WEST;
+				else if (hitVec.xCoord >= 15 / 16.0)
+					facing = EnumFacing.EAST;
+				else if (hitVec.yCoord <= 1 / 16.0)
+					facing = EnumFacing.DOWN;
+				else if (hitVec.yCoord >= 15 / 16.0)
+					facing = EnumFacing.UP;
+				break;
+		}
+
+		if (model.containsKey(facing))
+			return new MovingObjectPosition(nearestMOP.hitVec, facing, pos);
+		else
+			return null;
 	}
 
 	@Override
