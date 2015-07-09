@@ -29,15 +29,14 @@ public class EventHookContainer {
 
 		if (event.type == net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.DEBUG) {
 			Minecraft mc = Minecraft.getMinecraft();
-			if (mc.objectMouseOver.typeOfHit != MovingObjectType.BLOCK)
-				return;
-
-			Block block = mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
-			if (block instanceof BlockRedstonePasteWire) {
-				ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-				String text = ((BlockRedstonePasteWire) block).getDebugInfo();
-				int x = res.getScaledWidth() - mc.fontRendererObj.getStringWidth(text) - 2;
-				mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
+			if (mc.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
+				Block block = mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
+				if (block instanceof BlockRedstonePasteWire) {
+					ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+					String text = ((BlockRedstonePasteWire) block).getDebugInfo();
+					int x = res.getScaledWidth() - mc.fontRendererObj.getStringWidth(text) - 2;
+					mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
+				}
 			}
 		}
 	}

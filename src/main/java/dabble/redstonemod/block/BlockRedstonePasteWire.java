@@ -272,6 +272,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	private MovingObjectPosition getNearestFaceEdgeMOP(World worldIn, BlockPos pos, Vec3 start, Vec3 end, EnumMap<EnumFacing, EnumModel> model) {
 		MovingObjectPosition nearestMOP = super.collisionRayTrace(worldIn, pos, start, end);
+		if (nearestMOP == null)
+			return null;
+
 		Vec3 hitVec = nearestMOP.hitVec.subtract(pos.getX(), pos.getY(), pos.getZ());
 		Axis sideHitAxis = nearestMOP.sideHit.getAxis();
 
@@ -469,77 +472,79 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	}
 
 	private IBlockState updateSurroundingRedstone(World worldIn, BlockPos pos, IBlockState state) {
-		state = this.calculateCurrentChanges(worldIn, pos, pos, state);
-		ArrayList<BlockPos> arraylist = Lists.newArrayList(this.blocksNeedingUpdate);
+		state = this.calculateCurrentChanges(worldIn, pos, state);
+		ArrayList<BlockPos> blocksNeedingUpdate = Lists.newArrayList(this.blocksNeedingUpdate);
 		this.blocksNeedingUpdate.clear();
-		Iterator<BlockPos> iterator = arraylist.iterator();
 
-		while (iterator.hasNext()) {
-			BlockPos blockpos1 = (BlockPos) iterator.next();
-			worldIn.notifyNeighborsOfStateChange(blockpos1, this);
+		for (BlockPos neighborBlockPos : blocksNeedingUpdate)
+			worldIn.notifyNeighborsOfStateChange(neighborBlockPos, this);
+
+		return state;
+	}
+
+	private IBlockState calculateCurrentChanges(World worldIn, BlockPos pos, IBlockState state) {
+		IBlockState stateIn = state;
+		int signalStrength = ((Integer) state.getValue(POWER)).intValue();
+		int newSignalStrength = signalStrength;
+		this.canProvidePower = false;
+		int indirectSignalStrength = worldIn.isBlockIndirectlyGettingPowered(pos);
+		this.canProvidePower = true;
+
+		if (indirectSignalStrength > 0 && indirectSignalStrength > newSignalStrength - 1)
+			newSignalStrength = indirectSignalStrength;
+
+		int k = 0;
+
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			BlockPos neighborBlockPos = pos.offset(facing);
+			boolean yOffset = facing.getAxis() == Axis.Y;
+
+			if (!yOffset)
+				k = this.getMaxSignalStrength(worldIn.getBlockState(neighborBlockPos), k);
+
+			if (worldIn.getBlockState(neighborBlockPos).getBlock().isNormalCube() && !worldIn.getBlockState(pos.up()).getBlock().isNormalCube()) {
+
+				if (!yOffset)
+					k = this.getMaxSignalStrength(worldIn.getBlockState(neighborBlockPos.up()), k);
+			} else if (!worldIn.getBlockState(neighborBlockPos).getBlock().isNormalCube() && !yOffset)
+				k = this.getMaxSignalStrength(worldIn.getBlockState(neighborBlockPos.down()), k);
+		}
+
+		if (k > newSignalStrength)
+			newSignalStrength = k - 1;
+		else if (newSignalStrength > 0)
+			--newSignalStrength;
+		else
+			newSignalStrength = 0;
+
+		if (indirectSignalStrength > newSignalStrength - 1)
+			newSignalStrength = indirectSignalStrength;
+
+		if (signalStrength != newSignalStrength) {
+			state = state.withProperty(POWER, Integer.valueOf(newSignalStrength));
+
+			if (worldIn.getBlockState(pos) == stateIn)
+				worldIn.setBlockState(pos, state, 2);
+
+			this.blocksNeedingUpdate.add(pos);
+
+			for (byte i = 0; i < EnumFacing.VALUES.length; ++i) {
+				EnumFacing direction = EnumFacing.VALUES[i];
+				this.blocksNeedingUpdate.add(pos.offset(direction));
+			}
 		}
 
 		return state;
 	}
 
-	private IBlockState calculateCurrentChanges(World worldIn, BlockPos pos1, BlockPos pos2, IBlockState state) {
-		IBlockState iblockstate1 = state;
-		int currentPowerLevel = ((Integer) state.getValue(POWER)).intValue();
-		byte strength = 0;
-		int newPowerLevel = this.getMaxCurrentStrength(worldIn, pos2, strength);
-		this.canProvidePower = false;
-		int indirectPowerLevel = worldIn.isBlockIndirectlyGettingPowered(pos1);
-		this.canProvidePower = true;
+	private int getMaxSignalStrength(IBlockState state, int strengthIn) {
 
-		if (indirectPowerLevel > 0 && indirectPowerLevel > newPowerLevel - 1)
-			newPowerLevel = indirectPowerLevel;
-
-		int k = 0;
-		Iterator<?> iterator = EnumFacing.Plane.HORIZONTAL.iterator();
-
-		while (iterator.hasNext()) {
-			EnumFacing enumfacing = (EnumFacing) iterator.next();
-			BlockPos blockpos2 = pos1.offset(enumfacing);
-			boolean flag = blockpos2.getX() != pos2.getX() || blockpos2.getZ() != pos2.getZ();
-
-			if (flag)
-				k = this.getMaxCurrentStrength(worldIn, blockpos2, k);
-
-			if (worldIn.getBlockState(blockpos2).getBlock().isNormalCube() && !worldIn.getBlockState(pos1.up()).getBlock().isNormalCube()) {
-
-				if (flag && pos1.getY() >= pos2.getY())
-					k = this.getMaxCurrentStrength(worldIn, blockpos2.up(), k);
-			} else if (!worldIn.getBlockState(blockpos2).getBlock().isNormalCube() && flag && pos1.getY() <= pos2.getY())
-				k = this.getMaxCurrentStrength(worldIn, blockpos2.down(), k);
+		if (state.getBlock() != this)
+			return strengthIn;
+		else {
+			int signalStrength = ((Integer) state.getValue(POWER)).intValue();
+			return Math.max(signalStrength, strengthIn);
 		}
-
-		if (k > newPowerLevel)
-			newPowerLevel = k - 1;
-		else if (newPowerLevel > 0)
-			--newPowerLevel;
-		else
-			newPowerLevel = 0;
-
-		if (indirectPowerLevel > newPowerLevel - 1)
-			newPowerLevel = indirectPowerLevel;
-
-		if (currentPowerLevel != newPowerLevel) {
-			state = state.withProperty(POWER, Integer.valueOf(newPowerLevel));
-
-			if (worldIn.getBlockState(pos1) == iblockstate1)
-				worldIn.setBlockState(pos1, state, 2);
-
-			this.blocksNeedingUpdate.add(pos1);
-			EnumFacing[] aenumfacing = EnumFacing.values();
-			int i1 = aenumfacing.length;
-
-			for (byte i = 0; i < i1; ++i) {
-				EnumFacing enumfacing1 = aenumfacing[i];
-				this.blocksNeedingUpdate.add(pos1.offset(enumfacing1));
-			}
-		}
-
-		return state;
 	}
 
 	private void notifyWireNeighborsOfStateChange(World worldIn, BlockPos pos) {
@@ -623,16 +628,6 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				else
 					this.notifyWireNeighborsOfStateChange(worldIn, blockpos1.down());
 			}
-		}
-	}
-
-	private int getMaxCurrentStrength(World worldIn, BlockPos pos, int strength) {
-
-		if (worldIn.getBlockState(pos).getBlock() != this)
-			return strength;
-		else {
-			int j = ((Integer) worldIn.getBlockState(pos).getValue(POWER)).intValue();
-			return j > strength ? j : strength;
 		}
 	}
 
