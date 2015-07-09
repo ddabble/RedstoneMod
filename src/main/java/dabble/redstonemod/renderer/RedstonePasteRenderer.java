@@ -52,7 +52,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		worldRenderer.setColorRGBA(red, green, blue, 255);
 
 		for (Entry<EnumFacing, EnumModel> face : model.entrySet())
-			drawFace(worldRenderer, face);
+			drawFace(worldRenderer, face.getKey(), face.getValue());
 
 		tessellator.draw();
 
@@ -82,14 +82,13 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		return -16777216 | j << 16 | k << 8 | l;
 	}
 
-	private void drawFace(WorldRenderer worldRenderer, Entry<EnumFacing, EnumModel> face) {
-		EnumModel model = face.getValue();
+	private void drawFace(WorldRenderer worldRenderer, EnumFacing face, EnumModel model) {
 		double minU = model.getMinU();
 		double maxU = model.getMaxU();
 		double minV = model.getMinV();
 		double maxV = model.getMaxV();
 
-		switch (face.getKey()) {
+		switch (face) {
 			case DOWN:
 				worldRenderer.setNormal(0, 1, 0);
 				worldRenderer.addVertexWithUV(0, 0.25 / 16, 0, minU, minV);

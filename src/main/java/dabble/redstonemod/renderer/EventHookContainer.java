@@ -1,6 +1,8 @@
 package dabble.redstonemod.renderer;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -8,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,15 +25,31 @@ public class EventHookContainer {
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
+	public void renderDebugText(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
+
+		if (event.type == net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.DEBUG) {
+			Minecraft mc = Minecraft.getMinecraft();
+			if (mc.objectMouseOver.typeOfHit != MovingObjectType.BLOCK)
+				return;
+
+			Block block = mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
+			if (block instanceof BlockRedstonePasteWire) {
+				ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+				String text = ((BlockRedstonePasteWire) block).getDebugInfo();
+				int x = res.getScaledWidth() - mc.fontRendererObj.getStringWidth(text) - 2;
+				mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
+			}
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
 	public void boundingBoxHandler(DrawBlockHighlightEvent event) {
-		EntityPlayer player = event.player;
-		if (player == null)
-			return;
-
 		MovingObjectPosition target = event.target;
-		if (target == null)
+		if (target.typeOfHit != MovingObjectType.BLOCK)
 			return;
 
+		EntityPlayer player = event.player;
 		World worldIn = player.worldObj;
 		BlockPos pos = target.getBlockPos();
 		Block block = worldIn.getBlockState(pos).getBlock();

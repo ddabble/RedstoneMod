@@ -22,7 +22,6 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +31,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
@@ -52,9 +52,6 @@ import dabble.redstonemod.util.EnumModel;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
-	// TODO: Implement these for added debug information
-	public static final PropertyEnum PASTEDSIDE = PropertyEnum.create("pastedSide", EnumFacing.class);
-	public static final PropertyEnum PASTEDSIDE2 = PropertyEnum.create("pastedSide2", EnumFacing.class);
 	private boolean canProvidePower = true;
 	private final Set<BlockPos> blocksNeedingUpdate = Sets.newHashSet();
 	public EnumFacing pastedSide;
@@ -181,6 +178,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		end = end.subtract(pos.getX(), pos.getY(), pos.getZ());
 		EnumMap<EnumFacing, EnumModel> model = getModel(worldIn, pos);
 
+		MovingObjectPosition nearestFaceEdgeMOP = getNearestFaceEdgeMOP(worldIn, pos, start.addVector(pos.getX(), pos.getY(), pos.getZ()), end.addVector(pos.getX(), pos.getY(), pos.getZ()), model);
+		if (nearestFaceEdgeMOP != null)
+			return nearestFaceEdgeMOP;
+
 		EnumMap<EnumFacing, Vec3> hitVecs = new EnumMap<EnumFacing, Vec3>(EnumFacing.class);
 
 		Vec3 hitVecDown = (model.containsKey(EnumFacing.DOWN)) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 1 / 16.0), model) : null;
@@ -211,7 +212,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		EnumFacing facing = null;
 
 		if (hitVecs.size() == 0)
-			return getNearestFaceEdgeMOP(worldIn, pos, start.addVector(pos.getX(), pos.getY(), pos.getZ()), end.addVector(pos.getX(), pos.getY(), pos.getZ()), model);
+			return null;
 		else if (hitVecs.size() == 1) {
 			Entry<EnumFacing, Vec3> vec = hitVecs.entrySet().iterator().next();
 			hitVec = vec.getValue();
@@ -272,45 +273,79 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	private MovingObjectPosition getNearestFaceEdgeMOP(World worldIn, BlockPos pos, Vec3 start, Vec3 end, EnumMap<EnumFacing, EnumModel> model) {
 		MovingObjectPosition nearestMOP = super.collisionRayTrace(worldIn, pos, start, end);
 		Vec3 hitVec = nearestMOP.hitVec.subtract(pos.getX(), pos.getY(), pos.getZ());
-		EnumFacing facing = null;
+		Axis sideHitAxis = nearestMOP.sideHit.getAxis();
 
-		switch (nearestMOP.sideHit.getAxis()) {
-			case X:
-				if (hitVec.yCoord <= 1 / 16.0)
-					facing = EnumFacing.DOWN;
-				else if (hitVec.yCoord >= 15 / 16.0)
-					facing = EnumFacing.UP;
-				else if (hitVec.zCoord <= 1 / 16.0)
-					facing = EnumFacing.NORTH;
-				else if (hitVec.zCoord >= 15 / 16.0)
-					facing = EnumFacing.SOUTH;
-				break;
-			case Y:
-				if (hitVec.xCoord <= 1 / 16.0)
-					facing = EnumFacing.WEST;
-				else if (hitVec.xCoord >= 15 / 16.0)
-					facing = EnumFacing.EAST;
-				else if (hitVec.zCoord <= 1 / 16.0)
-					facing = EnumFacing.NORTH;
-				else if (hitVec.zCoord >= 15 / 16.0)
-					facing = EnumFacing.SOUTH;
-				break;
-			case Z:
-				if (hitVec.xCoord <= 1 / 16.0)
-					facing = EnumFacing.WEST;
-				else if (hitVec.xCoord >= 15 / 16.0)
-					facing = EnumFacing.EAST;
-				else if (hitVec.yCoord <= 1 / 16.0)
-					facing = EnumFacing.DOWN;
-				else if (hitVec.yCoord >= 15 / 16.0)
-					facing = EnumFacing.UP;
-				break;
+		EnumFacing facing = null;
+		byte facesHit = 0;
+
+		if (sideHitAxis != Axis.X && hitVec.xCoord <= 1 / 16.0 && model.containsKey(EnumFacing.WEST)) {
+			facing = EnumFacing.WEST;
+			++facesHit;
 		}
 
-		if (model.containsKey(facing))
-			return new MovingObjectPosition(nearestMOP.hitVec, facing, pos);
-		else
+		if (sideHitAxis != Axis.X && hitVec.xCoord >= 15 / 16.0 && model.containsKey(EnumFacing.EAST)) {
+			facing = EnumFacing.EAST;
+			++facesHit;
+		}
+
+		if (sideHitAxis != Axis.Y && hitVec.yCoord <= 1 / 16.0 && model.containsKey(EnumFacing.DOWN)) {
+			facing = EnumFacing.DOWN;
+			++facesHit;
+		}
+
+		if (sideHitAxis != Axis.Y && hitVec.yCoord >= 15 / 16.0 && model.containsKey(EnumFacing.UP)) {
+			facing = EnumFacing.UP;
+			++facesHit;
+		}
+
+		if (sideHitAxis != Axis.Z && hitVec.zCoord <= 1 / 16.0 && model.containsKey(EnumFacing.NORTH)) {
+			facing = EnumFacing.NORTH;
+			++facesHit;
+		}
+
+		if (sideHitAxis != Axis.Z && hitVec.zCoord >= 15 / 16.0 && model.containsKey(EnumFacing.SOUTH)) {
+			facing = EnumFacing.SOUTH;
+			++facesHit;
+		}
+
+		if (facesHit == 0)
 			return null;
+
+		if (facesHit > 1)
+			switch (sideHitAxis) {
+				case X:
+					if (hitVec.yCoord <= 1 / 16.0 && hitVec.zCoord <= 1 - hitVec.yCoord && hitVec.zCoord >= hitVec.yCoord)
+						facing = EnumFacing.DOWN;
+					else if (hitVec.yCoord >= 15 / 16.0 && hitVec.zCoord <= hitVec.yCoord && hitVec.zCoord >= 1 - hitVec.yCoord)
+						facing = EnumFacing.UP;
+					else if (hitVec.zCoord <= 1 / 16.0 && hitVec.yCoord <= 1 - hitVec.zCoord && hitVec.yCoord >= hitVec.zCoord)
+						facing = EnumFacing.NORTH;
+					else if (hitVec.zCoord >= 15 / 16.0 && hitVec.yCoord <= hitVec.zCoord && hitVec.yCoord >= 1 - hitVec.zCoord)
+						facing = EnumFacing.SOUTH;
+					break;
+				case Y:
+					if (hitVec.xCoord <= 1 / 16.0 && hitVec.zCoord <= 1 - hitVec.xCoord && hitVec.zCoord >= hitVec.xCoord)
+						facing = EnumFacing.WEST;
+					else if (hitVec.xCoord >= 15 / 16.0 && hitVec.zCoord <= hitVec.xCoord && hitVec.zCoord >= 1 - hitVec.xCoord)
+						facing = EnumFacing.EAST;
+					else if (hitVec.zCoord <= 1 / 16.0 && hitVec.xCoord <= 1 - hitVec.zCoord && hitVec.xCoord >= hitVec.zCoord)
+						facing = EnumFacing.NORTH;
+					else if (hitVec.zCoord >= 15 / 16.0 && hitVec.xCoord <= hitVec.zCoord && hitVec.xCoord >= 1 - hitVec.zCoord)
+						facing = EnumFacing.SOUTH;
+					break;
+				case Z:
+					if (hitVec.xCoord <= 1 / 16.0 && hitVec.yCoord <= 1 - hitVec.xCoord && hitVec.yCoord >= hitVec.xCoord)
+						facing = EnumFacing.WEST;
+					else if (hitVec.xCoord >= 15 / 16.0 && hitVec.yCoord <= hitVec.xCoord && hitVec.yCoord >= 1 - hitVec.xCoord)
+						facing = EnumFacing.EAST;
+					else if (hitVec.yCoord <= 1 / 16.0 && hitVec.xCoord <= 1 - hitVec.yCoord && hitVec.xCoord >= hitVec.yCoord)
+						facing = EnumFacing.DOWN;
+					else if (hitVec.yCoord >= 15 / 16.0 && hitVec.xCoord <= hitVec.yCoord && hitVec.xCoord >= 1 - hitVec.yCoord)
+						facing = EnumFacing.UP;
+					break;
+			}
+
+		return new MovingObjectPosition(nearestMOP.hitVec, facing, pos);
 	}
 
 	@Override
@@ -342,12 +377,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return canPasteOnSide(worldIn, pos.down(), EnumFacing.UP)
-				|| canPasteOnSide(worldIn, pos.north(), EnumFacing.SOUTH)
 				|| canPasteOnSide(worldIn, pos.south(), EnumFacing.NORTH)
-				|| canPasteOnSide(worldIn, pos.west(), EnumFacing.EAST)
+				|| canPasteOnSide(worldIn, pos.north(), EnumFacing.SOUTH)
 				|| canPasteOnSide(worldIn, pos.east(), EnumFacing.WEST)
-				|| canPasteOnSide(worldIn, pos.up(), EnumFacing.DOWN)
-				|| worldIn.getBlockState(pos.down()).getBlock() == Blocks.glowstone;
+				|| canPasteOnSide(worldIn, pos.west(), EnumFacing.EAST)
+				|| canPasteOnSide(worldIn, pos.up(), EnumFacing.DOWN);
 	}
 
 	public static EnumFacing getFirstPasteableSide(World worldIn, BlockPos pos, EnumFacing startSide) {
@@ -366,7 +400,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	}
 
 	private static boolean canPasteOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-
+		// TODO: Double check what should happen in all the different cases
 		Block block = worldIn.getBlockState(pos).getBlock();
 
 		if (block.isNormalCube())
@@ -374,6 +408,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 		if (block.getMaterial() == Material.circuits)
 			return false;
+
+		if (block == Blocks.glowstone)
+			return true;
 
 		IBlockState state = worldIn.getBlockState(pos);
 
@@ -454,9 +491,8 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		int indirectPowerLevel = worldIn.isBlockIndirectlyGettingPowered(pos1);
 		this.canProvidePower = true;
 
-		if (indirectPowerLevel > 0 && indirectPowerLevel > newPowerLevel - 1) {
+		if (indirectPowerLevel > 0 && indirectPowerLevel > newPowerLevel - 1)
 			newPowerLevel = indirectPowerLevel;
-		}
 
 		int k = 0;
 		Iterator<?> iterator = EnumFacing.Plane.HORIZONTAL.iterator();
@@ -466,38 +502,32 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			BlockPos blockpos2 = pos1.offset(enumfacing);
 			boolean flag = blockpos2.getX() != pos2.getX() || blockpos2.getZ() != pos2.getZ();
 
-			if (flag) {
+			if (flag)
 				k = this.getMaxCurrentStrength(worldIn, blockpos2, k);
-			}
 
 			if (worldIn.getBlockState(blockpos2).getBlock().isNormalCube() && !worldIn.getBlockState(pos1.up()).getBlock().isNormalCube()) {
 
-				if (flag && pos1.getY() >= pos2.getY()) {
+				if (flag && pos1.getY() >= pos2.getY())
 					k = this.getMaxCurrentStrength(worldIn, blockpos2.up(), k);
-				}
-			} else if (!worldIn.getBlockState(blockpos2).getBlock().isNormalCube() && flag && pos1.getY() <= pos2.getY()) {
+			} else if (!worldIn.getBlockState(blockpos2).getBlock().isNormalCube() && flag && pos1.getY() <= pos2.getY())
 				k = this.getMaxCurrentStrength(worldIn, blockpos2.down(), k);
-			}
 		}
 
-		if (k > newPowerLevel) {
+		if (k > newPowerLevel)
 			newPowerLevel = k - 1;
-		} else if (newPowerLevel > 0) {
+		else if (newPowerLevel > 0)
 			--newPowerLevel;
-		} else {
+		else
 			newPowerLevel = 0;
-		}
 
-		if (indirectPowerLevel > newPowerLevel - 1) {
+		if (indirectPowerLevel > newPowerLevel - 1)
 			newPowerLevel = indirectPowerLevel;
-		}
 
 		if (currentPowerLevel != newPowerLevel) {
 			state = state.withProperty(POWER, Integer.valueOf(newPowerLevel));
 
-			if (worldIn.getBlockState(pos1) == iblockstate1) {
+			if (worldIn.getBlockState(pos1) == iblockstate1)
 				worldIn.setBlockState(pos1, state, 2);
-			}
 
 			this.blocksNeedingUpdate.add(pos1);
 			EnumFacing[] aenumfacing = EnumFacing.values();
@@ -552,11 +582,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				enumfacing = (EnumFacing) iterator.next();
 				BlockPos blockpos1 = pos.offset(enumfacing);
 
-				if (worldIn.getBlockState(blockpos1).getBlock().isNormalCube()) {
+				if (worldIn.getBlockState(blockpos1).getBlock().isNormalCube())
 					this.notifyWireNeighborsOfStateChange(worldIn, blockpos1.up());
-				} else {
+				else
 					this.notifyWireNeighborsOfStateChange(worldIn, blockpos1.down());
-				}
 			}
 		}
 	}
@@ -589,11 +618,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				enumfacing1 = (EnumFacing) iterator.next();
 				BlockPos blockpos1 = pos.offset(enumfacing1);
 
-				if (worldIn.getBlockState(blockpos1).getBlock().isNormalCube()) {
+				if (worldIn.getBlockState(blockpos1).getBlock().isNormalCube())
 					this.notifyWireNeighborsOfStateChange(worldIn, blockpos1.up());
-				} else {
+				else
 					this.notifyWireNeighborsOfStateChange(worldIn, blockpos1.down());
-				}
 			}
 		}
 	}
@@ -615,7 +643,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 			if (this.canPlaceBlockAt(worldIn, pos)) {
 
-				if (this.isDoubleFaced) {
+				if (this.isDoubleFaced)
 
 					if (!canPasteOnSide(worldIn, pos.offset(this.pastedSide), this.pastedSide.getOpposite())) {
 						Block modBlocksBlock = ModBlocks.singleSideMap.get(pastedSide2.getIndex());
@@ -624,7 +652,6 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 						Block modBlocksBlock = ModBlocks.singleSideMap.get(pastedSide.getIndex());
 						worldIn.setBlockState(pos, modBlocksBlock.getDefaultState());
 					}
-				}
 
 				this.updateSurroundingRedstone(worldIn, pos, state);
 			} else {
@@ -777,6 +804,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	protected BlockState createBlockState() {
 		return new BlockState(this, new IProperty[] { POWER });
+	}
+
+	public String getDebugInfo() {
+		return ((this.isDoubleFaced) ? "pasted sides: " : "pasted side: ")
+				+ this.pastedSide.getName() + ((this.isDoubleFaced) ? ", " + this.pastedSide2.getName() : "");
 	}
 
 	private static enum AttachState {
