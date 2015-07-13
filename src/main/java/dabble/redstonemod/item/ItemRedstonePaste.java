@@ -14,14 +14,14 @@ import dabble.redstonemod.init.ModBlocks;
 public class ItemRedstonePaste extends Item {
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		boolean flag = worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos);
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		boolean flag = world.getBlockState(pos).getBlock().isReplaceable(world, pos);
 		BlockPos currentPos = flag ? pos : pos.offset(side);
 
-		if (!playerIn.canPlayerEdit(currentPos, side, stack))
+		if (!player.canPlayerEdit(currentPos, side, stack))
 			return false;
 		else {
-			Block currentBlock = worldIn.getBlockState(currentPos).getBlock();
+			Block currentBlock = world.getBlockState(currentPos).getBlock();
 
 			if (currentBlock instanceof BlockRedstonePasteWire) {
 				BlockRedstonePasteWire currentRedstonePaste = (BlockRedstonePasteWire) currentBlock;
@@ -30,29 +30,29 @@ public class ItemRedstonePaste extends Item {
 					int sideIndex = side.getOpposite().getIndex() << 1;
 					int pastedSideIndex = currentRedstonePaste.pastedSide.getIndex() << 1;
 					Block modBlocksBlock = ModBlocks.doubleSideMap.get(sideIndex + pastedSideIndex + (sideIndex * pastedSideIndex));
-					worldIn.setBlockState(currentPos, modBlocksBlock.getDefaultState());
+					world.setBlockState(currentPos, modBlocksBlock.getDefaultState());
 					return true;
 				} else
 					return false;
 			}
 
-			if (!worldIn.canBlockBePlaced(currentBlock, currentPos, false, side, null, stack))
+			if (!world.canBlockBePlaced(currentBlock, currentPos, false, side, null, stack))
 				return false;
-			else if (playerIn.dimension == -1) {
+			else if (world.provider.getDimensionId() == -1) {
 
-				if (BlockRedstonePasteWire.getFirstPasteableSide(worldIn, currentPos, side) != null) {
+				if (BlockRedstonePasteWire.getFirstPasteableSide(world, currentPos, side) != null) {
 					--stack.stackSize;
-					worldIn.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
+					world.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
 					return true;
 				} else
 					return false;
 			} else {
 				EnumFacing firstPasteableSide;
 
-				if ((firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(worldIn, currentPos, side)) != null) {
+				if ((firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(world, currentPos, side)) != null) {
 					--stack.stackSize;
 					Block redstonePasteBlock = ModBlocks.singleSideMap.get(firstPasteableSide.getOpposite().getIndex());
-					worldIn.setBlockState(currentPos, redstonePasteBlock.getDefaultState());
+					world.setBlockState(currentPos, redstonePasteBlock.getDefaultState());
 					return true;
 				} else
 					return false;

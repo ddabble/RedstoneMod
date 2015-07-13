@@ -1,5 +1,9 @@
 package dabble.redstonemod.renderer;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -7,12 +11,16 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,25 +28,81 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import dabble.redstonemod.block.BlockRedstonePasteWire;
+import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
+import dabble.redstonemod.util.PowerLookup;
 
 public class EventHookContainer {
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void renderDebugText(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
+	public void debugTextHandler(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
 
 		if (event.type == net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.DEBUG) {
 			Minecraft mc = Minecraft.getMinecraft();
 			if (mc.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-				Block block = mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
+				BlockPos pos = mc.objectMouseOver.getBlockPos();
+				Block block = mc.theWorld.getBlockState(pos).getBlock();
 				if (block instanceof BlockRedstonePasteWire) {
-					ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-					String text = ((BlockRedstonePasteWire) block).getDebugInfo();
-					int x = res.getScaledWidth() - mc.fontRendererObj.getStringWidth(text) - 2;
-					mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
+					int screenWidth = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight).getScaledWidth();
+					String[] text = ((BlockRedstonePasteWire) block).getDebugInfo(pos, mc.theWorld);
+					int x = screenWidth - mc.fontRendererObj.getStringWidth(text[0]) - 2;
+					mc.fontRendererObj.drawString(text[0], x, 128, 0xe0e0e0);
+					x = screenWidth - mc.fontRendererObj.getStringWidth(text[1]) - 2;
+					mc.fontRendererObj.drawString(text[1], x, 137, 0xe0e0e0);
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void chunkLoadHandler(ChunkEvent.Load event) {
+		// for (ExtendedBlockStorage arr : event.getChunk().getBlockStorageArray()) {
+		// if (arr != null) {
+		// for (short i = 0; i < 4096; ++i) {
+		// if (((IBlockState) Block.BLOCK_STATE_IDS.getByValue(arr.getData()[i])).getBlock() instanceof BlockRedstonePasteWire) {
+		// // System.out.println("x:" + (i) + ", y:" + (i >> 8) + ", z:" + (i));
+		// System.out.println(Minecraft.getMinecraft().theWorld);
+		// }
+		// }
+		// }
+		// }
+
+		@SuppressWarnings("unchecked")
+		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
+
+		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
+			if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
+				PowerLookup.addBlockNeedingUpdate(tileEntity.getKey(), event.world);
+	}
+
+	@SubscribeEvent
+	public void chunkWatchHandler(ChunkWatchEvent.Watch event) {
+		ArrayList<BlockPos> blocksNeedingUpdate = PowerLookup.getBlocksNeedingUpdate(event.player.worldObj);
+
+		if (blocksNeedingUpdate.size() > 0) {
+
+			for (BlockPos pos : blocksNeedingUpdate)
+				((BlockRedstonePasteWire) event.player.worldObj.getBlockState(pos).getBlock()).updateLoadedRedstonePaste(event.player.worldObj, pos);
+
+			PowerLookup.clearBlocksNeedingUpdate(event.player.worldObj);
+		}
+	}
+
+	@SubscribeEvent
+	public void chunkUnloadHandler(ChunkEvent.Unload event) {
+		@SuppressWarnings("unchecked")
+		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
+
+		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
+			if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
+				PowerLookup.removePower(tileEntity.getKey(), event.world);
+	}
+
+	@SubscribeEvent
+	public void worldUnloadHandler(WorldEvent.Unload event) {
+
+		if (!event.world.isRemote)
+			PowerLookup.clearPower(event.world);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -49,9 +113,9 @@ public class EventHookContainer {
 			return;
 
 		EntityPlayer player = event.player;
-		World worldIn = player.worldObj;
+		World world = player.worldObj;
 		BlockPos pos = target.getBlockPos();
-		Block block = worldIn.getBlockState(pos).getBlock();
+		Block block = world.getBlockState(pos).getBlock();
 		if (!(block instanceof BlockRedstonePasteWire))
 			return;
 

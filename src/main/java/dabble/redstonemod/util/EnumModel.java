@@ -54,7 +54,7 @@ public enum EnumModel {
 		return this.maxV;
 	}
 
-	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess worldIn, BlockPos pos) {
+	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess world, BlockPos pos) {
 		EnumMap<EnumFacing, EnumSet<EnumFacing>> faces = new EnumMap<EnumFacing, EnumSet<EnumFacing>>(EnumFacing.class);
 		EnumMap<EnumFacing, EnumModel> model = new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
 		EnumFacing pastedSide = wire.pastedSide;
@@ -68,7 +68,7 @@ public enum EnumModel {
 				if (side == blockSide.getOpposite())
 					continue;
 
-				Block block = worldIn.getBlockState(pos.offset(side)).getBlock();
+				Block block = world.getBlockState(pos.offset(side)).getBlock();
 
 				// TODO: Move this to checkBlockInDirection() in BlockRedstonePasteWire
 				if (block instanceof BlockRedstonePasteWire && (((BlockRedstonePasteWire) block).pastedSide == blockSide || ((BlockRedstonePasteWire) block).pastedSide2 == blockSide))
@@ -83,7 +83,7 @@ public enum EnumModel {
 				if (side[0] != blockSide && side[1] != blockSide)
 					continue;
 
-				BlockRedstonePasteWire diagonalBlock = (BlockRedstonePasteWire) worldIn.getBlockState(pos.offset(side[0]).offset(side[1])).getBlock();
+				BlockRedstonePasteWire diagonalBlock = (BlockRedstonePasteWire) world.getBlockState(pos.offset(side[0]).offset(side[1])).getBlock();
 				EnumFacing otherSide = ((blockSide == side[0]) ? side[1] : side[0]);
 
 				if (!connections.contains(otherSide) && (diagonalBlock.pastedSide == otherSide.getOpposite() || diagonalBlock.pastedSide2 == otherSide.getOpposite()
@@ -285,7 +285,7 @@ public enum EnumModel {
 		try {
 			return valueOf(sb.toString());
 		} catch (Exception e) {
-			System.out.println("Could not find the enum with the value of " + sb + ".");
+//			System.out.println("Could not find the enum with the value of " + sb + ".");
 			return NONE;
 		}
 	}

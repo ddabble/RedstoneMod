@@ -19,27 +19,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 import dabble.redstonemod.util.EnumModel;
+import dabble.redstonemod.util.PowerLookup;
 
 @SideOnly(Side.CLIENT)
 public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float foo, int wat) {
-		World worldIn = tileEntity.getWorld();
+		World world = tileEntity.getWorld();
 		BlockPos pos = tileEntity.getPos();
-		IBlockState state = worldIn.getBlockState(pos);
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		// Have to do this because worldIn.getBlockState(pos) occasionally returns the blockstate of a nearby air block for some reason
+		// Have to do this because world.getBlockState(pos) occasionally returns the blockstate of a nearby air block for some reason
 		if (!(block instanceof BlockRedstonePasteWire))
 			return;
 
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-		EnumMap<EnumFacing, EnumModel> model = ((BlockRedstonePasteWire) block).getModel(worldIn, pos);
+		EnumMap<EnumFacing, EnumModel> model = ((BlockRedstonePasteWire) block).getModel(world, pos);
 		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
 
-		int colour = colorMultiplier(((Integer) state.getValue(BlockRedstonePasteWire.POWER)).intValue());
+		int colour = colorMultiplier(PowerLookup.getPower(pos, world));
 		int red = colour >> 16 & 255;
 		int green = colour >> 8 & 255;
 		int blue = colour & 255;
@@ -60,7 +61,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		GlStateManager.popMatrix();
 	}
 
-	private int colorMultiplier(int powerLevel) {
+	public static int colorMultiplier(byte powerLevel) {
 		float f = powerLevel / 15f;
 		float f1 = f * 0.6f + 0.4f;
 
