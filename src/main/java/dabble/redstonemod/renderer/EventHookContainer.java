@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
@@ -43,12 +44,10 @@ public class EventHookContainer {
 				BlockPos pos = mc.objectMouseOver.getBlockPos();
 				Block block = mc.theWorld.getBlockState(pos).getBlock();
 				if (block instanceof BlockRedstonePasteWire) {
+					String text = ((BlockRedstonePasteWire) block).getDebugInfo(pos, mc.theWorld);
 					int screenWidth = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight).getScaledWidth();
-					String[] text = ((BlockRedstonePasteWire) block).getDebugInfo(pos, mc.theWorld);
-					int x = screenWidth - mc.fontRendererObj.getStringWidth(text[0]) - 2;
-					mc.fontRendererObj.drawString(text[0], x, 128, 0xe0e0e0);
-					x = screenWidth - mc.fontRendererObj.getStringWidth(text[1]) - 2;
-					mc.fontRendererObj.drawString(text[1], x, 137, 0xe0e0e0);
+					int x = screenWidth - mc.fontRendererObj.getStringWidth(text) - 2;
+					mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
 				}
 			}
 		}
@@ -56,16 +55,20 @@ public class EventHookContainer {
 
 	@SubscribeEvent
 	public void chunkLoadHandler(ChunkEvent.Load event) {
-		// for (ExtendedBlockStorage arr : event.getChunk().getBlockStorageArray()) {
-		// if (arr != null) {
-		// for (short i = 0; i < 4096; ++i) {
-		// if (((IBlockState) Block.BLOCK_STATE_IDS.getByValue(arr.getData()[i])).getBlock() instanceof BlockRedstonePasteWire) {
-		// // System.out.println("x:" + (i) + ", y:" + (i >> 8) + ", z:" + (i));
-		// System.out.println(Minecraft.getMinecraft().theWorld);
-		// }
-		// }
-		// }
-		// }
+		/*
+		 * For use when I figure out how to customise the rendering of non-tileEntities
+		 * 
+		 * for (ExtendedBlockStorage arr : event.getChunk().getBlockStorageArray()) {
+		 * if (arr != null) {
+		 * for (short i = 0; i < 4096; ++i) {
+		 * if (((IBlockState) Block.BLOCK_STATE_IDS.getByValue(arr.getData()[i])).getBlock() instanceof BlockRedstonePasteWire) {
+		 * // System.out.println("x:" + (i) + ", y:" + (i >> 8) + ", z:" + (i));
+		 * System.out.println(Minecraft.getMinecraft().theWorld);
+		 * }
+		 * }
+		 * }
+		 * }
+		 */
 
 		@SuppressWarnings("unchecked")
 		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
@@ -77,25 +80,34 @@ public class EventHookContainer {
 
 	@SubscribeEvent
 	public void chunkWatchHandler(ChunkWatchEvent.Watch event) {
-		ArrayList<BlockPos> blocksNeedingUpdate = PowerLookup.getBlocksNeedingUpdate(event.player.worldObj);
+		World world = event.player.worldObj;
+		ArrayList<BlockPos> blocksNeedingUpdate = PowerLookup.getBlocksNeedingUpdate(world);
 
 		if (blocksNeedingUpdate.size() > 0) {
+			System.out.println("Updating the power of " + blocksNeedingUpdate.size() + " redstone paste blocks in " + world.provider.getDimensionName());
 
 			for (BlockPos pos : blocksNeedingUpdate)
-				((BlockRedstonePasteWire) event.player.worldObj.getBlockState(pos).getBlock()).updateLoadedRedstonePaste(event.player.worldObj, pos);
+				((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).calculateCurrentChanges(pos, world, true);
 
-			PowerLookup.clearBlocksNeedingUpdate(event.player.worldObj);
+			PowerLookup.clearBlocksNeedingUpdate(world);
 		}
 	}
 
 	@SubscribeEvent
 	public void chunkUnloadHandler(ChunkEvent.Unload event) {
-		@SuppressWarnings("unchecked")
-		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
+		/*
+		 * When Minecraft unloads chunks from the overworld, it actually doesn't, for some weird reason.
+		 * So if the block gets removed here it will never get re-added when the chunk "re-loads",
+		 * because the chunk was never really unloaded and thusly will also never get re-loaded ._.
+		 */
+		if (event.world.provider.getDimensionId() != 0) {
+			@SuppressWarnings("unchecked")
+			Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
 
-		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
-			if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
-				PowerLookup.removePower(tileEntity.getKey(), event.world);
+			for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
+				if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
+					PowerLookup.removePower(tileEntity.getKey(), event.world);
+		}
 	}
 
 	@SubscribeEvent
@@ -124,22 +136,27 @@ public class EventHookContainer {
 		double y = pos.getY();
 		double z = pos.getZ();
 
-		switch (target.sideHit) {
+		switch ((EnumFacing) target.hitInfo) {
 			case DOWN:
 				boundingBox = new AxisAlignedBB(x, y, z, x + 1, y + 1 / 16.0, z + 1);
 				break;
+
 			case UP:
 				boundingBox = new AxisAlignedBB(x, y + 15 / 16.0, z, x + 1, y + 1, z + 1);
 				break;
+
 			case NORTH:
 				boundingBox = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1 / 16.0);
 				break;
+
 			case SOUTH:
 				boundingBox = new AxisAlignedBB(x, y, z + 15 / 16.0, x + 1, y + 1, z + 1);
 				break;
+
 			case WEST:
 				boundingBox = new AxisAlignedBB(x, y, z, x + 1 / 16.0, y + 1, z + 1);
 				break;
+
 			case EAST:
 				boundingBox = new AxisAlignedBB(x + 15 / 16.0, y, z, x + 1, y + 1, z + 1);
 				break;

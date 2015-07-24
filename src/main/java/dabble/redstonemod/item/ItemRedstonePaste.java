@@ -1,6 +1,7 @@
 package dabble.redstonemod.item;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -9,28 +10,23 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
-import dabble.redstonemod.init.ModBlocks;
+import dabble.redstonemod.block.BlockRedstonePasteWire_SinglePasted;
 
 public class ItemRedstonePaste extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		boolean flag = world.getBlockState(pos).getBlock().isReplaceable(world, pos);
-		BlockPos currentPos = flag ? pos : pos.offset(side);
+		BlockPos currentPos = world.getBlockState(pos).getBlock().isReplaceable(world, pos) ? pos : pos.offset(side);
 
 		if (!player.canPlayerEdit(currentPos, side, stack))
 			return false;
 		else {
-			Block currentBlock = world.getBlockState(currentPos).getBlock();
-
+			IBlockState state = world.getBlockState(currentPos);
+			Block currentBlock = state.getBlock();
 			if (currentBlock instanceof BlockRedstonePasteWire) {
-				BlockRedstonePasteWire currentRedstonePaste = (BlockRedstonePasteWire) currentBlock;
-
-				if (!currentRedstonePaste.isDoubleFaced && currentRedstonePaste.pastedSide != side) {
-					int sideIndex = side.getOpposite().getIndex() << 1;
-					int pastedSideIndex = currentRedstonePaste.pastedSide.getIndex() << 1;
-					Block modBlocksBlock = ModBlocks.doubleSideMap.get(sideIndex + pastedSideIndex + (sideIndex * pastedSideIndex));
-					world.setBlockState(currentPos, modBlocksBlock.getDefaultState());
+				IBlockState redstonePasteWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state);
+				if (redstonePasteWithAdditionalPastedSide != null) {
+					world.setBlockState(currentPos, redstonePasteWithAdditionalPastedSide);
 					return true;
 				} else
 					return false;
@@ -38,21 +34,20 @@ public class ItemRedstonePaste extends Item {
 
 			if (!world.canBlockBePlaced(currentBlock, currentPos, false, side, null, stack))
 				return false;
-			else if (world.provider.getDimensionId() == -1) {
 
-				if (BlockRedstonePasteWire.getFirstPasteableSide(world, currentPos, side) != null) {
+			if (world.provider.getDimensionId() == -1) {
+
+				if (BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, world) != null) {
 					--stack.stackSize;
 					world.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
 					return true;
 				} else
 					return false;
 			} else {
-				EnumFacing firstPasteableSide;
-
-				if ((firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(world, currentPos, side)) != null) {
+				EnumFacing firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, world);
+				if (firstPasteableSide != null) {
 					--stack.stackSize;
-					Block redstonePasteBlock = ModBlocks.singleSideMap.get(firstPasteableSide.getOpposite().getIndex());
-					world.setBlockState(currentPos, redstonePasteBlock.getDefaultState());
+					world.setBlockState(currentPos, BlockRedstonePasteWire_SinglePasted.getStateFromSide(firstPasteableSide));
 					return true;
 				} else
 					return false;

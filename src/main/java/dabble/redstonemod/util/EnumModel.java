@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 
 public enum EnumModel {
@@ -54,76 +54,79 @@ public enum EnumModel {
 		return this.maxV;
 	}
 
-	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, IBlockAccess world, BlockPos pos) {
+	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, BlockPos pos, World world) {
 		EnumMap<EnumFacing, EnumSet<EnumFacing>> faces = new EnumMap<EnumFacing, EnumSet<EnumFacing>>(EnumFacing.class);
 		EnumMap<EnumFacing, EnumModel> model = new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
-		EnumFacing pastedSide = wire.pastedSide;
-		EnumFacing pastedSide2 = wire.pastedSide2;
+		EnumFacing[] pastedSides = wire.getPastedSides(world.getBlockState(pos));
 
-		for (EnumFacing blockSide : blockDirections) {
-			EnumSet<EnumFacing> connections = EnumSet.noneOf(EnumFacing.class);
-
-			for (EnumFacing side : connectionDirections) {
-
-				if (side == blockSide.getOpposite())
-					continue;
-
-				Block block = world.getBlockState(pos.offset(side)).getBlock();
-
-				// TODO: Move this to checkBlockInDirection() in BlockRedstonePasteWire
-				if (block instanceof BlockRedstonePasteWire && (((BlockRedstonePasteWire) block).pastedSide == blockSide || ((BlockRedstonePasteWire) block).pastedSide2 == blockSide))
-					connections.add(side);
-				else if (blockSide == pastedSide || blockSide == pastedSide2)
-					connections.add(side);
-			}
-
-			for (EnumFacing[] side : diagonalConnectionDirections) {
-
-				// Sorts out any sides that are not directly next to the current blockSide
-				if (side[0] != blockSide && side[1] != blockSide)
-					continue;
-
-				BlockRedstonePasteWire diagonalBlock = (BlockRedstonePasteWire) world.getBlockState(pos.offset(side[0]).offset(side[1])).getBlock();
-				EnumFacing otherSide = ((blockSide == side[0]) ? side[1] : side[0]);
-
-				if (!connections.contains(otherSide) && (diagonalBlock.pastedSide == otherSide.getOpposite() || diagonalBlock.pastedSide2 == otherSide.getOpposite()
-						|| diagonalBlock.pastedSide == pastedSide || diagonalBlock.pastedSide == pastedSide2
-						|| diagonalBlock.pastedSide2 == pastedSide || diagonalBlock.pastedSide2 == pastedSide2))
-					connections.add(otherSide);
-			}
-
-			if (connections.size() == 0) {
-
-				if (blockSide == pastedSide || blockSide == pastedSide2)
-					faces.put(blockSide, connections);
-
-				continue;
-			} /*
-			 * else
-			 * normaliseAndSort(connections, blockSide);
-			 */
-
-			if (connections.size() == 1)
-				connections.add(connections.iterator().next().getOpposite());
-
-			faces.put(blockSide, connections);
+		for (EnumFacing pastedSide : pastedSides) {
+			model.put(pastedSide, NS);
 		}
 
-		for (Entry<EnumFacing, EnumSet<EnumFacing>> face : faces.entrySet()) {
-			EnumFacing currentSide = face.getKey();
+		// for (EnumFacing blockSide : blockDirections) {
+		// EnumSet<EnumFacing> connections = EnumSet.noneOf(EnumFacing.class);
+		//
+		// for (EnumFacing side : connectionDirections) {
+		//
+		// if (side == blockSide.getOpposite())
+		// continue;
+		//
+		// Block block = world.getBlockState(pos.offset(side)).getBlock();
+		//
+		// // TODO: Move this to checkBlockInDirection() in BlockRedstonePasteWire
+		// if (block instanceof BlockRedstonePasteWire && (((BlockRedstonePasteWire) block).pastedSide == blockSide || ((BlockRedstonePasteWire) block).pastedSide2 == blockSide))
+		// connections.add(side);
+		// else if (blockSide == pastedSide || blockSide == pastedSide2)
+		// connections.add(side);
+		// }
+		//
+		// for (EnumFacing[] side : diagonalConnectionDirections) {
+		//
+		// // Sorts out any sides that are not directly next to the current blockSide
+		// if (side[0] != blockSide && side[1] != blockSide)
+		// continue;
+		//
+		// BlockRedstonePasteWire diagonalBlock = (BlockRedstonePasteWire) world.getBlockState(pos.offset(side[0]).offset(side[1])).getBlock();
+		// EnumFacing otherSide = ((blockSide == side[0]) ? side[1] : side[0]);
+		//
+		// if (!connections.contains(otherSide) && (diagonalBlock.pastedSide == otherSide.getOpposite() || diagonalBlock.pastedSide2 == otherSide.getOpposite()
+		// || diagonalBlock.pastedSide == pastedSide || diagonalBlock.pastedSide == pastedSide2
+		// || diagonalBlock.pastedSide2 == pastedSide || diagonalBlock.pastedSide2 == pastedSide2))
+		// connections.add(otherSide);
+		// }
+		//
+		// if (connections.size() == 0) {
+		//
+		// if (blockSide == pastedSide || blockSide == pastedSide2)
+		// faces.put(blockSide, connections);
+		//
+		// continue;
+		// } /*
+		// * else
+		// * normaliseAndSort(connections, blockSide);
+		// */
+		//
+		// if (connections.size() == 1)
+		// connections.add(connections.iterator().next().getOpposite());
+		//
+		// faces.put(blockSide, connections);
+		// }
 
-			if (face.getValue().size() == 0) {
-
-				if (faces.size() == 1) {
-					model.put(currentSide, EnumModel.NONE);
-					return model;
-				}
-
-				EnumSet<EnumFacing> value = EnumSet.of(EnumFacing.NORTH, EnumFacing.SOUTH);
-				model.put(currentSide, valueOf(value));
-			} else
-				model.put(currentSide, valueOf(face.getValue()));
-		}
+		// for (Entry<EnumFacing, EnumSet<EnumFacing>> face : faces.entrySet()) {
+		// EnumFacing currentSide = face.getKey();
+		//
+		// if (face.getValue().size() == 0) {
+		//
+		// if (faces.size() == 1) {
+		// model.put(currentSide, EnumModel.NONE);
+		// return model;
+		// }
+		//
+		// EnumSet<EnumFacing> value = EnumSet.of(EnumFacing.NORTH, EnumFacing.SOUTH);
+		// model.put(currentSide, valueOf(value));
+		// } else
+		// model.put(currentSide, valueOf(face.getValue()));
+		// }
 
 		return model;
 	}
@@ -155,29 +158,39 @@ public enum EnumModel {
 			case UP:
 				if (currentSide.getAxis() == EnumFacing.Axis.X)
 					currentSide = currentSide.getOpposite();
+
 				break;
+
 			case NORTH:
 				if (currentSide.getAxis() == EnumFacing.Axis.Y)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
+
 				break;
+
 			case SOUTH:
 				if (currentSide.getAxis() == EnumFacing.Axis.X)
 					currentSide = currentSide.getOpposite();
 				else if (currentSide.getAxis() == EnumFacing.Axis.Y)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
+
 				break;
+
 			case WEST:
 				if (currentSide.getAxis() == EnumFacing.Axis.Y)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
 				else if (currentSide.getAxis() == EnumFacing.Axis.Z)
 					currentSide = currentSide.rotateY();
+
 				break;
+
 			case EAST:
 				if (currentSide.getAxis() == EnumFacing.Axis.Y)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
 				else if (currentSide.getAxis() == EnumFacing.Axis.Z)
 					currentSide = currentSide.rotateYCCW();
+
 				break;
+
 			default:
 				break;
 		}
@@ -191,23 +204,33 @@ public enum EnumModel {
 			case UP:
 				if (currentSide.getAxis() != EnumFacing.Axis.X)
 					currentSide = currentSide.getOpposite();
+
 				break;
+
 			case NORTH:
 				if (currentSide.getAxis() != EnumFacing.Axis.X)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
+
 				break;
+
 			case SOUTH:
 				if (currentSide.getAxis() != EnumFacing.Axis.X)
 					currentSide = rotateXCCW(currentSide);
+
 				break;
+
 			case WEST:
 				if (currentSide.getAxis() != EnumFacing.Axis.Z)
 					currentSide = rotateZCCW(currentSide);
+
 				break;
+
 			case EAST:
 				if (currentSide.getAxis() != EnumFacing.Axis.Z)
 					currentSide = currentSide.rotateAround(EnumFacing.Axis.Z);
+
 				break;
+
 			default:
 				break;
 		}
@@ -222,16 +245,19 @@ public enum EnumModel {
 					return rotateXCCW(side);
 
 				return side;
+
 			case 2:
 				if (side != EnumFacing.UP && side != EnumFacing.DOWN)
 					return side.rotateYCCW();
 
 				return side;
+
 			case 3:
 				if (side != EnumFacing.NORTH && side != EnumFacing.SOUTH)
 					return rotateZCCW(side);
 
 				return side;
+
 			default:
 				throw new IllegalStateException("Unable to get CW facing for axis " + axis);
 		}
@@ -242,14 +268,18 @@ public enum EnumModel {
 		switch (SwitchPlane.FACING_LOOKUP[side.ordinal()]) {
 			case 1:
 				return EnumFacing.UP;
+
 			case 2:
 			case 4:
 			default:
 				throw new IllegalStateException("Unable to get X-rotated facing of " + side);
+
 			case 3:
 				return EnumFacing.DOWN;
+
 			case 5:
 				return EnumFacing.SOUTH;
+
 			case 6:
 				return EnumFacing.NORTH;
 		}
@@ -260,13 +290,17 @@ public enum EnumModel {
 		switch (SwitchPlane.FACING_LOOKUP[side.ordinal()]) {
 			case 2:
 				return EnumFacing.UP;
+
 			case 3:
 			default:
 				throw new IllegalStateException("Unable to get Z-rotated facing of " + side);
+
 			case 4:
 				return EnumFacing.DOWN;
+
 			case 5:
 				return EnumFacing.WEST;
+
 			case 6:
 				return EnumFacing.EAST;
 		}
@@ -285,7 +319,7 @@ public enum EnumModel {
 		try {
 			return valueOf(sb.toString());
 		} catch (Exception e) {
-//			System.out.println("Could not find the enum with the value of " + sb + ".");
+			// System.out.println("Could not find the enum with the value of " + sb + ".");
 			return NONE;
 		}
 	}
@@ -299,37 +333,37 @@ public enum EnumModel {
 
 			try {
 				FACING_LOOKUP[EnumFacing.NORTH.ordinal()] = 1;
-			} catch (NoSuchFieldError var9) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				FACING_LOOKUP[EnumFacing.EAST.ordinal()] = 2;
-			} catch (NoSuchFieldError var8) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				FACING_LOOKUP[EnumFacing.SOUTH.ordinal()] = 3;
-			} catch (NoSuchFieldError var7) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				FACING_LOOKUP[EnumFacing.WEST.ordinal()] = 4;
-			} catch (NoSuchFieldError var6) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				FACING_LOOKUP[EnumFacing.UP.ordinal()] = 5;
-			} catch (NoSuchFieldError var5) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				FACING_LOOKUP[EnumFacing.DOWN.ordinal()] = 6;
-			} catch (NoSuchFieldError var4) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
@@ -337,19 +371,19 @@ public enum EnumModel {
 
 			try {
 				AXIS_LOOKUP[EnumFacing.Axis.X.ordinal()] = 1;
-			} catch (NoSuchFieldError var3) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				AXIS_LOOKUP[EnumFacing.Axis.Y.ordinal()] = 2;
-			} catch (NoSuchFieldError var2) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 
 			try {
 				AXIS_LOOKUP[EnumFacing.Axis.Z.ordinal()] = 3;
-			} catch (NoSuchFieldError var1) {
+			} catch (NoSuchFieldError e) {
 				;
 			}
 		}

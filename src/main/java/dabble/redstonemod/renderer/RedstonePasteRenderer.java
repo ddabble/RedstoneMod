@@ -37,7 +37,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-		EnumMap<EnumFacing, EnumModel> model = ((BlockRedstonePasteWire) block).getModel(world, pos);
+		EnumMap<EnumFacing, EnumModel> model = ((BlockRedstonePasteWire) block).getModel(pos, world);
 		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
 
 		int colour = colorMultiplier(PowerLookup.getPower(pos, world));
@@ -97,6 +97,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 				worldRenderer.addVertexWithUV(1, 0.25 / 16, 1, maxU, maxV);
 				worldRenderer.addVertexWithUV(1, 0.25 / 16, 0, maxU, minV);
 				break;
+
 			case UP:
 				worldRenderer.setNormal(0, -1, 0);
 				worldRenderer.addVertexWithUV(0, 15.75 / 16, 0, maxU, minV);
@@ -104,6 +105,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 				worldRenderer.addVertexWithUV(1, 15.75 / 16, 1, minU, maxV);
 				worldRenderer.addVertexWithUV(0, 15.75 / 16, 1, maxU, maxV);
 				break;
+
 			case NORTH:
 				worldRenderer.setNormal(0, 0, 1);
 				worldRenderer.addVertexWithUV(0, 0, 0.25 / 16, minU, maxV);
@@ -111,6 +113,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 				worldRenderer.addVertexWithUV(1, 1, 0.25 / 16, maxU, minV);
 				worldRenderer.addVertexWithUV(0, 1, 0.25 / 16, minU, minV);
 				break;
+
 			case SOUTH:
 				worldRenderer.setNormal(0, 0, -1);
 				worldRenderer.addVertexWithUV(0, 0, 15.75 / 16, maxU, maxV);
@@ -118,6 +121,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 				worldRenderer.addVertexWithUV(1, 1, 15.75 / 16, minU, minV);
 				worldRenderer.addVertexWithUV(1, 0, 15.75 / 16, minU, maxV);
 				break;
+
 			case WEST:
 				worldRenderer.setNormal(1, 0, 0);
 				worldRenderer.addVertexWithUV(0.25 / 16, 0, 0, maxU, maxV);
@@ -125,6 +129,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 				worldRenderer.addVertexWithUV(0.25 / 16, 1, 1, minU, minV);
 				worldRenderer.addVertexWithUV(0.25 / 16, 0, 1, minU, maxV);
 				break;
+
 			case EAST:
 				worldRenderer.setNormal(-1, 0, 0);
 				worldRenderer.addVertexWithUV(15.75 / 16, 0, 0, minU, maxV);
