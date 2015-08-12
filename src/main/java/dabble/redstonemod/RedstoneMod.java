@@ -9,11 +9,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import dabble.redstonemod.event.EventHookContainer;
 import dabble.redstonemod.init.ModBlocks;
 import dabble.redstonemod.init.ModItems;
 import dabble.redstonemod.init.ModRecipes;
 import dabble.redstonemod.proxy.CommonProxy;
-import dabble.redstonemod.renderer.EventHookContainer;
 import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 
 @Mod(modid = RedstoneMod.ID, name = RedstoneMod.NAME, version = RedstoneMod.VERSION)

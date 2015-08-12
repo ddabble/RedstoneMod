@@ -23,8 +23,8 @@ public class ItemRedstonePaste extends Item {
 		else {
 			IBlockState state = world.getBlockState(currentPos);
 			Block currentBlock = state.getBlock();
-			if (currentBlock instanceof BlockRedstonePasteWire) {
-				IBlockState redstonePasteWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state);
+			if (currentBlock instanceof BlockRedstonePasteWire && BlockRedstonePasteWire.canPasteOnSideOfBlock(side, pos, world)) {
+				IBlockState redstonePasteWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state, currentPos, player, world);
 				if (redstonePasteWithAdditionalPastedSide != null) {
 					world.setBlockState(currentPos, redstonePasteWithAdditionalPastedSide);
 					return true;

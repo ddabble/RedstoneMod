@@ -1,11 +1,13 @@
 package dabble.redstonemod.block;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -20,24 +22,40 @@ public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire 
 		this.setDefaultState(this.blockState.getBaseState().withProperty(PASTEDSIDES, EnumPasting.DN));
 	}
 
+	@Override
 	public EnumFacing[] getPastedSides(IBlockState state) {
 		return ((EnumPasting) state.getValue(PASTEDSIDES)).sides;
 	}
 
 	@Override
-	public IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state) {
+	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
+		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet;
+	}
+
+	@Override
+	public boolean isPastedOnSide(EnumFacing side, IBlockState state) {
+		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet.contains(side);
+	}
+
+	@Override
+	public IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state, BlockPos pos, EntityPlayer player, World world) {
 		EnumFacing[] pastedSides = ((EnumPasting) state.getValue(PASTEDSIDES)).sides;
-		if (pastedSides[0] != side && pastedSides[1] != side)
+		if (side != pastedSides[0] && side != pastedSides[1]) {
 
 			if (side == EnumFacing.DOWN || pastedSides[0] == EnumFacing.DOWN || pastedSides[1] == EnumFacing.DOWN)
 				return BlockRedstonePasteWire_TriplePasted_OnGround.getStateFromSides(EnumSet.of(side, pastedSides));
 			else
 				return BlockRedstonePasteWire_TriplePasted_OnWalls.getStateFromSides(EnumSet.of(side, pastedSides));
-		else
+		} else
 			return null;
 	}
 
 	static IBlockState getStateFromSides(EnumSet<EnumFacing> sides) {
+		Iterator<EnumFacing> sideIterator = sides.iterator();
+
+		if (sideIterator.next() == sideIterator.next().getOpposite())
+			return BlockRedstonePasteWire_SinglePasted.getStateFromSide(sides.iterator().next());
+
 		StringBuilder pasting = new StringBuilder(2);
 
 		for (EnumFacing side : sides)
@@ -50,10 +68,11 @@ public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire 
 	EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
 		EnumSet<EnumFacing> validPastedSides = EnumSet.noneOf(EnumFacing.class);
 
-		for (EnumFacing pastedSide : ((EnumPasting) state.getValue(PASTEDSIDES)).sides)
+		for (EnumFacing pastedSide : ((EnumPasting) state.getValue(PASTEDSIDES)).sides) {
 
 			if (canPasteOnSideOfBlock(pastedSide.getOpposite(), pos.offset(pastedSide), world))
 				validPastedSides.add(pastedSide);
+		}
 
 		return validPastedSides;
 	}
@@ -88,12 +107,14 @@ public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire 
 		SE(EnumFacing.SOUTH, EnumFacing.EAST);
 
 		private final EnumFacing[] sides;
+		private final EnumSet<EnumFacing> sideSet;
 		private final String name;
 
 		private static final EnumPasting[] PASTING_LOOKUP = new EnumPasting[EnumPasting.values().length];
 
 		private EnumPasting(EnumFacing side1, EnumFacing side2) {
 			this.sides = new EnumFacing[] { side1, side2 };
+			this.sideSet = EnumSet.of(side1, side2);
 			this.name = side1.getName() + ", " + side2.getName();
 		}
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
+// TODO: Just use block states instead, stupid.
 public class PowerLookup {
 	private static HashMap<BlockPos, Byte> powerMap_Overworld = new HashMap<BlockPos, Byte>();
 	private static HashMap<BlockPos, Byte> powerMap_Nether = new HashMap<BlockPos, Byte>();

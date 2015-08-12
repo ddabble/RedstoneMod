@@ -1,29 +1,29 @@
 package dabble.redstonemod.util;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import dabble.redstonemod.block.BlockRedstonePasteWire;
+import net.minecraft.util.EnumFacing.Axis;
 
 public enum EnumModel {
 	NONE(0, 1, 0, 1),
+
 	NS(1, 2, 0, 1),
 	WE(2, 3, 0, 1),
+
 	NW(3, 4, 0, 1),
 	NE(4, 5, 0, 1),
 	SW(5, 6, 0, 1),
 	SE(6, 7, 0, 1),
+
 	NSW(7, 8, 0, 1),
 	NSE(8, 9, 0, 1),
 	NWE(9, 10, 0, 1),
 	SWE(0, 1, 1, 2),
+
 	NSWE(1, 2, 1, 2);
 
 	private final double minU;
@@ -54,338 +54,163 @@ public enum EnumModel {
 		return this.maxV;
 	}
 
-	public static EnumMap<EnumFacing, EnumModel> getModel(BlockRedstonePasteWire wire, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, BlockPos pos, World world) {
-		EnumMap<EnumFacing, EnumSet<EnumFacing>> faces = new EnumMap<EnumFacing, EnumSet<EnumFacing>>(EnumFacing.class);
+	public static EnumMap<EnumFacing, EnumModel> getModelFromExternalConnections(EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, EnumSet<EnumFacing> pastedSides) {
 		EnumMap<EnumFacing, EnumModel> model = new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
-		EnumFacing[] pastedSides = wire.getPastedSides(world.getBlockState(pos));
+		addInternalConnections(connectionSides, pastedSides);
 
-		for (EnumFacing pastedSide : pastedSides) {
-			model.put(pastedSide, NS);
-		}
-
-		// for (EnumFacing blockSide : blockDirections) {
-		// EnumSet<EnumFacing> connections = EnumSet.noneOf(EnumFacing.class);
-		//
-		// for (EnumFacing side : connectionDirections) {
-		//
-		// if (side == blockSide.getOpposite())
-		// continue;
-		//
-		// Block block = world.getBlockState(pos.offset(side)).getBlock();
-		//
-		// // TODO: Move this to checkBlockInDirection() in BlockRedstonePasteWire
-		// if (block instanceof BlockRedstonePasteWire && (((BlockRedstonePasteWire) block).pastedSide == blockSide || ((BlockRedstonePasteWire) block).pastedSide2 == blockSide))
-		// connections.add(side);
-		// else if (blockSide == pastedSide || blockSide == pastedSide2)
-		// connections.add(side);
-		// }
-		//
-		// for (EnumFacing[] side : diagonalConnectionDirections) {
-		//
-		// // Sorts out any sides that are not directly next to the current blockSide
-		// if (side[0] != blockSide && side[1] != blockSide)
-		// continue;
-		//
-		// BlockRedstonePasteWire diagonalBlock = (BlockRedstonePasteWire) world.getBlockState(pos.offset(side[0]).offset(side[1])).getBlock();
-		// EnumFacing otherSide = ((blockSide == side[0]) ? side[1] : side[0]);
-		//
-		// if (!connections.contains(otherSide) && (diagonalBlock.pastedSide == otherSide.getOpposite() || diagonalBlock.pastedSide2 == otherSide.getOpposite()
-		// || diagonalBlock.pastedSide == pastedSide || diagonalBlock.pastedSide == pastedSide2
-		// || diagonalBlock.pastedSide2 == pastedSide || diagonalBlock.pastedSide2 == pastedSide2))
-		// connections.add(otherSide);
-		// }
-		//
-		// if (connections.size() == 0) {
-		//
-		// if (blockSide == pastedSide || blockSide == pastedSide2)
-		// faces.put(blockSide, connections);
-		//
-		// continue;
-		// } /*
-		// * else
-		// * normaliseAndSort(connections, blockSide);
-		// */
-		//
-		// if (connections.size() == 1)
-		// connections.add(connections.iterator().next().getOpposite());
-		//
-		// faces.put(blockSide, connections);
-		// }
-
-		// for (Entry<EnumFacing, EnumSet<EnumFacing>> face : faces.entrySet()) {
-		// EnumFacing currentSide = face.getKey();
-		//
-		// if (face.getValue().size() == 0) {
-		//
-		// if (faces.size() == 1) {
-		// model.put(currentSide, EnumModel.NONE);
-		// return model;
-		// }
-		//
-		// EnumSet<EnumFacing> value = EnumSet.of(EnumFacing.NORTH, EnumFacing.SOUTH);
-		// model.put(currentSide, valueOf(value));
-		// } else
-		// model.put(currentSide, valueOf(face.getValue()));
-		// }
+		for (Entry<EnumFacing, EnumSet<EnumFacing>> side : connectionSides.entrySet())
+			model.put(side.getKey(), getModelFromConnections(side.getValue(), side.getKey()));
 
 		return model;
 	}
 
-	private static void normaliseAndSort(ArrayList<EnumFacing> connectionSides, EnumFacing pastedSide) {
+	private static void addInternalConnections(EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, EnumSet<EnumFacing> pastedSides) {
 
-		// TODO: Remove this when finished (?)
-		if (connectionSides.size() > 0 && pastedSide != EnumFacing.DOWN)
+		for (EnumFacing pastedSide : pastedSides) {
+			EnumSet<EnumFacing> pastedSideConnections = null;
 
-			for (byte i = 0; i < connectionSides.size(); ++i) {
-				EnumFacing currentSide = connectionSides.get(i);
-				EnumFacing normalisedSide = getNormalisedSide(currentSide, pastedSide);
+			if (!connectionSides.containsKey(pastedSide))
+				pastedSideConnections = EnumSet.noneOf(EnumFacing.class);
 
-				if (normalisedSide != currentSide)
-					connectionSides.set(i, normalisedSide);
+			for (EnumFacing borderingSide : getBorderingFacings(pastedSide)) {
+
+				if (pastedSides.contains(borderingSide)) {
+
+					if (pastedSideConnections == null)
+						connectionSides.get(pastedSide).add(borderingSide);
+					else
+						pastedSideConnections.add(borderingSide);
+				} else if (connectionSides.containsKey(borderingSide)) {
+					connectionSides.get(borderingSide).add(pastedSide);
+
+					if (pastedSideConnections == null)
+						connectionSides.get(pastedSide).add(borderingSide);
+					else
+						pastedSideConnections.add(borderingSide);
+				}
 			}
 
-		connectionSides.sort(new Comparator<EnumFacing>() {
-			@Override
-			public int compare(EnumFacing side1, EnumFacing side2) {
-				return (int) Math.signum(side1.getIndex() - side2.getIndex());
-			}
-		});
-	}
-
-	private static EnumFacing getNormalisedSide(EnumFacing currentSide, EnumFacing pastedSide) {
-
-		switch (pastedSide) {
-			case UP:
-				if (currentSide.getAxis() == EnumFacing.Axis.X)
-					currentSide = currentSide.getOpposite();
-
-				break;
-
-			case NORTH:
-				if (currentSide.getAxis() == EnumFacing.Axis.Y)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
-
-				break;
-
-			case SOUTH:
-				if (currentSide.getAxis() == EnumFacing.Axis.X)
-					currentSide = currentSide.getOpposite();
-				else if (currentSide.getAxis() == EnumFacing.Axis.Y)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
-
-				break;
-
-			case WEST:
-				if (currentSide.getAxis() == EnumFacing.Axis.Y)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
-				else if (currentSide.getAxis() == EnumFacing.Axis.Z)
-					currentSide = currentSide.rotateY();
-
-				break;
-
-			case EAST:
-				if (currentSide.getAxis() == EnumFacing.Axis.Y)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
-				else if (currentSide.getAxis() == EnumFacing.Axis.Z)
-					currentSide = currentSide.rotateYCCW();
-
-				break;
-
-			default:
-				break;
-		}
-
-		return currentSide;
-	}
-
-	private static EnumFacing asdf(EnumFacing currentSide, EnumFacing pastedSide) {
-
-		switch (pastedSide) {
-			case UP:
-				if (currentSide.getAxis() != EnumFacing.Axis.X)
-					currentSide = currentSide.getOpposite();
-
-				break;
-
-			case NORTH:
-				if (currentSide.getAxis() != EnumFacing.Axis.X)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.X);
-
-				break;
-
-			case SOUTH:
-				if (currentSide.getAxis() != EnumFacing.Axis.X)
-					currentSide = rotateXCCW(currentSide);
-
-				break;
-
-			case WEST:
-				if (currentSide.getAxis() != EnumFacing.Axis.Z)
-					currentSide = rotateZCCW(currentSide);
-
-				break;
-
-			case EAST:
-				if (currentSide.getAxis() != EnumFacing.Axis.Z)
-					currentSide = currentSide.rotateAround(EnumFacing.Axis.Z);
-
-				break;
-
-			default:
-				break;
-		}
-
-		return currentSide;
-	}
-
-	public static EnumFacing rotateCCWAround(EnumFacing side, EnumFacing.Axis axis) {
-		switch (SwitchPlane.AXIS_LOOKUP[axis.ordinal()]) {
-			case 1:
-				if (side != EnumFacing.WEST && side != EnumFacing.EAST)
-					return rotateXCCW(side);
-
-				return side;
-
-			case 2:
-				if (side != EnumFacing.UP && side != EnumFacing.DOWN)
-					return side.rotateYCCW();
-
-				return side;
-
-			case 3:
-				if (side != EnumFacing.NORTH && side != EnumFacing.SOUTH)
-					return rotateZCCW(side);
-
-				return side;
-
-			default:
-				throw new IllegalStateException("Unable to get CW facing for axis " + axis);
+			if (pastedSideConnections != null)
+				connectionSides.put(pastedSide, pastedSideConnections);
 		}
 	}
 
-	private static EnumFacing rotateXCCW(EnumFacing side) {
+	private static EnumFacing[] getBorderingFacings(EnumFacing facing) {
 
-		switch (SwitchPlane.FACING_LOOKUP[side.ordinal()]) {
-			case 1:
-				return EnumFacing.UP;
+		switch (facing.getAxis()) {
+			case X:
+				return new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH };
 
-			case 2:
-			case 4:
+			case Y:
+				return new EnumFacing[] { EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST };
+
+			case Z:
+				return new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST };
+
 			default:
-				throw new IllegalStateException("Unable to get X-rotated facing of " + side);
-
-			case 3:
-				return EnumFacing.DOWN;
-
-			case 5:
-				return EnumFacing.SOUTH;
-
-			case 6:
-				return EnumFacing.NORTH;
+				return null;
 		}
 	}
 
-	private static EnumFacing rotateZCCW(EnumFacing side) {
+	private static EnumModel getModelFromConnections(EnumSet<EnumFacing> connections, EnumFacing side) {
 
-		switch (SwitchPlane.FACING_LOOKUP[side.ordinal()]) {
-			case 2:
-				return EnumFacing.UP;
-
-			case 3:
-			default:
-				throw new IllegalStateException("Unable to get Z-rotated facing of " + side);
-
-			case 4:
-				return EnumFacing.DOWN;
-
-			case 5:
-				return EnumFacing.WEST;
-
-			case 6:
-				return EnumFacing.EAST;
-		}
-	}
-
-	private static EnumModel valueOf(EnumSet<EnumFacing> model) {
-
-		if (model.size() == 4)
-			return NSWE;
-
-		StringBuffer sb = new StringBuffer();
-
-		for (EnumFacing direction : model)
-			sb.append(Character.toUpperCase(direction.toString().charAt(0)));
-
-		try {
-			return valueOf(sb.toString());
-		} catch (Exception e) {
-			// System.out.println("Could not find the enum with the value of " + sb + ".");
+		if (connections.isEmpty())
 			return NONE;
+
+		connections = getNormalisedConnections(connections, side);
+		Iterator<EnumFacing> connectionIterator = connections.iterator();
+
+		switch (connections.size()) {
+			case 1:
+				if (connectionIterator.next().getAxis() == Axis.Z)
+					return NS;
+				else
+					return WE;
+
+			case 2:
+				if (connectionIterator.next() == EnumFacing.NORTH) {
+
+					if (connectionIterator.next() == EnumFacing.WEST)
+						return NW;
+					else
+						return NE;
+				} else {
+
+					if (connectionIterator.next() == EnumFacing.WEST)
+						return SW;
+					else
+						return SE;
+				}
+
+			case 3:
+				if (connectionIterator.next() == EnumFacing.SOUTH)
+					return SWE;
+				else if (connectionIterator.next() == EnumFacing.WEST)
+					return NWE;
+				else if (connectionIterator.next() == EnumFacing.WEST)
+					return NSW;
+				else
+					return NSE;
+
+			case 4:
+				return NSWE;
+
+			default:
+				return null;
 		}
 	}
 
-	static final class SwitchPlane {
-		static final int[] AXIS_LOOKUP;
-		static final int[] FACING_LOOKUP;
+	private static EnumSet<EnumFacing> getNormalisedConnections(EnumSet<EnumFacing> connections, EnumFacing side) {
 
-		static {
-			FACING_LOOKUP = new int[EnumFacing.values().length];
+		if (connections.size() == 2) {
+			Iterator<EnumFacing> connectionIterator = connections.iterator();
 
-			try {
-				FACING_LOOKUP[EnumFacing.NORTH.ordinal()] = 1;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				FACING_LOOKUP[EnumFacing.EAST.ordinal()] = 2;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				FACING_LOOKUP[EnumFacing.SOUTH.ordinal()] = 3;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				FACING_LOOKUP[EnumFacing.WEST.ordinal()] = 4;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				FACING_LOOKUP[EnumFacing.UP.ordinal()] = 5;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				FACING_LOOKUP[EnumFacing.DOWN.ordinal()] = 6;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			AXIS_LOOKUP = new int[EnumFacing.Axis.values().length];
-
-			try {
-				AXIS_LOOKUP[EnumFacing.Axis.X.ordinal()] = 1;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				AXIS_LOOKUP[EnumFacing.Axis.Y.ordinal()] = 2;
-			} catch (NoSuchFieldError e) {
-				;
-			}
-
-			try {
-				AXIS_LOOKUP[EnumFacing.Axis.Z.ordinal()] = 3;
-			} catch (NoSuchFieldError e) {
-				;
-			}
+			if (connectionIterator.next() == connectionIterator.next().getOpposite())
+				return EnumSet.of(getNormalisedConnection(connections.iterator().next(), side));
 		}
+
+		EnumSet<EnumFacing> normalisedConnections = EnumSet.noneOf(EnumFacing.class);
+
+		for (EnumFacing connection : connections)
+			normalisedConnections.add(getNormalisedConnection(connection, side));
+
+		return normalisedConnections;
+	}
+
+	private static EnumFacing getNormalisedConnection(EnumFacing connection, EnumFacing side) {
+
+		switch (side) {
+			case DOWN:
+				return connection;
+
+			case UP:
+				if (connection.getAxis() == Axis.Z)
+					return connection.getOpposite();
+				else
+					break;
+
+			case NORTH:
+				break;
+
+			case SOUTH:
+				if (connection.getAxis() == Axis.X)
+					return connection.getOpposite();
+				else
+					break;
+
+			case WEST:
+				if (connection.getAxis() == Axis.Z)
+					return connection.rotateY();
+				else
+					break;
+
+			case EAST:
+				if (connection.getAxis() == Axis.Z)
+					return connection.rotateYCCW();
+				else
+					break;
+		}
+
+		return connection.rotateAround(Axis.X);
 	}
 }

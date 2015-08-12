@@ -1,22 +1,30 @@
 package dabble.redstonemod.block;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map.Entry;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockCompressedPowered;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockLever;
+import net.minecraft.block.BlockLever.EnumOrientation;
+import net.minecraft.block.BlockRailBase.EnumRailDirection;
+import net.minecraft.block.BlockRailDetector;
 import net.minecraft.block.BlockRedstoneDiode;
 import net.minecraft.block.BlockRedstoneRepeater;
+import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +43,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import dabble.redstonemod.init.ModItems;
 import dabble.redstonemod.renderer.RedstonePasteRenderer;
 import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
+import dabble.redstonemod.util.EnumFacing2;
 import dabble.redstonemod.util.EnumModel;
 import dabble.redstonemod.util.PowerLookup;
 
@@ -44,7 +53,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	public abstract EnumFacing[] getPastedSides(IBlockState state);
 
-	public abstract IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state);
+	public abstract EnumSet<EnumFacing> getPastedSidesSet(IBlockState state);
+
+	public abstract boolean isPastedOnSide(EnumFacing side, IBlockState state);
+
+	public abstract IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state, BlockPos pos, EntityPlayer player, World world);
 
 	abstract EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world);
 
@@ -71,6 +84,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	}
 
 	@Override
+	public boolean isAssociatedBlock(Block otherBlock) {
+		return otherBlock instanceof BlockRedstonePasteWire;
+	}
+
+	@Override
 	public boolean isFullCube() {
 		return false;
 	}
@@ -87,8 +105,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	@Override
 	public boolean canProvidePower() {
-		// TODO: Look into what changing this does
-		return this.canProvidePower;
+		// // TODO: Look into what changing this does
+		// return this.canProvidePower;
+		// Currently like this to prevent redstone connecting to redstone paste
+		return false;
 	}
 
 	@Override
@@ -99,7 +119,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	@Override
 	public int getRenderType() {
-		return 2;
+		return -1;
 	}
 
 	@Override
@@ -120,78 +140,183 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	}
 
 	public EnumMap<EnumFacing, EnumModel> getModel(BlockPos pos, World world) {
-		ArrayList<EnumFacing> connectionDirections = new ArrayList<EnumFacing>();
-		ArrayList<EnumFacing> blockDirections = new ArrayList<EnumFacing>();
-		ArrayList<EnumFacing[]> diagonalConnectionDirections = new ArrayList<EnumFacing[]>();
+		EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides = new EnumMap<EnumFacing, EnumSet<EnumFacing>>(EnumFacing.class);
+		IBlockState state = world.getBlockState(pos);
 
 		for (EnumFacing direction : EnumFacing.VALUES)
-			checkBlockInDirection(direction, connectionDirections, blockDirections, pos, world);
+			this.checkBlockInDirection(direction, connectionSides, state, pos, world);
 
-		checkBlockInDirection(EnumFacing.DOWN, EnumFacing.NORTH, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.DOWN, EnumFacing.SOUTH, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.DOWN, EnumFacing.WEST, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.DOWN, EnumFacing.EAST, diagonalConnectionDirections, blockDirections, pos, world);
+		for (EnumFacing2 direction : EnumFacing2.VALUES)
+			this.checkBlockInDirection(direction, connectionSides, state, pos, world);
 
-		checkBlockInDirection(EnumFacing.UP, EnumFacing.NORTH, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.UP, EnumFacing.SOUTH, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.UP, EnumFacing.WEST, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.UP, EnumFacing.EAST, diagonalConnectionDirections, blockDirections, pos, world);
-
-		checkBlockInDirection(EnumFacing.NORTH, EnumFacing.WEST, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.NORTH, EnumFacing.EAST, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.SOUTH, EnumFacing.WEST, diagonalConnectionDirections, blockDirections, pos, world);
-		checkBlockInDirection(EnumFacing.SOUTH, EnumFacing.EAST, diagonalConnectionDirections, blockDirections, pos, world);
-
-		return EnumModel.getModel(this, connectionDirections, diagonalConnectionDirections, blockDirections, pos, world);
+		return EnumModel.getModelFromExternalConnections(connectionSides, this.getPastedSidesSet(state));
 	}
 
-	private void checkBlockInDirection(EnumFacing side, ArrayList<EnumFacing> connectionDirections, ArrayList<EnumFacing> blockDirections, BlockPos pos, World world) {
-		AttachState state = getAttachState(side, pos, world);
-
-		if (state != AttachState.NONE)
-
-			// TODO: Separate these
-			if (state == AttachState.CONNECT || state == AttachState.PASTE)
-				connectionDirections.add(side);
-			else
-				blockDirections.add(side);
-	}
-
-	private AttachState getAttachState(EnumFacing side, BlockPos pos, World world) {
-		BlockPos neighbourPos = pos.offset(side);
+	private void checkBlockInDirection(EnumFacing direction, EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, IBlockState state, BlockPos pos, World world) {
+		BlockPos neighbourPos = pos.offset(direction);
 		IBlockState neighbourState = world.getBlockState(neighbourPos);
 		Block neighbourBlock = neighbourState.getBlock();
 
-		if (neighbourBlock == Blocks.air)
-			return AttachState.NONE;
-		else if (neighbourBlock instanceof BlockRedstonePasteWire)
-			return AttachState.PASTE;
-		else if (canPasteOnSideOfBlock(side.getOpposite(), neighbourPos, world))
-			return AttachState.BLOCK;
-		else if (Blocks.unpowered_repeater.isAssociated(neighbourBlock)) {
-			EnumFacing direction = (EnumFacing) neighbourState.getValue(BlockRedstoneRepeater.FACING);
-			if (direction == side || direction.getOpposite() == side)
-				return AttachState.CONNECT;
-		} else if (neighbourBlock.canConnectRedstone(world, pos, side) && !(neighbourBlock == Blocks.redstone_wire))
-			return AttachState.CONNECT;
+		if (neighbourBlock instanceof BlockRedstonePasteWire) {
+			EnumSet<EnumFacing> pastedSides = this.getPastedSidesSet(state);
+			EnumSet<EnumFacing> neighbourPastedSides = ((BlockRedstonePasteWire) neighbourBlock).getPastedSidesSet(neighbourState);
+			boolean hasConnected = false;
 
-		return AttachState.NONE;
-	}
+			for (EnumFacing side : neighbourPastedSides) {
 
-	private void checkBlockInDirection(EnumFacing side1, EnumFacing side2, ArrayList<EnumFacing[]> diagonalConnectionDirections, ArrayList<EnumFacing> blockDirections, BlockPos pos, World world) {
+				if (pastedSides.contains(side)) {
+					this.addConnection(side, direction, connectionSides, state, pos, world, true);
+					hasConnected = true;
+				}
+			}
 
-		if (blockDirections.contains(side1) && blockDirections.contains(side2))
+			if (!hasConnected) {
+
+				for (EnumFacing side : EnumFacing.VALUES) {
+
+					if (pastedSides.contains(side)) {
+						boolean isOppositeSide = neighbourPastedSides.size() == 1 && side == neighbourPastedSides.iterator().next().getOpposite();
+
+						if (!isOppositeSide && canPasteOnSideOfBlock(side.getOpposite(), neighbourPos.offset(side), world)) {
+							this.addConnection(side, direction, connectionSides, state, pos, world, true);
+							return;
+						}
+					} else if (neighbourPastedSides.contains(side)) {
+						boolean isOppositeSide = pastedSides.size() == 1 && side == pastedSides.iterator().next().getOpposite();
+
+						if (!isOppositeSide && canPasteOnSideOfBlock(side.getOpposite(), pos.offset(side), world)) {
+							this.addConnection(side, direction, connectionSides, state, pos, world, false);
+							return;
+						}
+					}
+				}
+			}
+
 			return;
+		}
+		// TODO: Maybe switch places with this and the redstone_wire one, in case canProvidePower() returns false in BlockRedstoneWire..
+		// (Only necessary if this method is going to be called while calculating redstone power.)
+		else if (!neighbourBlock.canProvidePower())
+			return;
+		else if (neighbourBlock == Blocks.redstone_wire) {
 
-		if (getAttachState(side1, side2, pos, world) != AttachState.NONE)
-			diagonalConnectionDirections.add(new EnumFacing[] { side1, side2 });
+			if (isRedstoneWirePoweringDirection(direction.getOpposite(), neighbourPos, world))
+				this.addConnection(EnumFacing.DOWN, direction, connectionSides, state, pos, world, false);
+
+			return;
+		} else if (Blocks.unpowered_repeater.isAssociated(neighbourBlock)) {
+
+			if (direction.getAxis() == ((EnumFacing) neighbourState.getValue(BlockDirectional.FACING)).getAxis())
+				this.addConnection(EnumFacing.DOWN, direction, connectionSides, state, pos, world, false);
+
+			return;
+		} else if (neighbourBlock instanceof BlockCompressedPowered) {
+
+			for (EnumFacing side : this.getPastedSides(state)) {
+
+				if (side != direction.getOpposite())
+					this.addConnection(side, direction, connectionSides, state, pos, world, true);
+			}
+
+			return;
+		} else {
+			EnumFacing attachedSide = this.getAttachedSideOfBlockProvidingPower(neighbourState, neighbourBlock);
+
+			if (attachedSide != null && this.isPastedOnSide(attachedSide, state)) {
+				this.addConnection(attachedSide, direction, connectionSides, state, pos, world, true);
+				return;
+			}
+		}
+
+		this.addConnection(this.getPastedSides(state)[0], direction, connectionSides, state, pos, world, true);
 	}
 
-	private AttachState getAttachState(EnumFacing side1, EnumFacing side2, BlockPos pos, World world) {
-		if (world.getBlockState(pos.offset(side1).offset(side2)).getBlock() instanceof BlockRedstonePasteWire)
-			return AttachState.PASTE;
+	private static boolean isRedstoneWirePoweringDirection(EnumFacing direction, BlockPos pos, World world) {
+		BlockPos leftPos = pos.offset(direction.rotateYCCW());
+
+		if (isRedstoneWire(leftPos, world) || isRedstoneWire(leftPos.down(), world) || isRedstoneWire(leftPos.up(), world))
+			return false;
+
+		BlockPos rightPos = pos.offset(direction.rotateY());
+
+		if (isRedstoneWire(rightPos, world) || isRedstoneWire(rightPos.down(), world) || isRedstoneWire(rightPos.up(), world))
+			return false;
+
+		if (isRedstoneWire(pos.offset(direction).down(), world))
+			return false;
+
+		return true;
+	}
+
+	private static boolean isRedstoneWire(BlockPos pos, World world) {
+		return world.getBlockState(pos).getBlock() == Blocks.redstone_wire;
+	}
+
+	private EnumFacing getAttachedSideOfBlockProvidingPower(IBlockState state, Block block) {
+
+		if (block instanceof BlockRedstoneTorch)
+			return (EnumFacing) state.getValue(BlockRedstoneTorch.FACING);
+		else if (block instanceof BlockLever)
+			return ((EnumOrientation) state.getValue(BlockLever.FACING)).getFacing();
+		else if (block instanceof BlockButton)
+			return (EnumFacing) state.getValue(BlockButton.FACING);
+		else if (block instanceof BlockRailDetector) {
+
+			switch ((EnumRailDirection) state.getValue(BlockRailDetector.SHAPE)) {
+				case ASCENDING_EAST:
+					return EnumFacing.EAST;
+
+				case ASCENDING_WEST:
+					return EnumFacing.WEST;
+
+				case ASCENDING_NORTH:
+					return EnumFacing.NORTH;
+
+				case ASCENDING_SOUTH:
+					return EnumFacing.SOUTH;
+
+				default:
+					return EnumFacing.DOWN;
+			}
+		} else if (block instanceof BlockTripWireHook)
+			return (EnumFacing) state.getValue(BlockTripWireHook.FACING);
+
+		return null;
+	}
+
+	private void checkBlockInDirection(EnumFacing2 direction, EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, IBlockState state, BlockPos pos, World world) {
+		IBlockState neighbourState = world.getBlockState(direction.offsetBlockPos(pos));
+
+		if (neighbourState.getBlock() instanceof BlockRedstonePasteWire) {
+			BlockRedstonePasteWire neighbourBlock = (BlockRedstonePasteWire) neighbourState.getBlock();
+
+			if (!world.getBlockState(pos.offset(direction.facing1)).getBlock().isSolidFullCube()) {
+				boolean isOppositeSide = neighbourBlock.numberOfPastedSides == 1 && neighbourBlock.isPastedOnSide(direction.facing1, neighbourState);
+
+				if ((!isOppositeSide && this.isPastedOnSide(direction.facing2, state)) || neighbourBlock.isPastedOnSide(direction.facing1.getOpposite(), neighbourState))
+					this.addConnection(direction.facing2, direction.facing1, connectionSides, state, pos, world, false);
+			} else if (!world.getBlockState(pos.offset(direction.facing2)).getBlock().isSolidFullCube()) {
+				boolean isOppositeSide = neighbourBlock.numberOfPastedSides == 1 && neighbourBlock.isPastedOnSide(direction.facing2, neighbourState);
+
+				if ((!isOppositeSide && this.isPastedOnSide(direction.facing1, state)) || neighbourBlock.isPastedOnSide(direction.facing2.getOpposite(), neighbourState))
+					this.addConnection(direction.facing1, direction.facing2, connectionSides, state, pos, world, false);
+			}
+		}
+	}
+
+	private void addConnection(EnumFacing side, EnumFacing connection, EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, IBlockState state, BlockPos pos, World world, boolean isGuaranteedPasted) {
+
+		if (!isGuaranteedPasted) {
+			boolean isOppositeSide = this.numberOfPastedSides == 1 && this.isPastedOnSide(side.getOpposite(), state);
+
+			if (isOppositeSide || !canPasteOnSideOfBlock(side.getOpposite(), pos.offset(side), world))
+				return;
+		}
+
+		if (connectionSides.containsKey(side))
+			connectionSides.get(side).add(connection);
 		else
-			return AttachState.NONE;
+			connectionSides.put(side, EnumSet.of(connection));
 	}
 
 	@Override
@@ -239,8 +364,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			Entry<EnumFacing, Vec3> vec = hitVecs.entrySet().iterator().next();
 			hitVec = vec.getValue();
 			sideLookingAt = vec.getKey();
-		} else
-			for (Entry<EnumFacing, Vec3> vec : hitVecs.entrySet())
+		} else {
+
+			for (Entry<EnumFacing, Vec3> vec : hitVecs.entrySet()) {
 
 				if (hitVec == null) {
 					hitVec = vec.getValue();
@@ -249,6 +375,8 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 					hitVec = vec.getValue();
 					sideLookingAt = vec.getKey();
 				}
+			}
+		}
 
 		if (hitVec == null)
 			return null;
@@ -338,7 +466,8 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		if (facesHit == 0)
 			return null;
 
-		if (facesHit > 1)
+		if (facesHit > 1) {
+
 			switch (sideHitAxis) {
 				case X:
 					if (hitVec.yCoord <= 1 / 16.0 && hitVec.zCoord <= 1 - hitVec.yCoord && hitVec.zCoord >= hitVec.yCoord)
@@ -376,6 +505,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 					break;
 			}
+		}
 
 		MovingObjectPosition redstonePasteHit = new MovingObjectPosition(nearestMOP.hitVec, nearestMOP.sideHit, pos);
 		redstonePasteHit.hitInfo = sideLookingAt;
@@ -387,15 +517,17 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		if (canPasteOnSideOfBlock(startSide.getOpposite(), pos.offset(startSide), world))
 			return startSide;
 
-		for (EnumFacing currentSide : EnumFacing.VALUES)
+		// TODO: Try pasting on the approximated side the player is looking at before doing this
+		for (EnumFacing currentSide : EnumFacing.VALUES) {
 
 			if (currentSide != startSide && canPasteOnSideOfBlock(currentSide.getOpposite(), pos.offset(currentSide), world))
 				return currentSide;
+		}
 
 		return null;
 	}
 
-	protected static boolean canPasteOnSideOfBlock(EnumFacing side, BlockPos pos, World world) {
+	public static boolean canPasteOnSideOfBlock(EnumFacing side, BlockPos pos, World world) {
 		// TODO: Double check what should happen in all the different cases
 		Block block = world.getBlockState(pos).getBlock();
 
@@ -467,41 +599,23 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	protected void updateSurroundingBlocks(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste) {
 
 		for (EnumFacing direction : EnumFacing.VALUES)
-			this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, direction);
+			this.updateBlock(pos.offset(direction), world, shouldOnlyAffectRedstonePaste);
 
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.DOWN, EnumFacing.NORTH);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.DOWN, EnumFacing.SOUTH);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.DOWN, EnumFacing.WEST);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.DOWN, EnumFacing.EAST);
+		for (EnumFacing2 direction : EnumFacing2.VALUES)
+			this.updateBlock(direction.offsetBlockPos(pos), world, shouldOnlyAffectRedstonePaste);
 
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.UP, EnumFacing.NORTH);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.UP, EnumFacing.SOUTH);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.UP, EnumFacing.WEST);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.UP, EnumFacing.EAST);
-
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.NORTH, EnumFacing.WEST);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.NORTH, EnumFacing.EAST);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.SOUTH, EnumFacing.WEST);
-		this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, EnumFacing.SOUTH, EnumFacing.EAST);
-
-		if (!shouldOnlyAffectRedstonePaste)
+		if (!shouldOnlyAffectRedstonePaste) {
 
 			for (EnumFacing direction : EnumFacing.VALUES)
-				this.updateBlockInDirection(pos, world, shouldOnlyAffectRedstonePaste, direction, direction);
+				this.updateBlock(pos.offset(direction).offset(direction), world, shouldOnlyAffectRedstonePaste);
+		}
 	}
 
-	private void updateBlockInDirection(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste, EnumFacing... direction) {
+	private void updateBlock(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste) {
 
-		if (direction.length == 2)
-			pos = pos.offset(direction[0]).offset(direction[1]);
-		else
-			pos = pos.offset(direction[0]);
-
-		if (shouldOnlyAffectRedstonePaste) {
-
-			if (world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire)
-				this.calculateCurrentChanges(pos, world, shouldOnlyAffectRedstonePaste);
-		} else
+		if (world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire)
+			this.calculateCurrentChanges(pos, world, shouldOnlyAffectRedstonePaste);
+		else if (!shouldOnlyAffectRedstonePaste)
 			world.notifyBlockOfStateChange(pos, this);
 	}
 
@@ -640,10 +754,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			else {
 				EnumSet<EnumFacing> sidesProvidingPowerTo = EnumSet.noneOf(EnumFacing.class);
 
-				for (EnumFacing horizontalSide : EnumFacing.HORIZONTALS)
+				for (EnumFacing horizontalSide : EnumFacing.HORIZONTALS) {
 
 					if (this.canProvidePowerToSide(world, pos, horizontalSide))
 						sidesProvidingPowerTo.add(horizontalSide);
+				}
 
 				if (side.getAxis().isHorizontal() && sidesProvidingPowerTo.isEmpty() || world.getBlockState(pos.offset(side.getOpposite())).getBlock() instanceof BlockRedstoneDiode)
 					return signalStrength;
@@ -683,14 +798,13 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass) {
-		return world.getBlockState(pos).getBlock() != this ? super.colorMultiplier(world, pos, renderPass) : RedstonePasteRenderer.colorMultiplier(PowerLookup.getPower(pos, (World) world));
+		return world.getBlockState(pos).getBlock() != this ? super.colorMultiplier(world, pos, renderPass) : RedstonePasteRenderer.calculateColour(PowerLookup.getPower(pos, (World) world));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		byte i = PowerLookup.getPower(pos, world);
-
 		if (i != 0) {
 			double d0 = pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
 			double d1 = pos.getY() + 1 / 16.0;
@@ -699,15 +813,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			float f1 = f * 0.6f + 0.4f;
 			float f2 = Math.max(0, f * f * 0.7f - 0.5f);
 			float f3 = Math.max(0, f * f * 0.6f - 0.7f);
-			world.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, f1, f2, f3, new int[0]);
+			world.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, f1, f2, f3);
 		}
 	}
 
 	public String getDebugInfo(BlockPos pos, World world) {
 		return "power: " + PowerLookup.getPower(pos, world);
-	}
-
-	private static enum AttachState {
-		NONE, PASTE, CONNECT, BLOCK;
 	}
 }

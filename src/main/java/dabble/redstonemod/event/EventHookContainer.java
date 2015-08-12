@@ -1,4 +1,4 @@
-package dabble.redstonemod.renderer;
+package dabble.redstonemod.event;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class EventHookContainer {
 					String text = ((BlockRedstonePasteWire) block).getDebugInfo(pos, mc.theWorld);
 					int screenWidth = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight).getScaledWidth();
 					int x = screenWidth - mc.fontRendererObj.getStringWidth(text) - 2;
-					mc.fontRendererObj.drawString(text, x, 137, 0xe0e0e0);
+					mc.fontRendererObj.drawString(text, x, 137, 0xE0E0E0);
 				}
 			}
 		}
@@ -73,9 +73,11 @@ public class EventHookContainer {
 		@SuppressWarnings("unchecked")
 		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
 
-		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
+		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet()) {
+
 			if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
 				PowerLookup.addBlockNeedingUpdate(tileEntity.getKey(), event.world);
+		}
 	}
 
 	@SubscribeEvent
@@ -86,8 +88,11 @@ public class EventHookContainer {
 		if (blocksNeedingUpdate.size() > 0) {
 			System.out.println("Updating the power of " + blocksNeedingUpdate.size() + " redstone paste blocks in " + world.provider.getDimensionName());
 
-			for (BlockPos pos : blocksNeedingUpdate)
-				((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).calculateCurrentChanges(pos, world, true);
+			for (BlockPos pos : blocksNeedingUpdate) {
+
+				if (world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire)
+					((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).calculateCurrentChanges(pos, world, true);
+			}
 
 			PowerLookup.clearBlocksNeedingUpdate(world);
 		}
@@ -104,9 +109,11 @@ public class EventHookContainer {
 			@SuppressWarnings("unchecked")
 			Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
 
-			for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet())
+			for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet()) {
+
 				if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
 					PowerLookup.removePower(tileEntity.getKey(), event.world);
+			}
 		}
 	}
 
@@ -125,10 +132,8 @@ public class EventHookContainer {
 			return;
 
 		EntityPlayer player = event.player;
-		World world = player.worldObj;
 		BlockPos pos = target.getBlockPos();
-		Block block = world.getBlockState(pos).getBlock();
-		if (!(block instanceof BlockRedstonePasteWire))
+		if (!(player.worldObj.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire))
 			return;
 
 		AxisAlignedBB boundingBox = null;
@@ -163,7 +168,6 @@ public class EventHookContainer {
 		}
 
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -175,8 +179,9 @@ public class EventHookContainer {
 		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
 		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
 		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
+		double magicNum = 0.0020000000949949026;
 
-		drawOutlinedBoundingBox(tessellator, worldRenderer, boundingBox.offset(-d0, -d1, -d2));
+		drawOutlinedBoundingBox(tessellator, tessellator.getWorldRenderer(), boundingBox.expand(magicNum, magicNum, magicNum).offset(-d0, -d1, -d2));
 
 		GlStateManager.depthMask(true);
 		GlStateManager.enableTexture2D();
