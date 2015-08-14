@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 import dabble.redstonemod.util.EnumModel;
+import dabble.redstonemod.util.ModelLookup;
 import dabble.redstonemod.util.PowerLookup;
 
 @SideOnly(Side.CLIENT)
@@ -34,10 +35,16 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-		EnumMap<EnumFacing, EnumModel> model = ((BlockRedstonePasteWire) block).getModel(pos, world);
+		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world, (BlockRedstonePasteWire) block);
 		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
 
-		int colour = calculateColour(PowerLookup.getPower(pos, world));
+		int colour;
+
+		if (BlockRedstonePasteWire.isDebugWorld)
+			colour = calculateColour((byte) (int) (Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER));
+		else
+			colour = calculateColour(PowerLookup.getPower(pos, world));
+
 		int red = colour >> 16 & 255;
 		int green = colour >> 8 & 255;
 		int blue = colour & 255;
@@ -48,6 +55,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 
 		worldRenderer.startDrawingQuads();
 		worldRenderer.setColorRGBA(red, green, blue, 255);
+		worldRenderer.setNormal(0, 1, 0);
 
 		for (Entry<EnumFacing, EnumModel> face : model.entrySet())
 			drawFace(worldRenderer, face.getKey(), face.getValue());
@@ -67,20 +75,14 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		else
 			red = (int) ((powerPercentage * 0.6 + 0.4) * 255);
 
-		int green = (int) ((powerPercentage * powerPercentage * 0.7 - 0.5) * 255);
-		if (green < 0)
-			green = 0;
-
-		int blue = (int) ((powerPercentage * powerPercentage * 0.6 - 0.7) * 255);
-		if (blue < 0)
-			blue = 0;
-
+		int green = Math.max(0, (int) ((powerPercentage * powerPercentage * 0.7 - 0.5) * 255));
+		int blue = Math.max(0, (int) ((powerPercentage * powerPercentage * 0.6 - 0.7) * 255));
 		return 0xFF000000 | applyMoisture(red) << 16 | green << 8 | blue;
 	}
 
 	private final static int amountOfLightAbsorbed = 36;
-	private final static int maxLight = 255;
 	private final static int minLight = 76;
+	private final static int maxLight = 255;
 
 	private static int applyMoisture(int colour) {
 		return colour - amountOfLightAbsorbed * (1 - (colour - minLight) / (maxLight - minLight));
@@ -91,7 +93,6 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		double maxU = model.getMaxU();
 		double minV = model.getMinV();
 		double maxV = model.getMaxV();
-		worldRenderer.setNormal(0, 1, 0);
 
 		switch (face) {
 			case DOWN:

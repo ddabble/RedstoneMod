@@ -23,6 +23,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockTripWireHook;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -45,9 +46,13 @@ import dabble.redstonemod.renderer.RedstonePasteRenderer;
 import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.EnumFacing2;
 import dabble.redstonemod.util.EnumModel;
+import dabble.redstonemod.util.ModelLookup;
 import dabble.redstonemod.util.PowerLookup;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
+	// Only here for debugging, like displaying the block's power on the debug screen, and making the game display every possible block state in a debug world.
+	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
+	public static boolean isDebugWorld = false;
 	private boolean canProvidePower = true;
 	private final byte numberOfPastedSides;
 
@@ -134,9 +139,19 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	}
 
 	@Override
+	public int quantityDropped(Random random) {
+		return this.numberOfPastedSides;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public EnumWorldBlockLayer getBlockLayer() {
 		return EnumWorldBlockLayer.CUTOUT;
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		return state.withProperty(POWER, Integer.valueOf(PowerLookup.getPower(pos, (World) world)));
 	}
 
 	public EnumMap<EnumFacing, EnumModel> getModel(BlockPos pos, World world) {
@@ -596,38 +611,27 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return false;
 	}
 
-	protected void updateSurroundingBlocks(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste) {
+	public void updateSurroundingBlocks(BlockPos pos, World world) {
 
-		for (EnumFacing direction : EnumFacing.VALUES)
-			this.updateBlock(pos.offset(direction), world, shouldOnlyAffectRedstonePaste);
+		for (EnumFacing direction : EnumFacing.VALUES) {
+			BlockPos neighbourPos = pos.offset(direction);
+			world.notifyBlockOfStateChange(neighbourPos, this);
+			world.notifyBlockOfStateChange(neighbourPos.offset(direction), this);
+		}
 
 		for (EnumFacing2 direction : EnumFacing2.VALUES)
-			this.updateBlock(direction.offsetBlockPos(pos), world, shouldOnlyAffectRedstonePaste);
-
-		if (!shouldOnlyAffectRedstonePaste) {
-
-			for (EnumFacing direction : EnumFacing.VALUES)
-				this.updateBlock(pos.offset(direction).offset(direction), world, shouldOnlyAffectRedstonePaste);
-		}
+			world.notifyBlockOfStateChange(direction.offsetBlockPos(pos), this);
 	}
 
-	private void updateBlock(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste) {
-
-		if (world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire)
-			this.calculateCurrentChanges(pos, world, shouldOnlyAffectRedstonePaste);
-		else if (!shouldOnlyAffectRedstonePaste)
-			world.notifyBlockOfStateChange(pos, this);
-	}
-
-	public boolean calculateCurrentChanges(BlockPos pos, World world, boolean shouldOnlyAffectRedstonePaste) {
-		byte signalStrength = PowerLookup.getPower(pos, world);
-		int newSignalStrength = signalStrength;
+	public boolean updatePower(BlockPos pos, World world) {
+		byte power = PowerLookup.getPower(pos, world);
+		int newPower = power;
 		this.canProvidePower = false;
-		int indirectSignalStrength = world.isBlockIndirectlyGettingPowered(pos);
+		int indirectPower = world.isBlockIndirectlyGettingPowered(pos);
 		this.canProvidePower = true;
 
-		if (indirectSignalStrength > 0 && indirectSignalStrength > newSignalStrength - 1)
-			newSignalStrength = indirectSignalStrength;
+		if (indirectPower > 0 && indirectPower > newPower - 1)
+			newPower = indirectPower;
 
 		int k = 0;
 
@@ -646,19 +650,18 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				k = this.getMaxSignalStrength(k, neighbourBlockPos.down(), world);
 		}
 
-		if (k > newSignalStrength)
-			newSignalStrength = k - 1;
-		else if (newSignalStrength > 0)
-			--newSignalStrength;
+		if (k > newPower)
+			newPower = k - 1;
+		else if (newPower > 0)
+			--newPower;
 		else
-			newSignalStrength = 0;
+			newPower = 0;
 
-		if (indirectSignalStrength > newSignalStrength - 1)
-			newSignalStrength = indirectSignalStrength;
+		if (indirectPower > newPower - 1)
+			newPower = indirectPower;
 
-		if (signalStrength != newSignalStrength) {
-			PowerLookup.putPower(pos, (byte) newSignalStrength, world);
-			this.updateSurroundingBlocks(pos, world, shouldOnlyAffectRedstonePaste);
+		if (power != newPower) {
+			PowerLookup.putPower(pos, (byte) newPower, world);
 			return true;
 		} else
 			return false;
@@ -677,9 +680,8 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 
 		if (!world.isRemote) {
-
-			if (!this.calculateCurrentChanges(pos, world, false))
-				this.updateSurroundingBlocks(pos, world, false);
+			this.updatePower(pos, world);
+			this.updateSurroundingBlocks(pos, world);
 		}
 	}
 
@@ -688,8 +690,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		super.breakBlock(world, pos, state);
 
 		if (!world.isRemote) {
+			ModelLookup.removeModel(pos, world);
 			PowerLookup.removePower(pos, world);
-			this.updateSurroundingBlocks(pos, world, false);
+			this.updateSurroundingBlocks(pos, world);
 		}
 	}
 
@@ -728,10 +731,13 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 						return;
 				}
 
-				world.setBlockState(pos, newState);
+				world.setBlockState(pos, newState, 2);
 			}
 
-			this.calculateCurrentChanges(pos, world, false);
+			if (this.updatePower(pos, world))
+				this.updateSurroundingBlocks(pos, world);
+
+			ModelLookup.putModel(pos, this.getModel(pos, world), world);
 		}
 	}
 
@@ -746,11 +752,11 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		if (!this.canProvidePower)
 			return 0;
 		else {
-			byte signalStrength = PowerLookup.getPower(pos, (World) world);
-			if (signalStrength == 0)
+			byte power = PowerLookup.getPower(pos, (World) world);
+			if (power == 0)
 				return 0;
 			else if (side == EnumFacing.UP)
-				return signalStrength;
+				return power;
 			else {
 				EnumSet<EnumFacing> sidesProvidingPowerTo = EnumSet.noneOf(EnumFacing.class);
 
@@ -761,9 +767,9 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				}
 
 				if (side.getAxis().isHorizontal() && sidesProvidingPowerTo.isEmpty() || world.getBlockState(pos.offset(side.getOpposite())).getBlock() instanceof BlockRedstoneDiode)
-					return signalStrength;
+					return power;
 				else if (sidesProvidingPowerTo.contains(side) && !sidesProvidingPowerTo.contains(side.rotateYCCW()) && !sidesProvidingPowerTo.contains(side.rotateY()))
-					return signalStrength;
+					return power;
 				else
 					return 0;
 			}
@@ -798,26 +804,30 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass) {
-		return world.getBlockState(pos).getBlock() != this ? super.colorMultiplier(world, pos, renderPass) : RedstonePasteRenderer.calculateColour(PowerLookup.getPower(pos, (World) world));
+
+		if (world.getBlockState(pos).getBlock() != this)
+			return super.colorMultiplier(world, pos, renderPass);
+		else if (isDebugWorld)
+			return RedstonePasteRenderer.calculateColour((byte) (int) (Integer) world.getBlockState(pos).getValue(POWER));
+		else
+			return RedstonePasteRenderer.calculateColour(PowerLookup.getPower(pos, (World) world));
 	}
 
+	// TODO: Spawn particles near every pasted side
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		byte i = PowerLookup.getPower(pos, world);
-		if (i != 0) {
-			double d0 = pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
-			double d1 = pos.getY() + 1 / 16.0;
-			double d2 = pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
-			float f = i / 15f;
-			float f1 = f * 0.6f + 0.4f;
-			float f2 = Math.max(0, f * f * 0.7f - 0.5f);
-			float f3 = Math.max(0, f * f * 0.6f - 0.7f);
-			world.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, f1, f2, f3);
-		}
-	}
+		byte power = (isDebugWorld) ? (byte) (int) (Integer) world.getBlockState(pos).getValue(POWER) : PowerLookup.getPower(pos, (World) world);
+		if (power != 0) {
+			double x = pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
+			double y = pos.getY() + 1 / 16.0;
+			double z = pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
 
-	public String getDebugInfo(BlockPos pos, World world) {
-		return "power: " + PowerLookup.getPower(pos, world);
+			float powerPercentage = power / 15f;
+			float red = powerPercentage * 0.6f + 0.4f;
+			float green = Math.max(0, powerPercentage * powerPercentage * 0.7f - 0.5f);
+			float blue = Math.max(0, powerPercentage * powerPercentage * 0.6f - 0.7f);
+			world.spawnParticle(EnumParticleTypes.REDSTONE, x, y, z, red, green, blue);
+		}
 	}
 }

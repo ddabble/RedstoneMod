@@ -18,7 +18,9 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 
 	public BlockRedstonePasteWire_TriplePasted_OnWalls(String unlocalisedName) {
 		super(unlocalisedName, (byte) 3);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(PASTEDSIDES, EnumPasting.UNS));
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(PASTEDSIDES, EnumPasting.UNS)
+				.withProperty(POWER, Integer.valueOf(0)));
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { PASTEDSIDES });
+		return new BlockState(this, new IProperty[] { PASTEDSIDES, POWER });
 	}
 
 	private enum EnumPasting implements IStringSerializable {

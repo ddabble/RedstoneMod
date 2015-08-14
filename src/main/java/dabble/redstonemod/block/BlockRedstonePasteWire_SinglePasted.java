@@ -18,7 +18,9 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 	public BlockRedstonePasteWire_SinglePasted(String unlocalisedName) {
 		super(unlocalisedName, (byte) 1);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(PASTEDSIDE, EnumFacing.DOWN));
+		this.setDefaultState(this.blockState.getBaseState()
+				.withProperty(PASTEDSIDE, EnumFacing.DOWN)
+				.withProperty(POWER, Integer.valueOf(0)));
 	}
 
 	@Override
@@ -152,6 +154,6 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 	@Override
 	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { PASTEDSIDE });
+		return new BlockState(this, new IProperty[] { PASTEDSIDE, POWER });
 	}
 }

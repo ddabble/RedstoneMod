@@ -24,9 +24,10 @@ public class ItemRedstonePaste extends Item {
 			IBlockState state = world.getBlockState(currentPos);
 			Block currentBlock = state.getBlock();
 			if (currentBlock instanceof BlockRedstonePasteWire && BlockRedstonePasteWire.canPasteOnSideOfBlock(side, pos, world)) {
-				IBlockState redstonePasteWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state, currentPos, player, world);
-				if (redstonePasteWithAdditionalPastedSide != null) {
-					world.setBlockState(currentPos, redstonePasteWithAdditionalPastedSide);
+				IBlockState stateWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state, currentPos, player, world);
+				if (stateWithAdditionalPastedSide != null) {
+					--stack.stackSize;
+					world.setBlockState(currentPos, stateWithAdditionalPastedSide, 2);
 					return true;
 				} else
 					return false;
@@ -47,7 +48,7 @@ public class ItemRedstonePaste extends Item {
 				EnumFacing firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, world);
 				if (firstPasteableSide != null) {
 					--stack.stackSize;
-					world.setBlockState(currentPos, BlockRedstonePasteWire_SinglePasted.getStateFromSide(firstPasteableSide));
+					world.setBlockState(currentPos, BlockRedstonePasteWire_SinglePasted.getStateFromSide(firstPasteableSide), 2);
 					return true;
 				} else
 					return false;

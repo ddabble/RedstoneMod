@@ -1,12 +1,8 @@
 package dabble.redstonemod.event;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -17,10 +13,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,28 +25,10 @@ import org.lwjgl.opengl.GL11;
 
 import dabble.redstonemod.block.BlockRedstonePasteWire;
 import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
+import dabble.redstonemod.util.ModelLookup;
 import dabble.redstonemod.util.PowerLookup;
 
 public class EventHookContainer {
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void debugTextHandler(net.minecraftforge.client.event.RenderGameOverlayEvent event) {
-
-		if (event.type == net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.DEBUG) {
-			Minecraft mc = Minecraft.getMinecraft();
-			if (mc.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-				BlockPos pos = mc.objectMouseOver.getBlockPos();
-				Block block = mc.theWorld.getBlockState(pos).getBlock();
-				if (block instanceof BlockRedstonePasteWire) {
-					String text = ((BlockRedstonePasteWire) block).getDebugInfo(pos, mc.theWorld);
-					int screenWidth = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight).getScaledWidth();
-					int x = screenWidth - mc.fontRendererObj.getStringWidth(text) - 2;
-					mc.fontRendererObj.drawString(text, x, 137, 0xE0E0E0);
-				}
-			}
-		}
-	}
 
 	@SubscribeEvent
 	public void chunkLoadHandler(ChunkEvent.Load event) {
@@ -70,49 +47,21 @@ public class EventHookContainer {
 		 * }
 		 */
 
+		if (event.world.isRemote)
+			return;
+
+		BlockRedstonePasteWire.isDebugWorld = event.world.getWorldInfo().getTerrainType() == WorldType.DEBUG_WORLD;
+
 		@SuppressWarnings("unchecked")
 		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
 
 		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet()) {
 
-			if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
-				PowerLookup.addBlockNeedingUpdate(tileEntity.getKey(), event.world);
-		}
-	}
+			if (tileEntity.getValue() instanceof TileEntityRedstonePaste) {
+				BlockRedstonePasteWire block = (BlockRedstonePasteWire) tileEntity.getValue().getBlockType();
 
-	@SubscribeEvent
-	public void chunkWatchHandler(ChunkWatchEvent.Watch event) {
-		World world = event.player.worldObj;
-		ArrayList<BlockPos> blocksNeedingUpdate = PowerLookup.getBlocksNeedingUpdate(world);
-
-		if (blocksNeedingUpdate.size() > 0) {
-			System.out.println("Updating the power of " + blocksNeedingUpdate.size() + " redstone paste blocks in " + world.provider.getDimensionName());
-
-			for (BlockPos pos : blocksNeedingUpdate) {
-
-				if (world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire)
-					((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).calculateCurrentChanges(pos, world, true);
-			}
-
-			PowerLookup.clearBlocksNeedingUpdate(world);
-		}
-	}
-
-	@SubscribeEvent
-	public void chunkUnloadHandler(ChunkEvent.Unload event) {
-		/*
-		 * When Minecraft unloads chunks from the overworld, it actually doesn't, for some weird reason.
-		 * So if the block gets removed here it will never get re-added when the chunk "re-loads",
-		 * because the chunk was never really unloaded and thusly will also never get re-loaded ._.
-		 */
-		if (event.world.provider.getDimensionId() != 0) {
-			@SuppressWarnings("unchecked")
-			Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
-
-			for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet()) {
-
-				if (tileEntity.getValue() instanceof TileEntityRedstonePaste)
-					PowerLookup.removePower(tileEntity.getKey(), event.world);
+				if (block.updatePower(tileEntity.getKey(), event.world))
+					block.updateSurroundingBlocks(tileEntity.getKey(), event.world);
 			}
 		}
 	}
@@ -120,8 +69,11 @@ public class EventHookContainer {
 	@SubscribeEvent
 	public void worldUnloadHandler(WorldEvent.Unload event) {
 
-		if (!event.world.isRemote)
-			PowerLookup.clearPower(event.world);
+		// Apparently this is only true when quitting to the title screen
+		if (!event.world.isRemote && event.world.provider.getDimensionId() == 0) {
+			ModelLookup.clearModels();
+			PowerLookup.clearPower();
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
