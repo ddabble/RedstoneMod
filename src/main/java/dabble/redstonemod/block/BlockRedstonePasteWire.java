@@ -33,6 +33,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.EnumFacing.AxisDirection;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MovingObjectPosition;
@@ -700,6 +701,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block triggerBlock) {
 
 		if (!world.isRemote) {
+			BlockRedstonePasteWire block = this;
 			EnumSet<EnumFacing> validPastedSides = this.getValidPastedSides(state, pos, world);
 			if (validPastedSides.size() < this.numberOfPastedSides) {
 				IBlockState newState = null;
@@ -732,12 +734,13 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 				}
 
 				world.setBlockState(pos, newState, 2);
+				block = (BlockRedstonePasteWire) newState.getBlock();
 			}
 
-			if (this.updatePower(pos, world))
-				this.updateSurroundingBlocks(pos, world);
+			if (block.updatePower(pos, world))
+				block.updateSurroundingBlocks(pos, world);
 
-			ModelLookup.putModel(pos, this.getModel(pos, world), world);
+			ModelLookup.putModel(pos, block.getModel(pos, world), world);
 		}
 	}
 
@@ -813,21 +816,28 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 			return RedstonePasteRenderer.calculateColour(PowerLookup.getPower(pos, (World) world));
 	}
 
-	// TODO: Spawn particles near every pasted side
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		byte power = (isDebugWorld) ? (byte) (int) (Integer) world.getBlockState(pos).getValue(POWER) : PowerLookup.getPower(pos, (World) world);
 		if (power != 0) {
-			double x = pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
-			double y = pos.getY() + 1 / 16.0;
-			double z = pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.2;
-
 			float powerPercentage = power / 15f;
 			float red = powerPercentage * 0.6f + 0.4f;
 			float green = Math.max(0, powerPercentage * powerPercentage * 0.7f - 0.5f);
 			float blue = Math.max(0, powerPercentage * powerPercentage * 0.6f - 0.7f);
-			world.spawnParticle(EnumParticleTypes.REDSTONE, x, y, z, red, green, blue);
+
+			for (EnumFacing side : this.getPastedSides(state)) {
+				double x = (side.getAxis() != Axis.X) ? pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.2
+						: (side.getAxisDirection() == AxisDirection.NEGATIVE) ? pos.getX() + 1 / 16.0 : pos.getX() + 15 / 16.0;
+
+				double y = (side.getAxis() != Axis.Y) ? pos.getY() + 0.5 + (rand.nextFloat() - 0.5) * 0.2
+						: (side.getAxisDirection() == AxisDirection.NEGATIVE) ? pos.getY() + 1 / 16.0 : pos.getY() + 15 / 16.0;
+
+				double z = (side.getAxis() != Axis.Z) ? pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.2
+						: (side.getAxisDirection() == AxisDirection.NEGATIVE) ? pos.getZ() + 1 / 16.0 : pos.getZ() + 15 / 16.0;
+
+				world.spawnParticle(EnumParticleTypes.REDSTONE, x, y, z, red, green, blue);
+			}
 		}
 	}
 }

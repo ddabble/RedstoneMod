@@ -38,13 +38,8 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world, (BlockRedstonePasteWire) block);
 		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
 
-		int colour;
-
-		if (BlockRedstonePasteWire.isDebugWorld)
-			colour = calculateColour((byte) (int) (Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER));
-		else
-			colour = calculateColour(PowerLookup.getPower(pos, world));
-
+		int colour = (!BlockRedstonePasteWire.isDebugWorld) ? calculateColour(PowerLookup.getPower(pos, world))
+				: calculateColour((byte) (int) (Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER));
 		int red = colour >> 16 & 255;
 		int green = colour >> 8 & 255;
 		int blue = colour & 255;
