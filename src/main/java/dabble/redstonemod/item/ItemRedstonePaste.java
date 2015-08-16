@@ -22,37 +22,41 @@ public class ItemRedstonePaste extends Item {
 			return false;
 		else {
 			IBlockState state = world.getBlockState(currentPos);
-			Block currentBlock = state.getBlock();
-			if (currentBlock instanceof BlockRedstonePasteWire && BlockRedstonePasteWire.canPasteOnSideOfBlock(side, pos, world)) {
-				IBlockState stateWithAdditionalPastedSide = ((BlockRedstonePasteWire) currentBlock).pasteAdditionalSide(side.getOpposite(), state, currentPos, player, world);
-				if (stateWithAdditionalPastedSide != null) {
-					--stack.stackSize;
-					world.setBlockState(currentPos, stateWithAdditionalPastedSide, 2);
-					return true;
-				} else
-					return false;
+			Block block = state.getBlock();
+			if (block instanceof BlockRedstonePasteWire) {
+
+				if (BlockRedstonePasteWire.canPasteOnSideOfBlock(side, pos, world)) {
+					IBlockState stateWithAdditionalSide = ((BlockRedstonePasteWire) block).pasteAdditionalSide(side.getOpposite(), state, currentPos, player, world);
+					if (stateWithAdditionalSide != null) {
+						--stack.stackSize;
+						world.setBlockState(currentPos, stateWithAdditionalSide, 2);
+						return true;
+					}
+				}
+
+				return false;
 			}
 
-			if (!world.canBlockBePlaced(currentBlock, currentPos, false, side, null, stack))
+			if (!world.canBlockBePlaced(block, currentPos, false, side, null, stack))
 				return false;
 
 			if (world.provider.getDimensionId() == -1) {
 
-				if (BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, world) != null) {
+				if (BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, player, world) != null) {
 					--stack.stackSize;
 					world.setBlockState(currentPos, Blocks.redstone_wire.getDefaultState());
 					return true;
-				} else
-					return false;
+				}
 			} else {
-				EnumFacing firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, world);
+				EnumFacing firstPasteableSide = BlockRedstonePasteWire.getFirstPasteableSide(side.getOpposite(), currentPos, player, world);
 				if (firstPasteableSide != null) {
 					--stack.stackSize;
 					world.setBlockState(currentPos, BlockRedstonePasteWire_SinglePasted.getStateFromSide(firstPasteableSide), 2);
 					return true;
-				} else
-					return false;
+				}
 			}
+
+			return false;
 		}
 	}
 }

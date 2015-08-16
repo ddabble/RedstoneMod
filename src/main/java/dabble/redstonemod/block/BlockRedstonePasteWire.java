@@ -528,19 +528,81 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 		return redstonePasteHit;
 	}
 
-	public static EnumFacing getFirstPasteableSide(EnumFacing startSide, BlockPos pos, World world) {
+	// TODO: If the player is sneaking, only remove the targeted side, or do nothing if it's not pasted
+	@Override
+	public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
-		if (canPasteOnSideOfBlock(startSide.getOpposite(), pos.offset(startSide), world))
-			return startSide;
+		if (player.isSneaking()) {
+			MovingObjectPosition blockLookingAt = player.rayTrace(5, 1);
+			if (blockLookingAt != null) {
+				EnumFacing sideHit = (EnumFacing) blockLookingAt.hitInfo;
+				System.out.println(sideHit);
+			}
+		}
 
-		// TODO: Try pasting on the approximated side the player is looking at before doing this
-		for (EnumFacing currentSide : EnumFacing.VALUES) {
+		return world.setBlockToAir(pos);
+	}
 
-			if (currentSide != startSide && canPasteOnSideOfBlock(currentSide.getOpposite(), pos.offset(currentSide), world))
-				return currentSide;
+	public static EnumFacing getFirstPasteableSide(EnumFacing sideLookingAt, BlockPos pos, EntityPlayer player, World world) {
+
+		if (canPasteOnSideOfBlock(sideLookingAt.getOpposite(), pos.offset(sideLookingAt), world))
+			return sideLookingAt;
+
+		EnumFacing facing = getFacingPastingDirection(sideLookingAt.getAxis(), pos.offset(sideLookingAt), player, world, false);
+
+		if (sideLookingAt.getAxis() != Axis.Y && canPasteOnSideOfBlock(facing.getOpposite(), pos.offset(facing), world))
+			return facing;
+
+		if (facing.getAxis() == Axis.Y) {
+			facing = getFacingPastingDirection(sideLookingAt.getAxis(), pos.offset(sideLookingAt), player, world, true);
+
+			if (canPasteOnSideOfBlock(facing.getOpposite(), pos.offset(facing), world))
+				return facing;
+		}
+
+		if (sideLookingAt.getAxis() != Axis.Y) {
+
+			facing = (player.rotationPitch > 0) ? EnumFacing.DOWN : EnumFacing.UP;
+
+			if (canPasteOnSideOfBlock(facing.getOpposite(), pos.offset(facing), world))
+				return facing;
+		}
+
+		for (EnumFacing side : EnumFacing.VALUES) {
+
+			if (side != sideLookingAt && side != facing && canPasteOnSideOfBlock(side.getOpposite(), pos.offset(side), world))
+				return side;
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns the side that the player is most likely expecting to be pasted.
+	 * <p>
+	 * If a horizontal direction is returned, it is guaranteed to be the direction the player is looking the most toward while still not being on the same axis as the side clicked.
+	 */
+	protected static EnumFacing getFacingPastingDirection(Axis clickedAxis, BlockPos clickedPos, EntityPlayer player, World world, boolean onlyHorizontals) {
+
+		if (!onlyHorizontals && clickedAxis != Axis.Y && Math.abs(player.posX - (clickedPos.getX() + 0.5)) < 1.5 && Math.abs(player.posZ - (clickedPos.getZ() + 0.5)) < 1.5) {
+			double eyePosY = player.posY + player.getEyeHeight();
+
+			if (eyePosY - clickedPos.getY() > 1.5)
+				return EnumFacing.DOWN;
+			else if (clickedPos.getY() - eyePosY > 0)
+				return EnumFacing.UP;
+		}
+
+		EnumFacing horizontalFacing = player.getHorizontalFacing();
+		if (horizontalFacing.getAxis() != clickedAxis)
+			return horizontalFacing;
+
+		float yaw = player.rotationYaw / 90;
+		EnumFacing otherHorizontalFacing = EnumFacing.fromAngle(Math.floor(yaw) * 90);
+		if (otherHorizontalFacing != horizontalFacing)
+			return otherHorizontalFacing;
+		else
+			return EnumFacing.fromAngle(Math.ceil(yaw) * 90);
 	}
 
 	public static boolean canPasteOnSideOfBlock(EnumFacing side, BlockPos pos, World world) {
