@@ -30,7 +30,7 @@ public class BlockRedstonePasteWire_TriplePasted_OnGround extends BlockRedstoneP
 
 	@Override
 	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet;
+		return EnumSet.copyOf(((EnumPasting) state.getValue(PASTEDSIDES)).sideSet);
 	}
 
 	@Override

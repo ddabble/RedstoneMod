@@ -2,6 +2,7 @@ package dabble.redstonemod.block;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -526,7 +527,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
-		if (player.isSneaking()) {
+		if (!world.isRemote && player.isSneaking()) {
 			MovingObjectPosition blockLookingAt = player.rayTrace(5, 1);
 			if (blockLookingAt != null) {
 				EnumFacing sideHit = (EnumFacing) blockLookingAt.hitInfo;
@@ -542,12 +543,12 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 							return world.setBlockToAir(pos);
 
 						case 1:
-							state = BlockRedstonePasteWire_SinglePasted.getStateFromSides(pastedSides);
+							state = BlockRedstonePasteWire_SinglePasted.getStateFromSide(pastedSides.iterator().next());
 							break;
 
 						case 2:
 							Iterator<EnumFacing> sideIterator = pastedSides.iterator();
-							if (sideIterator.next == sideIterator.next.getOpposite())
+							if (sideIterator.next() == sideIterator.next().getOpposite())
 								return world.setBlockToAir(pos);
 
 							state = BlockRedstonePasteWire_DoublePasted.getStateFromSides(pastedSides);
@@ -571,6 +572,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 					block.updatePower(pos, world);
 					block.updateSurroundingBlocks(pos, world);
 					ModelLookup.putModel(pos, block.getModel(pos, world), world);
+					return false;
 				}
 			}
 		}

@@ -31,7 +31,7 @@ public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire 
 
 	@Override
 	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet;
+		return EnumSet.copyOf(((EnumPasting) state.getValue(PASTEDSIDES)).sideSet);
 	}
 
 	@Override
