@@ -38,6 +38,11 @@ public class PowerLookup {
 
 	public static void putPower(BlockPos pos, byte power, World world) {
 
+		if (power == 0) {
+			removePower(pos, world);
+			return;
+		}
+
 		switch (world.provider.getDimensionId()) {
 			case 0:
 				powerMap_Overworld.put(pos, power);

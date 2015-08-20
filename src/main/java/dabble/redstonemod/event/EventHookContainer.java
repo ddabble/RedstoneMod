@@ -119,8 +119,6 @@ public class EventHookContainer {
 				break;
 		}
 
-		Tessellator tessellator = Tessellator.getInstance();
-
 		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GlStateManager.color(0, 0, 0, 0.4f);
@@ -133,7 +131,7 @@ public class EventHookContainer {
 		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
 		double magicNum = 0.0020000000949949026;
 
-		drawOutlinedBoundingBox(tessellator, tessellator.getWorldRenderer(), boundingBox.expand(magicNum, magicNum, magicNum).offset(-d0, -d1, -d2));
+		drawOutlinedBoundingBox(boundingBox.expand(magicNum, magicNum, magicNum).offset(-d0, -d1, -d2));
 
 		GlStateManager.depthMask(true);
 		GlStateManager.enableTexture2D();
@@ -142,7 +140,10 @@ public class EventHookContainer {
 		event.setCanceled(true);
 	}
 
-	private void drawOutlinedBoundingBox(Tessellator tessellator, WorldRenderer worldRenderer, AxisAlignedBB boundingBox) {
+	private void drawOutlinedBoundingBox(AxisAlignedBB boundingBox) {
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+
 		worldRenderer.startDrawing(3);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.minY, boundingBox.minZ);
 		worldRenderer.addVertex(boundingBox.maxX, boundingBox.minY, boundingBox.minZ);
@@ -150,6 +151,7 @@ public class EventHookContainer {
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.minY, boundingBox.maxZ);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.minY, boundingBox.minZ);
 		tessellator.draw();
+
 		worldRenderer.startDrawing(3);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.maxY, boundingBox.minZ);
 		worldRenderer.addVertex(boundingBox.maxX, boundingBox.maxY, boundingBox.minZ);
@@ -157,6 +159,7 @@ public class EventHookContainer {
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.maxY, boundingBox.maxZ);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.maxY, boundingBox.minZ);
 		tessellator.draw();
+
 		worldRenderer.startDrawing(1);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.minY, boundingBox.minZ);
 		worldRenderer.addVertex(boundingBox.minX, boundingBox.maxY, boundingBox.minZ);
