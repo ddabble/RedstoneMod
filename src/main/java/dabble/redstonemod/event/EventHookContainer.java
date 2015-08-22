@@ -1,19 +1,16 @@
 package dabble.redstonemod.event;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -24,46 +21,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import dabble.redstonemod.block.BlockRedstonePasteWire;
-import dabble.redstonemod.tileentity.TileEntityRedstonePaste;
 import dabble.redstonemod.util.ModelLookup;
 import dabble.redstonemod.util.PowerLookup;
 
 public class EventHookContainer {
+	static int i = 0;
 
 	@SubscribeEvent
 	public void chunkLoadHandler(ChunkEvent.Load event) {
-		/*
-		 * For use when I figure out how to customise the rendering of non-tileEntities
-		 * 
-		 * for (ExtendedBlockStorage arr : event.getChunk().getBlockStorageArray()) {
-		 * if (arr != null) {
-		 * for (short i = 0; i < 4096; ++i) {
-		 * if (((IBlockState) Block.BLOCK_STATE_IDS.getByValue(arr.getData()[i])).getBlock() instanceof BlockRedstonePasteWire) {
-		 * // System.out.println("x:" + (i) + ", y:" + (i >> 8) + ", z:" + (i));
-		 * System.out.println(Minecraft.getMinecraft().theWorld);
-		 * }
-		 * }
-		 * }
-		 * }
-		 */
 
 		if (event.world.isRemote)
 			return;
 
-		BlockRedstonePasteWire.isDebugWorld = event.world.getWorldInfo().getTerrainType() == WorldType.DEBUG_WORLD;
+		for (ExtendedBlockStorage ebs : event.getChunk().getBlockStorageArray()) {
+			if (ebs == null || ebs.isEmpty())
+				continue;
+			System.out.println(++i * 0x1000);
 
-		@SuppressWarnings("unchecked")
-		Map<BlockPos, TileEntity> tileEntityMap = event.getChunk().getTileEntityMap();
+			for (short i = 0; i < 0x1000; ++i) {
+				BlockPos pos = event.getChunk().getChunkCoordIntPair().getBlock(i & 0x000F, (i >> 8) + ebs.getYLocation(), i >> 4 & 0x000F);
 
-		for (Entry<BlockPos, TileEntity> tileEntity : tileEntityMap.entrySet()) {
-
-			if (tileEntity.getValue() instanceof TileEntityRedstonePaste) {
-				BlockRedstonePasteWire block = (BlockRedstonePasteWire) tileEntity.getValue().getBlockType();
-
-				if (block.updatePower(tileEntity.getKey(), event.world))
-					block.updateSurroundingBlocks(tileEntity.getKey(), event.world);
+				if (event.world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire) {
+					BlockRedstonePasteWire block = (BlockRedstonePasteWire) event.world.getBlockState(pos).getBlock();
+					if (block.updatePower(pos, event.world))
+						block.updateSurroundingBlocks(pos, event.world);
+				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void worldLoadHandler(WorldEvent.Load event) {
+		BlockRedstonePasteWire.isDebugWorld = event.world.getWorldInfo().getTerrainType() == WorldType.DEBUG_WORLD;
 	}
 
 	@SubscribeEvent

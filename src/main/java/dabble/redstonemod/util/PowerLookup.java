@@ -37,6 +37,7 @@ public class PowerLookup {
 	}
 
 	public static void putPower(BlockPos pos, byte power, World world) {
+		power = (power < 0) ? 0 : ((power > 15) ? 15 : power);
 
 		if (power == 0) {
 			removePower(pos, world);
