@@ -11,31 +11,35 @@ import net.minecraft.util.EnumFacing.Axis;
 public enum EnumModel {
 	NONE(0, 1, 0, 1),
 
-	NS(1, 2, 0, 1),
-	WE(2, 3, 0, 1),
+	NS(1, 2, 0, 1, EnumFacing.NORTH, EnumFacing.SOUTH),
+	WE(2, 3, 0, 1, EnumFacing.WEST, EnumFacing.EAST),
 
-	NW(3, 4, 0, 1),
-	NE(4, 5, 0, 1),
-	SW(5, 6, 0, 1),
-	SE(6, 7, 0, 1),
+	NW(3, 4, 0, 1, EnumFacing.NORTH, EnumFacing.WEST),
+	NE(4, 5, 0, 1, EnumFacing.NORTH, EnumFacing.EAST),
+	SW(5, 6, 0, 1, EnumFacing.SOUTH, EnumFacing.WEST),
+	SE(6, 7, 0, 1, EnumFacing.SOUTH, EnumFacing.EAST),
 
-	NSW(7, 8, 0, 1),
-	NSE(8, 9, 0, 1),
-	NWE(9, 10, 0, 1),
-	SWE(0, 1, 1, 2),
+	NSW(7, 8, 0, 1, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST),
+	NSE(8, 9, 0, 1, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.EAST),
+	NWE(9, 10, 0, 1, EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.EAST),
+	SWE(0, 1, 1, 2, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST),
 
-	NSWE(1, 2, 1, 2);
+	NSWE(1, 2, 1, 2, EnumFacing.HORIZONTALS);
 
 	private final double minU;
 	private final double maxU;
 	private final double minV;
 	private final double maxV;
+	private final EnumSet<EnumFacing> connections = EnumSet.noneOf(EnumFacing.class);
 
-	private EnumModel(double minU, double maxU, double minV, double maxV) {
+	private EnumModel(double minU, double maxU, double minV, double maxV, EnumFacing... connections) {
 		this.minU = minU / 10;
 		this.maxU = maxU / 10;
 		this.minV = minV / 2;
 		this.maxV = maxV / 2;
+
+		for (EnumFacing direction : connections)
+			this.connections.add(direction);
 	}
 
 	public double getMinU() {
@@ -52,6 +56,10 @@ public enum EnumModel {
 
 	public double getMaxV() {
 		return this.maxV;
+	}
+
+	public boolean containsConnection(EnumFacing connection) {
+		return this.connections.contains(connection) || this == NONE;
 	}
 
 	public static EnumMap<EnumFacing, EnumModel> getModelFromExternalConnections(EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, EnumSet<EnumFacing> pastedSides) {
@@ -177,7 +185,7 @@ public enum EnumModel {
 		return normalisedConnections;
 	}
 
-	private static EnumFacing getNormalisedConnection(EnumFacing connection, EnumFacing side) {
+	public static EnumFacing getNormalisedConnection(EnumFacing connection, EnumFacing side) {
 
 		switch (side) {
 			case DOWN:

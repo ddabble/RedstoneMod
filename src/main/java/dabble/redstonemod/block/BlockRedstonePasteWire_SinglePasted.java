@@ -78,6 +78,11 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 				if (canPasteOnSideOfBlock(facing.getOpposite(), pos.offset(facing), world))
 					return facing;
+			} else {
+				facing = (player.rotationPitch > 0) ? EnumFacing.DOWN : EnumFacing.UP;
+
+				if (canPasteOnSideOfBlock(facing.getOpposite(), pos.offset(facing), world))
+					return facing;
 			}
 		}
 

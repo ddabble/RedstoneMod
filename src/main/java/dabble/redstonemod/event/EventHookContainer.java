@@ -25,7 +25,6 @@ import dabble.redstonemod.util.ModelLookup;
 import dabble.redstonemod.util.PowerLookup;
 
 public class EventHookContainer {
-	static int i = 0;
 
 	@SubscribeEvent
 	public void chunkLoadHandler(ChunkEvent.Load event) {
@@ -36,7 +35,6 @@ public class EventHookContainer {
 		for (ExtendedBlockStorage ebs : event.getChunk().getBlockStorageArray()) {
 			if (ebs == null || ebs.isEmpty())
 				continue;
-			System.out.println(++i * 0x1000);
 
 			for (short i = 0; i < 0x1000; ++i) {
 				BlockPos pos = event.getChunk().getChunkCoordIntPair().getBlock(i & 0x000F, (i >> 8) + ebs.getYLocation(), i >> 4 & 0x000F);
