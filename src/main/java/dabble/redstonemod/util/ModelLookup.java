@@ -3,13 +3,12 @@ package dabble.redstonemod.util;
 import java.util.EnumMap;
 import java.util.HashMap;
 
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-
 import org.apache.logging.log4j.LogManager;
 
 import dabble.redstonemod.block.BlockRedstonePasteWire;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class ModelLookup {
 	private static HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> modelMap_Overworld = new HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>>();

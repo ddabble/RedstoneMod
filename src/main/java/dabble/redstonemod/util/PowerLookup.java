@@ -2,10 +2,10 @@ package dabble.redstonemod.util;
 
 import java.util.HashMap;
 
+import org.apache.logging.log4j.LogManager;
+
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import org.apache.logging.log4j.LogManager;
 
 public class PowerLookup {
 	private static HashMap<BlockPos, Byte> powerMap_Overworld = new HashMap<BlockPos, Byte>();

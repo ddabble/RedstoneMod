@@ -3,6 +3,7 @@ package dabble.redstonemod.block;
 import java.util.EnumSet;
 import java.util.Iterator;
 
+import dabble.redstonemod.init.ModBlocks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
@@ -12,7 +13,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
-import dabble.redstonemod.init.ModBlocks;
 
 public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire {
 	public static final PropertyEnum PASTEDSIDES = PropertyEnum.create("pasted_sides", EnumPasting.class);
@@ -67,7 +67,7 @@ public class BlockRedstonePasteWire_DoublePasted extends BlockRedstonePasteWire 
 	}
 
 	@Override
-	EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
+	protected EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
 		EnumSet<EnumFacing> validPastedSides = EnumSet.noneOf(EnumFacing.class);
 
 		for (EnumFacing pastedSide : ((EnumPasting) state.getValue(PASTEDSIDES)).sides) {

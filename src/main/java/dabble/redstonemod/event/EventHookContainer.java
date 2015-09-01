@@ -1,5 +1,10 @@
 package dabble.redstonemod.event;
 
+import org.lwjgl.opengl.GL11;
+
+import dabble.redstonemod.block.BlockRedstonePasteWire;
+import dabble.redstonemod.util.ModelLookup;
+import dabble.redstonemod.util.PowerLookup;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -17,12 +22,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
-import dabble.redstonemod.block.BlockRedstonePasteWire;
-import dabble.redstonemod.util.ModelLookup;
-import dabble.redstonemod.util.PowerLookup;
 
 public class EventHookContainer {
 
@@ -118,7 +117,7 @@ public class EventHookContainer {
 		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
 		double magicNum = 0.0020000000949949026;
 
-		drawOutlinedBoundingBox(boundingBox.expand(magicNum, magicNum, magicNum).offset(-d0, -d1, -d2));
+		this.drawOutlinedBoundingBox(boundingBox.expand(magicNum, magicNum, magicNum).offset(-d0, -d1, -d2));
 
 		GlStateManager.depthMask(true);
 		GlStateManager.enableTexture2D();

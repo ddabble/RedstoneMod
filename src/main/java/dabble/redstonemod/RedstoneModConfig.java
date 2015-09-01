@@ -13,7 +13,7 @@ public class RedstoneModConfig extends Configurations {
 
 	@Override
 	protected void setDefaults() {
-		whatToPrint = "";
+		this.whatToPrint = "";
 	}
 
 	@Override

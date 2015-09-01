@@ -1,12 +1,12 @@
 package dabble.redstonemod.init;
 
+import dabble.redstonemod.RedstoneMod;
+import dabble.redstonemod.item.ItemRedstonePaste;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import dabble.redstonemod.RedstoneMod;
-import dabble.redstonemod.item.ItemRedstonePaste;
 
 public class ModItems {
 

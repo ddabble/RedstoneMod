@@ -1,13 +1,13 @@
 package dabble.redstonemod.init;
 
-import net.minecraft.block.Block;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import dabble.redstonemod.block.BlockRedstonePasteWire_DoublePasted;
 import dabble.redstonemod.block.BlockRedstonePasteWire_QuadruplePasted;
 import dabble.redstonemod.block.BlockRedstonePasteWire_QuintuplePasted;
 import dabble.redstonemod.block.BlockRedstonePasteWire_SinglePasted;
 import dabble.redstonemod.block.BlockRedstonePasteWire_TriplePasted_OnGround;
 import dabble.redstonemod.block.BlockRedstonePasteWire_TriplePasted_OnWalls;
+import net.minecraft.block.Block;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 	public static BlockRedstonePasteWire_SinglePasted redstone_paste_single_pasted;

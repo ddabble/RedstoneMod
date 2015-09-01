@@ -1,5 +1,7 @@
 package dabble.redstonemod.item;
 
+import dabble.redstonemod.block.BlockRedstonePasteWire;
+import dabble.redstonemod.block.BlockRedstonePasteWire_SinglePasted;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,8 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import dabble.redstonemod.block.BlockRedstonePasteWire;
-import dabble.redstonemod.block.BlockRedstonePasteWire_SinglePasted;
 
 public class ItemRedstonePaste extends Item {
 

@@ -3,6 +3,10 @@ package dabble.redstonemod.renderer;
 import java.util.EnumMap;
 import java.util.Map.Entry;
 
+import dabble.redstonemod.block.BlockRedstonePasteWire;
+import dabble.redstonemod.util.EnumModel;
+import dabble.redstonemod.util.ModelLookup;
+import dabble.redstonemod.util.PowerLookup;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -15,10 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import dabble.redstonemod.block.BlockRedstonePasteWire;
-import dabble.redstonemod.util.EnumModel;
-import dabble.redstonemod.util.ModelLookup;
-import dabble.redstonemod.util.PowerLookup;
 
 @SideOnly(Side.CLIENT)
 public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
@@ -33,31 +33,28 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		if (!(block instanceof BlockRedstonePasteWire))
 			return;
 
-		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world, (BlockRedstonePasteWire) block);
-		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
-
 		int colour = (!BlockRedstonePasteWire.isDebugWorld) ? calculateColour(PowerLookup.getPower(pos, world))
-				: calculateColour((byte) (int) (Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER));
+				: calculateColour(((Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER)).byteValue());
 		int red = colour >> 16 & 255;
 		int green = colour >> 8 & 255;
 		int blue = colour & 255;
+		this.bindTexture(new ResourceLocation("redstonemod:textures/blocks/redstone_paste.png"));
 
 		GlStateManager.pushMatrix();
-		GlStateManager.pushAttrib();
 		GlStateManager.translate(x, y, z);
 
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 		worldRenderer.startDrawingQuads();
 		worldRenderer.setColorRGBA(red, green, blue, 255);
 		worldRenderer.setNormal(0, 1, 0);
 
+		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world, (BlockRedstonePasteWire) block);
 		for (Entry<EnumFacing, EnumModel> face : model.entrySet())
-			drawFace(worldRenderer, face.getKey(), face.getValue());
+			this.drawFace(worldRenderer, face.getKey(), face.getValue());
 
 		tessellator.draw();
 
-		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
 
