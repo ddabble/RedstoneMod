@@ -49,7 +49,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		worldRenderer.setColorRGBA(red, green, blue, 255);
 		worldRenderer.setNormal(0, 1, 0);
 
-		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world, (BlockRedstonePasteWire) block);
+		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world);
 		for (Entry<EnumFacing, EnumModel> face : model.entrySet())
 			this.drawFace(worldRenderer, face.getKey(), face.getValue());
 

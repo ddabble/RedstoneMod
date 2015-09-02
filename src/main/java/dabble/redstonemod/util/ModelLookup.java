@@ -15,7 +15,7 @@ public class ModelLookup {
 	private static HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> modelMap_Nether = new HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>>();
 	private static HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> modelMap_TheEnd = new HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>>();
 
-	public static EnumMap<EnumFacing, EnumModel> getModel(BlockPos pos, World world, BlockRedstonePasteWire block) {
+	public static EnumMap<EnumFacing, EnumModel> getModel(BlockPos pos, World world) {
 		EnumMap<EnumFacing, EnumModel> model = null;
 
 		switch (world.provider.getDimensionId()) {
@@ -38,7 +38,7 @@ public class ModelLookup {
 		}
 
 		if (model == null) {
-			model = block.getModel(pos, world);
+			model = ((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).getModel(pos, world);
 			putModel(pos, model, world);
 		}
 
