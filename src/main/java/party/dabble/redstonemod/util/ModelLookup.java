@@ -2,6 +2,7 @@ package party.dabble.redstonemod.util;
 
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -87,5 +88,31 @@ public class ModelLookup {
 		modelMap_Overworld.clear();
 		modelMap_Nether.clear();
 		modelMap_TheEnd.clear();
+	}
+
+	public static boolean isModelPointingInDirection(EnumFacing direction, BlockPos pos, World world) {
+
+		for (Entry<EnumFacing, EnumModel> face : getModel(pos, world).entrySet()) {
+
+			if (face.getKey().getAxis() == direction.getAxis())
+				continue;
+			else if (face.getValue() == EnumModel.NONE || face.getValue().containsConnection(EnumModel.getNormalisedConnection(direction, face.getKey())))
+				return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isModelPointingInDirection(EnumFacing direction, EnumMap<EnumFacing, EnumModel> model) {
+
+		for (Entry<EnumFacing, EnumModel> face : model.entrySet()) {
+
+			if (face.getKey().getAxis() == direction.getAxis())
+				continue;
+			else if (face.getValue() == EnumModel.NONE || face.getValue().containsConnection(EnumModel.getNormalisedConnection(direction, face.getKey())))
+				return true;
+		}
+
+		return false;
 	}
 }

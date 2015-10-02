@@ -1,4 +1,4 @@
-package party.dabble.redstonemod.renderer;
+package party.dabble.redstonemod.rendering;
 
 import java.util.EnumMap;
 import java.util.Map.Entry;

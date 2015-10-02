@@ -185,7 +185,7 @@ public enum EnumModel {
 		return normalisedConnections;
 	}
 
-	public static EnumFacing getNormalisedConnection(EnumFacing connection, EnumFacing side) {
+	static EnumFacing getNormalisedConnection(EnumFacing connection, EnumFacing side) {
 
 		switch (side) {
 			case DOWN:
