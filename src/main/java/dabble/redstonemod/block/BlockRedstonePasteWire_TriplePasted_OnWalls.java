@@ -17,7 +17,7 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 	public static final PropertyEnum PASTEDSIDES = PropertyEnum.create("pasted_sides", EnumPasting.class);
 
 	public BlockRedstonePasteWire_TriplePasted_OnWalls(String unlocalisedName) {
-		super(unlocalisedName, (byte) 3);
+		super(unlocalisedName, (byte)3);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(PASTEDSIDES, EnumPasting.UNS)
 				.withProperty(POWER, Integer.valueOf(0)));
@@ -25,22 +25,22 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 
 	@Override
 	public EnumFacing[] getPastedSides(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sides;
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).sides;
 	}
 
 	@Override
 	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
-		return EnumSet.copyOf(((EnumPasting) state.getValue(PASTEDSIDES)).sideSet);
+		return EnumSet.copyOf(((EnumPasting)state.getValue(PASTEDSIDES)).sideSet);
 	}
 
 	@Override
 	public boolean isPastedOnSide(EnumFacing side, IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet.contains(side);
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).sideSet.contains(side);
 	}
 
 	@Override
 	public IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state, BlockPos pos, EntityPlayer player, World world) {
-		EnumFacing[] pastedSides = ((EnumPasting) state.getValue(PASTEDSIDES)).sides;
+		EnumFacing[] pastedSides = ((EnumPasting)state.getValue(PASTEDSIDES)).sides;
 
 		if (side != pastedSides[0] && side != pastedSides[1] && side != pastedSides[2])
 			return BlockRedstonePasteWire_QuadruplePasted.getStateFromSides(EnumSet.of(side, pastedSides));
@@ -61,7 +61,7 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 	protected EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
 		EnumSet<EnumFacing> validPastedSides = EnumSet.noneOf(EnumFacing.class);
 
-		for (EnumFacing pastedSide : ((EnumPasting) state.getValue(PASTEDSIDES)).sides) {
+		for (EnumFacing pastedSide : ((EnumPasting)state.getValue(PASTEDSIDES)).sides) {
 
 			if (canPasteOnSideOfBlock(pastedSide.getOpposite(), pos.offset(pastedSide), world))
 				validPastedSides.add(pastedSide);
@@ -77,7 +77,7 @@ public class BlockRedstonePasteWire_TriplePasted_OnWalls extends BlockRedstonePa
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).ordinal();
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).ordinal();
 	}
 
 	@Override

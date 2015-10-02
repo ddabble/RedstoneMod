@@ -17,7 +17,7 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 	public static final PropertyDirection PASTEDSIDE = PropertyDirection.create("pasted_side");
 
 	public BlockRedstonePasteWire_SinglePasted(String unlocalisedName) {
-		super(unlocalisedName, (byte) 1);
+		super(unlocalisedName, (byte)1);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(PASTEDSIDE, EnumFacing.DOWN)
 				.withProperty(POWER, Integer.valueOf(0)));
@@ -25,22 +25,22 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 	@Override
 	public EnumFacing[] getPastedSides(IBlockState state) {
-		return new EnumFacing[] { (EnumFacing) state.getValue(PASTEDSIDE) };
+		return new EnumFacing[] { (EnumFacing)state.getValue(PASTEDSIDE) };
 	}
 
 	@Override
 	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
-		return EnumSet.of((EnumFacing) state.getValue(PASTEDSIDE));
+		return EnumSet.of((EnumFacing)state.getValue(PASTEDSIDE));
 	}
 
 	@Override
 	public boolean isPastedOnSide(EnumFacing side, IBlockState state) {
-		return side == (EnumFacing) state.getValue(PASTEDSIDE);
+		return side == (EnumFacing)state.getValue(PASTEDSIDE);
 	}
 
 	@Override
 	public IBlockState pasteAdditionalSide(EnumFacing side, IBlockState state, BlockPos pos, EntityPlayer player, World world) {
-		EnumFacing pastedSide = (EnumFacing) state.getValue(PASTEDSIDE);
+		EnumFacing pastedSide = (EnumFacing)state.getValue(PASTEDSIDE);
 		if (side != pastedSide) {
 
 			if (side != pastedSide.getOpposite())
@@ -101,7 +101,7 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 	@Override
 	protected EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
-		EnumFacing pastedSide = (EnumFacing) state.getValue(PASTEDSIDE);
+		EnumFacing pastedSide = (EnumFacing)state.getValue(PASTEDSIDE);
 
 		if (canPasteOnSideOfBlock(pastedSide.getOpposite(), pos.offset(pastedSide), world))
 			return EnumSet.of(pastedSide);
@@ -116,7 +116,7 @@ public class BlockRedstonePasteWire_SinglePasted extends BlockRedstonePasteWire 
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return ((EnumFacing) state.getValue(PASTEDSIDE)).getIndex();
+		return ((EnumFacing)state.getValue(PASTEDSIDE)).getIndex();
 	}
 
 	@Override

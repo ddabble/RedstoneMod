@@ -39,7 +39,7 @@ public class EventHookContainer {
 				BlockPos pos = event.getChunk().getChunkCoordIntPair().getBlock(i & 0x000F, (i >> 8) + ebs.getYLocation(), i >> 4 & 0x000F);
 
 				if (event.world.getBlockState(pos).getBlock() instanceof BlockRedstonePasteWire) {
-					BlockRedstonePasteWire block = (BlockRedstonePasteWire) event.world.getBlockState(pos).getBlock();
+					BlockRedstonePasteWire block = (BlockRedstonePasteWire)event.world.getBlockState(pos).getBlock();
 					if (block.updatePower(pos, event.world))
 						block.updateSurroundingBlocks(pos, event.world);
 				}
@@ -79,7 +79,7 @@ public class EventHookContainer {
 		double y = pos.getY();
 		double z = pos.getZ();
 
-		switch ((EnumFacing) target.hitInfo) {
+		switch ((EnumFacing)target.hitInfo) {
 			case DOWN:
 				boundingBox = new AxisAlignedBB(x, y, z, x + 1, y + 1 / 16.0, z + 1);
 				break;

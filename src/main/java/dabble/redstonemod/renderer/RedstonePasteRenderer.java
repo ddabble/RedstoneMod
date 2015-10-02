@@ -34,7 +34,7 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 			return;
 
 		int colour = (!BlockRedstonePasteWire.isDebugWorld) ? calculateColour(PowerLookup.getPower(pos, world))
-				: calculateColour(((Integer) world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER)).byteValue());
+				: calculateColour(((Integer)world.getBlockState(pos).getValue(BlockRedstonePasteWire.POWER)).byteValue());
 		int red = colour >> 16 & 255;
 		int green = colour >> 8 & 255;
 		int blue = colour & 255;
@@ -63,12 +63,12 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		int red;
 
 		if (powerLevel == 0)
-			red = (int) (0.3 * 255);
+			red = (int)(0.3 * 255);
 		else
-			red = (int) ((powerPercentage * 0.6 + 0.4) * 255);
+			red = (int)((powerPercentage * 0.6 + 0.4) * 255);
 
-		int green = Math.max(0, (int) ((powerPercentage * powerPercentage * 0.7 - 0.5) * 255));
-		int blue = Math.max(0, (int) ((powerPercentage * powerPercentage * 0.6 - 0.7) * 255));
+		int green = Math.max(0, (int)((powerPercentage * powerPercentage * 0.7 - 0.5) * 255));
+		int blue = Math.max(0, (int)((powerPercentage * powerPercentage * 0.6 - 0.7) * 255));
 		return 0xFF000000 | applyMoisture(red) << 16 | green << 8 | blue;
 	}
 

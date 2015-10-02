@@ -17,7 +17,7 @@ public class BlockRedstonePasteWire_QuintuplePasted extends BlockRedstonePasteWi
 	public static final PropertyEnum PASTEDSIDES = PropertyEnum.create("pasted_sides", EnumPasting.class);
 
 	public BlockRedstonePasteWire_QuintuplePasted(String unlocalisedName) {
-		super(unlocalisedName, (byte) 5);
+		super(unlocalisedName, (byte)5);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(PASTEDSIDES, EnumPasting.DUNSW)
 				.withProperty(POWER, Integer.valueOf(0)));
@@ -25,17 +25,17 @@ public class BlockRedstonePasteWire_QuintuplePasted extends BlockRedstonePasteWi
 
 	@Override
 	public EnumFacing[] getPastedSides(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sides;
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).sides;
 	}
 
 	@Override
 	public EnumSet<EnumFacing> getPastedSidesSet(IBlockState state) {
-		return EnumSet.copyOf(((EnumPasting) state.getValue(PASTEDSIDES)).sideSet);
+		return EnumSet.copyOf(((EnumPasting)state.getValue(PASTEDSIDES)).sideSet);
 	}
 
 	@Override
 	public boolean isPastedOnSide(EnumFacing side, IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).sideSet.contains(side);
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).sideSet.contains(side);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class BlockRedstonePasteWire_QuintuplePasted extends BlockRedstonePasteWi
 	protected EnumSet<EnumFacing> getValidPastedSides(IBlockState state, BlockPos pos, World world) {
 		EnumSet<EnumFacing> validPastedSides = EnumSet.noneOf(EnumFacing.class);
 
-		for (EnumFacing pastedSide : ((EnumPasting) state.getValue(PASTEDSIDES)).sides) {
+		for (EnumFacing pastedSide : ((EnumPasting)state.getValue(PASTEDSIDES)).sides) {
 
 			if (canPasteOnSideOfBlock(pastedSide.getOpposite(), pos.offset(pastedSide), world))
 				validPastedSides.add(pastedSide);
@@ -72,7 +72,7 @@ public class BlockRedstonePasteWire_QuintuplePasted extends BlockRedstonePasteWi
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return ((EnumPasting) state.getValue(PASTEDSIDES)).ordinal();
+		return ((EnumPasting)state.getValue(PASTEDSIDES)).ordinal();
 	}
 
 	@Override

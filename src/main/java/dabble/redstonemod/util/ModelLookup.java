@@ -38,7 +38,7 @@ public class ModelLookup {
 		}
 
 		if (model == null) {
-			model = ((BlockRedstonePasteWire) world.getBlockState(pos).getBlock()).getModel(pos, world);
+			model = ((BlockRedstonePasteWire)world.getBlockState(pos).getBlock()).getModel(pos, world);
 			putModel(pos, model, world);
 		}
 

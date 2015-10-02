@@ -59,7 +59,7 @@ public enum EnumModel {
 	}
 
 	public boolean containsConnection(EnumFacing connection) {
-		return this.connections.contains(connection) || this == NONE;
+		return this.connections.contains(connection);
 	}
 
 	public static EnumMap<EnumFacing, EnumModel> getModelFromExternalConnections(EnumMap<EnumFacing, EnumSet<EnumFacing>> connectionSides, EnumSet<EnumFacing> pastedSides) {
@@ -219,6 +219,26 @@ public enum EnumModel {
 					break;
 		}
 
-		return connection.rotateAround(Axis.X);
+		return rotateX(connection);
+	}
+
+	private static EnumFacing rotateX(EnumFacing facing) {
+
+		switch (facing) {
+			case DOWN:
+				return EnumFacing.SOUTH;
+
+			case UP:
+				return EnumFacing.NORTH;
+
+			case NORTH:
+				return EnumFacing.DOWN;
+
+			case SOUTH:
+				return EnumFacing.UP;
+
+			default:
+				return facing;
+		}
 	}
 }
