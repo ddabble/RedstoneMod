@@ -1,6 +1,7 @@
 package party.dabble.redstonemod.rendering;
 
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map.Entry;
 
 import net.minecraft.util.BlockPos;
@@ -14,9 +15,10 @@ import party.dabble.redstonemod.util.ModelLookup;
 
 public class RayTracing {
 
-	public static MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end, MovingObjectPosition superRayTrace) {
+	public static MovingObjectPosition collisionRayTrace(Vec3 start, Vec3 end, BlockPos pos, World world, MovingObjectPosition superRayTrace, EnumSet<EnumFacing> pastedSides) {
 		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world);
-		MovingObjectPosition nearestFaceEdgeMOP = getNearestFaceEdgeMOP(world, pos, start, end, model, superRayTrace);
+		MovingObjectPosition nearestFaceEdgeMOP = getNearestFaceEdgeMOP(superRayTrace, model, pos, world, pastedSides);
+
 		if (nearestFaceEdgeMOP != null)
 			return nearestFaceEdgeMOP;
 
@@ -24,31 +26,31 @@ public class RayTracing {
 		end = end.subtract(pos.getX(), pos.getY(), pos.getZ());
 		EnumMap<EnumFacing, Vec3> hitVecs = new EnumMap<EnumFacing, Vec3>(EnumFacing.class);
 
-		Vec3 hitVecDown = (model.containsKey(EnumFacing.DOWN)) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 1 / 16.0), model) : null;
-		if (hitVecDown != null)
-			hitVecs.put(EnumFacing.DOWN, hitVecDown);
+		Vec3 hitVec = (model.containsKey(EnumFacing.DOWN) && end.yCoord <= start.yCoord) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 1 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.DOWN, hitVec);
 
-		Vec3 hitVecUp = (model.containsKey(EnumFacing.UP)) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 15 / 16.0), model) : null;
-		if (hitVecUp != null)
-			hitVecs.put(EnumFacing.UP, hitVecUp);
+		hitVec = (model.containsKey(EnumFacing.UP) && end.yCoord >= start.yCoord) ? getVecInsideXZBounds(start.getIntermediateWithYValue(end, 15 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.UP, hitVec);
 
-		Vec3 hitVecNorth = (model.containsKey(EnumFacing.NORTH)) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 1 / 16.0), model) : null;
-		if (hitVecNorth != null)
-			hitVecs.put(EnumFacing.NORTH, hitVecNorth);
+		hitVec = (model.containsKey(EnumFacing.NORTH) && end.zCoord <= start.zCoord) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 1 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.NORTH, hitVec);
 
-		Vec3 hitVecSouth = (model.containsKey(EnumFacing.SOUTH)) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 15 / 16.0), model) : null;
-		if (hitVecSouth != null)
-			hitVecs.put(EnumFacing.SOUTH, hitVecSouth);
+		hitVec = (model.containsKey(EnumFacing.SOUTH) && end.zCoord >= start.zCoord) ? getVecInsideXYBounds(start.getIntermediateWithZValue(end, 15 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.SOUTH, hitVec);
 
-		Vec3 hitVecWest = (model.containsKey(EnumFacing.WEST)) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 1 / 16.0), model) : null;
-		if (hitVecWest != null)
-			hitVecs.put(EnumFacing.WEST, hitVecWest);
+		hitVec = (model.containsKey(EnumFacing.WEST) && end.xCoord <= start.xCoord) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 1 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.WEST, hitVec);
 
-		Vec3 hitVecEast = (model.containsKey(EnumFacing.EAST)) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 15 / 16.0), model) : null;
-		if (hitVecEast != null)
-			hitVecs.put(EnumFacing.EAST, hitVecEast);
+		hitVec = (model.containsKey(EnumFacing.EAST) && end.xCoord >= start.xCoord) ? getVecInsideYZBounds(start.getIntermediateWithXValue(end, 15 / 16.0), model) : null;
+		if (hitVec != null)
+			hitVecs.put(EnumFacing.EAST, hitVec);
 
-		Vec3 hitVec = null;
+		hitVec = null;
 		EnumFacing sideLookingAt = null;
 
 		if (hitVecs.size() == 0)
@@ -71,7 +73,7 @@ public class RayTracing {
 			}
 		}
 
-		if (hitVec == null)
+		if (hitVec == null || world.isRemote && net.minecraft.client.Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
 			return null;
 
 		MovingObjectPosition redstonePasteHit = new MovingObjectPosition(hitVec.addVector(pos.getX(), pos.getY(), pos.getZ()), sideLookingAt.getOpposite(), pos);
@@ -79,7 +81,7 @@ public class RayTracing {
 		return redstonePasteHit;
 	}
 
-	private static MovingObjectPosition getNearestFaceEdgeMOP(World world, BlockPos pos, Vec3 start, Vec3 end, EnumMap<EnumFacing, EnumModel> model, MovingObjectPosition nearestMOP) {
+	private static MovingObjectPosition getNearestFaceEdgeMOP(MovingObjectPosition nearestMOP, EnumMap<EnumFacing, EnumModel> model, BlockPos pos, World world, EnumSet<EnumFacing> pastedSides) {
 		if (nearestMOP == null)
 			return null;
 
@@ -160,6 +162,9 @@ public class RayTracing {
 					break;
 			}
 		}
+
+		if (world.isRemote && net.minecraft.client.Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
+			return null;
 
 		MovingObjectPosition redstonePasteHit = new MovingObjectPosition(nearestMOP.hitVec, nearestMOP.sideHit, pos);
 		redstonePasteHit.hitInfo = sideLookingAt;

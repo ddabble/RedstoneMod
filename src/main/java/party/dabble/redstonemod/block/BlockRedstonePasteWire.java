@@ -151,7 +151,7 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 
 	@Override
 	public MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end) {
-		return RayTracing.collisionRayTrace(world, pos, start, end, super.collisionRayTrace(world, pos, start, end));
+		return RayTracing.collisionRayTrace(start, end, pos, world, super.collisionRayTrace(world, pos, start, end), this.getPastedSidesSet(world.getBlockState(pos)));
 	}
 
 	public static EnumFacing getFirstPasteableSide(EnumFacing sideLookingAt, BlockPos pos, EntityPlayer player, World world) {
@@ -633,16 +633,16 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
-		if (!world.isRemote && player.isSneaking()) {
+		// XXX: Was originally !world.isRemote
+		if (world.isRemote && player.isSneaking()) {
 			MovingObjectPosition blockLookingAt = player.rayTrace(5, 1);
 			if (blockLookingAt != null) {
-				EnumFacing sideHit = (EnumFacing)blockLookingAt.hitInfo;
 				IBlockState state = world.getBlockState(pos);
 				EnumSet<EnumFacing> pastedSides = this.getPastedSidesSet(state);
-				if (!pastedSides.contains(sideHit))
+				if (!pastedSides.contains(blockLookingAt.hitInfo))
 					return false;
 				else {
-					pastedSides.remove(sideHit);
+					pastedSides.remove(blockLookingAt.hitInfo);
 
 					switch (pastedSides.size()) {
 						case 0:
