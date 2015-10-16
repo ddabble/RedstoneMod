@@ -72,12 +72,12 @@ public class RedstonePasteRenderer extends TileEntitySpecialRenderer {
 		return 0xFF000000 | applyMoisture(red) << 16 | green << 8 | blue;
 	}
 
-	private final static int amountOfLightAbsorbed = 36;
-	private final static int minLight = 76;
-	private final static int maxLight = 255;
+	private final static int AMOUNT_OF_LIGHT_ABSORBED = 36;
+	private final static int MIN_LIGHT = 76;
+	private final static int MAX_LIGHT = 255;
 
 	private static int applyMoisture(int colour) {
-		return colour - amountOfLightAbsorbed * (1 - (colour - minLight) / (maxLight - minLight));
+		return colour - AMOUNT_OF_LIGHT_ABSORBED * (1 - (colour - MIN_LIGHT) / (MAX_LIGHT - MIN_LIGHT));
 	}
 
 	private void drawFace(WorldRenderer worldRenderer, EnumFacing face, EnumModel model) {

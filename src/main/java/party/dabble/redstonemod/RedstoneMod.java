@@ -25,7 +25,7 @@ public class RedstoneMod {
 	public static final String CLIENT_PROXY_CLASS = "party.dabble.redstonemod.proxy.ClientProxy";
 
 	@Instance(ID)
-	static RedstoneMod instance;
+	static RedstoneMod instance = new RedstoneMod();
 
 	@SidedProxy(clientSide = CLIENT_PROXY_CLASS, serverSide = SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;

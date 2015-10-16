@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map.Entry;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
@@ -14,6 +16,27 @@ import party.dabble.redstonemod.util.EnumModel;
 import party.dabble.redstonemod.util.ModelLookup;
 
 public class RayTracing {
+	/** Make sure this equals Minecraft.getMinecraft().playerController.getBlockReachDistance() when in creative mode. */
+	private static final float BLOCK_REACH_DISTANCE = 5;
+	public static EntityPlayer removingPlayer = null;
+
+	public static MovingObjectPosition rayTraceFromPlayer(EntityPlayer player) {
+		Vec3 eyePos = getPositionEyes(player, 1);
+		Vec3 lookVec = player.getLook(1);
+		Vec3 endVec = eyePos.addVector(lookVec.xCoord * BLOCK_REACH_DISTANCE, lookVec.yCoord * BLOCK_REACH_DISTANCE, lookVec.zCoord * BLOCK_REACH_DISTANCE);
+		return player.worldObj.rayTraceBlocks(eyePos, endVec, false, false, true);
+	}
+
+	private static Vec3 getPositionEyes(EntityPlayer player, float partialTicks) {
+		if (partialTicks == 1.0F)
+			return new Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ);
+		else {
+			double d0 = player.prevPosX + (player.posX - player.prevPosX) * partialTicks;
+			double d1 = player.prevPosY + (player.posY - player.prevPosY) * partialTicks + player.getEyeHeight();
+			double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
+			return new Vec3(d0, d1, d2);
+		}
+	}
 
 	public static MovingObjectPosition collisionRayTrace(Vec3 start, Vec3 end, BlockPos pos, World world, MovingObjectPosition superRayTrace, EnumSet<EnumFacing> pastedSides) {
 		EnumMap<EnumFacing, EnumModel> model = ModelLookup.getModel(pos, world);
@@ -73,7 +96,9 @@ public class RayTracing {
 			}
 		}
 
-		if (hitVec == null || world.isRemote && net.minecraft.client.Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
+		if (hitVec == null
+				|| world.isRemote && Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt)
+				|| removingPlayer != null && removingPlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
 			return null;
 
 		MovingObjectPosition redstonePasteHit = new MovingObjectPosition(hitVec.addVector(pos.getX(), pos.getY(), pos.getZ()), sideLookingAt.getOpposite(), pos);
@@ -163,7 +188,8 @@ public class RayTracing {
 			}
 		}
 
-		if (world.isRemote && net.minecraft.client.Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
+		if (world.isRemote && Minecraft.getMinecraft().thePlayer.isSneaking() && !pastedSides.contains(sideLookingAt)
+				|| removingPlayer != null && removingPlayer.isSneaking() && !pastedSides.contains(sideLookingAt))
 			return null;
 
 		MovingObjectPosition redstonePasteHit = new MovingObjectPosition(nearestMOP.hitVec, nearestMOP.sideHit, pos);

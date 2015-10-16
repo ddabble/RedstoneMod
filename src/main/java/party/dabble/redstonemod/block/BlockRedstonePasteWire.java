@@ -633,9 +633,10 @@ public abstract class BlockRedstonePasteWire extends Block implements ITileEntit
 	@Override
 	public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
-		// XXX: Was originally !world.isRemote
-		if (world.isRemote && player.isSneaking()) {
-			MovingObjectPosition blockLookingAt = player.rayTrace(5, 1);
+		if (!world.isRemote && player.isSneaking()) {
+			RayTracing.removingPlayer = player;
+			MovingObjectPosition blockLookingAt = RayTracing.rayTraceFromPlayer(player);
+			RayTracing.removingPlayer = null;
 			if (blockLookingAt != null) {
 				IBlockState state = world.getBlockState(pos);
 				EnumSet<EnumFacing> pastedSides = this.getPastedSidesSet(state);
