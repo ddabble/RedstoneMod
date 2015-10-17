@@ -51,7 +51,7 @@ import party.dabble.redstonemod.util.PowerLookup;
 
 public abstract class BlockRedstonePasteWire extends Block implements ITileEntityProvider {
 	/**
-	 * Only for debugging, like displaying the block's power on the debug screen, and making the game display every possible block state in a debug world.
+	 * Only for debugging, like displaying power on the debug screen, and making the game display every possible block state in a debug world.
 	 */
 	public static final PropertyInteger POWER = PropertyInteger.create("power", 0, 15);
 	public static boolean isDebugWorld = false;

@@ -17,27 +17,7 @@ public class ModelLookup {
 	private static HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> modelMap_TheEnd = new HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>>();
 
 	public static EnumMap<EnumFacing, EnumModel> getModel(BlockPos pos, World world) {
-		EnumMap<EnumFacing, EnumModel> model = null;
-
-		switch (world.provider.getDimensionId()) {
-			case 0:
-				model = modelMap_Overworld.get(pos);
-				break;
-
-			case -1:
-				model = modelMap_Nether.get(pos);
-				break;
-
-			case 1:
-				model = modelMap_TheEnd.get(pos);
-				break;
-
-			default:
-				LogManager.getLogger().error("Could not find the dimension with the ID " + world.provider.getDimensionId()
-						+ ".\nRedstone Paste will as a result not render at all. Ooh, invisible Redstone Paste o.O");
-				return new EnumMap<EnumFacing, EnumModel>(EnumFacing.class);
-		}
-
+		EnumMap<EnumFacing, EnumModel> model = getModelMap(world).get(pos);
 		if (model == null) {
 			model = ((BlockRedstonePasteWire)world.getBlockState(pos).getBlock()).getModel(pos, world);
 			putModel(pos, model, world);
@@ -47,47 +27,66 @@ public class ModelLookup {
 	}
 
 	public static void putModel(BlockPos pos, EnumMap<EnumFacing, EnumModel> model, World world) {
-
-		switch (world.provider.getDimensionId()) {
-			case 0:
-				modelMap_Overworld.put(pos, model);
-				break;
-
-			case -1:
-				modelMap_Nether.put(pos, model);
-				break;
-
-			case 1:
-				modelMap_TheEnd.put(pos, model);
-				break;
-		}
+		getModelMap(world).put(pos, model);
 	}
 
 	public static void removeModel(BlockPos pos, World world) {
+		getModelMap(world).remove(pos);
+	}
 
-		switch (world.provider.getDimensionId()) {
-			case 0:
-				modelMap_Overworld.remove(pos);
-				break;
-
-			case -1:
-				modelMap_Nether.remove(pos);
-				break;
-
-			case 1:
-				modelMap_TheEnd.remove(pos);
-				break;
+	public static void clearModels(World world) {
+		HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> modelMap = getModelMap(world);
+		if (modelMap.size() > 0) {
+			LogManager.getLogger().info("Removing the models of " + modelMap.size() + " redstone paste blocks in "
+					+ world.provider.getDimensionName() + " from memory.");
+			modelMap.clear();
 		}
 	}
 
-	public static void clearModels() {
-		int combinedSize = modelMap_Overworld.size() + modelMap_Nether.size() + modelMap_TheEnd.size();
-		if (combinedSize > 0)
-			LogManager.getLogger().info("Removing the models of " + combinedSize + " redstone paste blocks from memory.");
+	public static void clearAllModels() {
 
-		modelMap_Overworld.clear();
-		modelMap_Nether.clear();
-		modelMap_TheEnd.clear();
+		if (modelMap_Overworld.size() > 0) {
+			LogManager.getLogger().info("Removing the models of " + modelMap_Overworld.size() + " redstone paste blocks in "
+					+ new net.minecraft.world.WorldProviderSurface().getDimensionName() + " from memory.");
+			modelMap_Overworld.clear();
+		}
+
+		if (modelMap_Nether.size() > 0) {
+			LogManager.getLogger().info("Removing the models of " + modelMap_Nether.size() + " redstone paste blocks in "
+					+ new net.minecraft.world.WorldProviderHell().getDimensionName() + " from memory.");
+			modelMap_Nether.clear();
+		}
+
+		if (modelMap_TheEnd.size() > 0) {
+			LogManager.getLogger().info("Removing the models of " + modelMap_TheEnd.size() + " redstone paste blocks in "
+					+ new net.minecraft.world.WorldProviderEnd().getDimensionName() + " from memory.");
+			modelMap_TheEnd.clear();
+		}
+	}
+
+	private static long prevTime = System.nanoTime();
+
+	private static HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>> getModelMap(World world) {
+
+		switch (world.provider.getDimensionId()) {
+			case 0:
+				return modelMap_Overworld;
+
+			case -1:
+				return modelMap_Nether;
+
+			case 1:
+				return modelMap_TheEnd;
+
+			default:
+				if (System.nanoTime() - prevTime > 1e10) {
+					LogManager.getLogger().error("Could not find the dimension with the ID " + world.provider.getDimensionId()
+							+ ". Redstone Paste will as a result not render as efficiently.");
+					prevTime = System.nanoTime();
+				}
+
+				return new HashMap<BlockPos, EnumMap<EnumFacing, EnumModel>>();
+		}
 	}
 
 	public static boolean isModelPointingInDirection(EnumFacing direction, BlockPos pos, World world) {
